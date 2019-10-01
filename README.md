@@ -2,7 +2,7 @@
 
 ### TRIBE - Zhaoyang Song, Hsin-Yu Chang and Ming-Yi Lin
 ### Introduction
-Targeted audience : Metro Bike Institute <br>
+Targeted audience : **Metro Bike Institute** <br>
 Our purposes : <br>
 \- **Quality on Maintaining Metro Bikes**<br>
 &nbsp;&nbsp; Which stations are high demanding?<br>
