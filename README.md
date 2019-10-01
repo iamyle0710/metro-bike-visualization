@@ -14,6 +14,10 @@ Our purposes : <br>
 &nbsp;&nbsp; Analyze users when, where and how they rent the metro bikes?
 
 ## Our Visualization
+* What is the topic?
+    - Statistic Visualization of LA Metro Bike Share trip data
+* What is the information you plan to present?
+* Do you have a story?
 
 ## Secret Sauce
 \- Visualizing metro bikers' routes around Los Angeles
@@ -32,7 +36,7 @@ Our purposes : <br>
 <br>&nbsp;&nbsp; 5. Design and create a mock-up of what our website should look like.
 <br>&nbsp;&nbsp; 6. Develop our website using the technologies mentioned above.
 <br>&nbsp;&nbsp; 7. Evaluate based on features testing, interactivity and visualization wheel.
-<br>\- Risk : Hard to identify data based on user types
+<br>\- Risk : Hard to identify data based on user types since the data doesn't include user id
 
 ## How We Work Together?
 \- Define the purpose and design ideas together in weekly meetings.
