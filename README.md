@@ -43,4 +43,4 @@ Our purposes : <br>
 ## Our Team
 Zhaoyang : Product-Oriented thinking, Jquery Interactive Coding, Design skills, Data Analysis
 <br> Hsin-Yu : User Interface Design, Statistical thinking, Data Visualization
-<br> Ming-Yi : Web Developing
+<br> Ming-Yi : Web Developing, User Interface Desing, Data Processing 
