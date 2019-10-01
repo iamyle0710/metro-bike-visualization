@@ -4,7 +4,7 @@
 ### Introduction
 Targeted audience : Metro Bike Institute <br>
 Our purposes : <br>
-<br>\- Quality on Maintaining Metro Bikes<br>
+\- Quality on Maintaining Metro Bikes<br>
 &nbsp;&nbsp; Which stations are high demanding?<br>
 &nbsp;&nbsp; When to refill the bikes to meet the upcoming demand?<br>
 &nbsp;&nbsp; How to tranfer bikes from station to station and maintain the bikes without high depreciation cost? <br>
