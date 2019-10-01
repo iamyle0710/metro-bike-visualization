@@ -9,7 +9,7 @@ Our purposes : <br>
 &nbsp;&nbsp; When to refill the bikes to meet the upcoming demand?<br>
 &nbsp;&nbsp; How to tranfer bikes from station to station and maintain the bikes without high depreciation cost? <br>
 &nbsp;&nbsp; How to encourage more users to use metro bikes as their public transportation?
-<br><br>
+<br>
 \- User Behavior Analysis<br>
 &nbsp;&nbsp; Analyze users when, where and how they rent the metro bikes?
 
