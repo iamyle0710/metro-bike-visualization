@@ -2,14 +2,14 @@
 
 ### TRIBE - Zhaoyang Song, Hsin-Yu Chang and Ming-Yi Lin
 ### Introduction
-* Targeted audience : **Metro Bike Institute<br>
+* Targeted audience : **Metro Bike Institute**<br>
 * Our purposes :
    - **Quality on Maintaining Metro Bikes**<br>
 &nbsp;Which stations are high demanding?<br>
 &nbsp;When to refill the bikes to meet the upcoming demand?<br>
 &nbsp;How to tranfer bikes from station to station and maintain the bikes without high depreciation cost? <br>
 &nbsp;How to encourage more users to use metro bikes as their public transportation?
-<br>
+
    - **User Behavior Analysis**<br>
 &nbsp;Analyze users when, where and how they rent the metro bikes?
 
