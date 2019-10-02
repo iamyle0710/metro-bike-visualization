@@ -1,7 +1,8 @@
 # INF 554 Assignment for 5 - Metro Bike Sharing
 
 ### TRIBE - Zhaoyang Song, Hsin-Yu Chang and Ming-Yi Lin
-### Introduction
+
+## Introduction
 * Targeted audience : **Metro Bike Institute**<br>
 * Our purposes :
    - **Quality on Maintaining Metro Bikes**<br>
