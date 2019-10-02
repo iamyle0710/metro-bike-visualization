@@ -53,7 +53,7 @@
 
 ## Our Timeline
 * Biweek1 : Reseach on previous works on related topics and collect data which can be linked to our main data.
-<br>&nbsp;e.g. bike lane map.
+<br>e.g. bike lane map, users profiles...
 * Biweek2 : Based on research, initial design on prototypes and layouts to meet our purposes.
 * Biweek3 : Construct first-sketch website to build up our visualization and functions.
 * Biweek4 : Experiment on users and refine the website.
