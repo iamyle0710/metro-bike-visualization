@@ -17,7 +17,13 @@ Our purposes : <br>
 * What is the topic?
     - Statistic Visualization of LA Metro Bike Share trip data
 * What is the information you plan to present?
+    - Maintain the bikes: When Where and how many bikes need to be refilled. Bike depreciation/
+    - User behaviours: when do they use the bikes? Where are the start point and end point? What type of    trip? One way or round trip?
+    - Performance so far: Are users increasing by years? How many people have the monthly plan or annual plan? How many people are using the free plan?
+ 
 * Do you have a story?
+   - "I took Metro every day to go to work at Venice Beach this summer. It still had 20 mins walking distance from the metro station to my company, so I planned to take the metro sharing bike. However, it became so hard for me to find a bike near the metro station. Either there was no bike at all or the bikes there just couldn’t work. However, sometimes I found several stations have way more bikes than it should be." -- Zhaoyang
+
 
 ## Secret Sauce
 \- Visualizing metro bikers' routes around Los Angeles
