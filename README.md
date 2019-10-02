@@ -51,6 +51,14 @@
 * Assign works and set timeline to finish all tasks.
 * Meet weekly to 1. solve technical problems. 2. revise design plan
 
+## Our Timeline
+* Biweek1 : Reseach on previous works on related topics and collect data which can be linked to our main data, e.g. bike lane map.
+* Biweek2 : Based on research, initial design on prototypes and layouts to meet our purposes.
+* Biweek3 : Construct first-sketch website to build up our visualization and functions.
+* Biweek4 : Experiment on users and refine the website.
+* Biweek5 : Paper elaborating on the whole process we set up our project.
+* Final : Final review on website and paper.
+
 ## Our Team
 Zhaoyang : Product-Oriented thinking, Jquery Interactive Coding, Design skills, Data Analysis
 <br> Hsin-Yu : User Interface Design, Statistical thinking, Data Visualization
