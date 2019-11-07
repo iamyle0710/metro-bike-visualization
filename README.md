@@ -1,20 +1,28 @@
 # INF 554 Assignment for 5 - Metro Bike Sharing
 
 ### TRIBE - Zhaoyang Song | Hsin-Yu Chang | Ming-Yi Lin
+![Introduction](images/inf554_project_final.001.png)
+
+## Overleaf
+* [Link](https://www.overleaf.com/8681218574nrbhrmjpqgks)
 
 ## Introduction
+
 * Targeted audience : **Metro Bike Institute**<br>
 * Our purposes :
    - **Quality on Maintaining Metro Bikes**<br>
+   ![Purpose](images/inf554_project_final.002.png)
 &nbsp;Which stations are high demanding?<br>
 &nbsp;When to refill the bikes to meet the upcoming demand?<br>
 &nbsp;How to tranfer bikes from station to station and maintain the bikes without high depreciation cost? <br>
 &nbsp;How to encourage more users to use metro bikes as their public transportation?
 
    - **User Behavior Analysis**<br>
+![Purpose](images/inf554_project_final.003.png)
 &nbsp;Analyze users when, where and how they rent the metro bikes?
 
 ## Our Visualization
+![Purpose](images/inf554_project_final.004.png)
 * What is the topic?
     - Statistic Visualization of LA Metro Bike Share trip data
 * What is the information you plan to present?
@@ -27,15 +35,20 @@
 
 
 ## Secret Sauce
+![Secret](images/inf554_project_final.005.png)
+![Secret](images/inf554_project_final.006.png)
 * Visualizing metro bikers' routes around Los Angeles
 * Responsive User Interface: maintainer / marketer /  user mode
 * Drill down details when clicking on certain route
 
 ## Our Plan
+
 * Dataset : [Metro Bike Share Trip Data](https://bikeshare.metro.net/about/data/]) 
 * Data collected from 2017 Q1 to 2019 Q2
 * Technology : Javascript, D3.js, HTML5, Python 
+![Technology](images/inf554_project_final.007.png)
 * Design plans, building and evaluating : 
+![Design Plan](images/inf554_project_final.008.png)
 <br>&nbsp; 1. Analyze the bike station data.
 <br>&nbsp; 2. Set the purpose and goals of our website.
 <br>&nbsp; 3. Assign roles to make sure everyone knows their role and tasks.
@@ -46,12 +59,14 @@
 * Risk : Hard to identify data based on user types since the data doesn't include user id
 
 ## How We Work Together?
+![Work](images/inf554_project_final.009.png)
 * Define the purpose and design ideas together in weekly meetings.
 * Explore and analyze the data.
 * Assign works and set timeline to finish all tasks.
 * Meet weekly to 1. solve technical problems. 2. revise design plan
 
 ## Our Timeline
+![Work](images/inf554_project_final.010.png)
 * Biweek1 : Reseach on previous works on related topics and collect data which can be linked to our main data.
 <br>e.g. bike lane map, users profiles...
 * Biweek2 : Based on research, initial design on prototypes and layouts to meet our purposes.
