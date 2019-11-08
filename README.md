@@ -3,8 +3,20 @@
 ### TRIBE - Zhaoyang Song | Hsin-Yu Chang | Ming-Yi Lin
 ![Introduction](images/inf554_project_final.001.png)
 
-## Overleaf
-* [Link](https://www.overleaf.com/8681218574nrbhrmjpqgks)
+## PROJECT SUMMARY
+
+### PROJECT INFORMATION
+
+- Project title: Metro Bike Sharing
+- Group name: Tribe
+- Team names: Hsin-Yu Chang>(hsinyuch) | Ming-Yi Lin (linmingy) | Zhaoyang Song(zhaoyans)
+
+### PROJECT ARTIFACTS
+
+- [Demonstration URL](<demo-url>)
+- [Presentation PDF](<presentation-pdf-url>) and [transcript](<presentation-transcript-md-url>)
+- [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/8681218574nrbhrmjpqgks)
+- [YouTube video](<youtube-video-url>)
 
 ## Introduction
 
