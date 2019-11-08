@@ -15,7 +15,7 @@
 
 - [Demonstration URL](<demo-url>)
 - [Presentation PDF](<presentation-pdf-url>) and [transcript](<presentation-transcript-md-url>)
-- [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/8681218574nrbhrmjpqgks)
+- [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/read/vnpnvkwvddft)
 - [YouTube video](<youtube-video-url>)
 
 ## Introduction
