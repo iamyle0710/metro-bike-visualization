@@ -9,7 +9,7 @@
 
 - Project title: Metro Bike Sharing
 - Group name: Tribe
-- Team names: Hsin-Yu Chang>(hsinyuch) | Ming-Yi Lin (linmingy) | Zhaoyang Song(zhaoyans)
+- Team names: Hsin-Yu Chang(hsinyuch) | Ming-Yi Lin (linmingy) | Zhaoyang Song(zhaoyans)
 
 ### PROJECT ARTIFACTS
 
