@@ -24,4 +24,16 @@ const cars : Car[] = [
 export class AppComponent {
   title = 'tribe';
   cars = cars;
+  servers : Array<any> = [
+    { name: 'audi', content: 'a4'},
+    { name: 'BMW', content: 'a1'},
+    { name: 'Toyota', content: 'a5'},
+  ]
+
+  onMapCreated = function(map){
+    console.log(map);
+    this.servers.push(
+      { name : map.name, content : map.content}
+    )
+  }
 }
