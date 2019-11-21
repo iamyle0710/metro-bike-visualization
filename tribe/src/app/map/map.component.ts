@@ -15,14 +15,46 @@ export class MapComponent implements OnInit {
   style : string = 'mapbox://styles/mapbox/dark-v10';
   lat : number = 34.026283;
   lng : number = -118.272892;
+  markers : {};
+  markersOnScreen : {};
   popup : mapboxgl.Popup = new mapboxgl.Popup({
     closeButton : false,
     closeOnClick : false
   });
-
+  
   constructor(private mapService : MapService) {
+    this.markers = {};
+    this.markersOnScreen = {};
     this.mapService.getJSON().subscribe((data : any) => {
-      this.addBikeStationMarkers(data);      
+      
+
+      this.map.on('load', () => {
+        this.map.addLayer({
+          "id" : "stations",
+          "type" : "circle",
+          "layout" : {},
+          "source" : {
+            "type" : "geojson",
+            "data" : data
+          },
+          "paint" : {
+            "circle-color" : "transparent",
+            "circle-radius" : 10
+          }
+        })
+
+        this.map.on('data', (e) => {
+          if(e.sourceId !== "stations" || !e.isSourceLoaded){
+            return;
+          }
+
+          this.map.on('mouseenter', 'stations', this.createPopup.bind(this));
+          this.map.on('mouseleave', 'stations', this.removePopup.bind(this));
+          this.map.on('move', this.updateMarkers.bind(this));
+          this.map.on('moveend', this.updateMarkers.bind(this));
+          this.updateMarkers();
+        })
+      })
     })
   }
   
@@ -43,34 +75,76 @@ export class MapComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
   }
 
-  addBikeStationMarkers(data) {
-    data.features.forEach(marker => {
-      var el = document.createElement("div");
-      var ratio = 100 * (marker.properties.bikesAvailable / marker.properties.totalDocks);
-      el.innerHTML = [
-        "<div class='bike_station_progess' style='top:"+(100 - ratio )+"%'></div>",
-      ].join("")
-      el.className = 'bike_station_marker';
+  updateMarkers(){
+    var newMarkers = {};
+    var features = this.map.querySourceFeatures("stations");
 
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(new mapboxgl.Popup({ offset: 25, closeButton : false}) // add popups
-        .setHTML([
-          "<div class='marker_header'>",
-            "<span class='title'>" + marker.properties.addressStreet + "</span>",
-          "</div>",
-          "<div class='bike_dock_status'>",
-            "<span class='flex_col'>",
-              "<span class='status'>" + marker.properties.bikesAvailable + "</span>",
-              "<span class='name'>Bikes</span>",
-            "</span>",
-            "<span class='flex_col'>",
-              "<span class='status'>" + marker.properties.docksAvailable + "</span>",
-              "<span class='name'>Docks</span>",
-            "</span>",
+    for(var i = 0; i < features.length; i++){
+      var coords = features[i].geometry.coordinates;
+      var props = features[i].properties;
+      var ratio = 100 - 100 * (props.bikesAvailable / props.totalDocks);
+      var id = props.kioskId;
+      var marker = (this.markers.hasOwnProperty(id)) ? this.markers[id] : false;
+      
+      if(!marker){
+        var el = document.createElement("div");
+        el.innerHTML = [
+          "<div class='bike_station_marker'>",
+            "<div class='bike_station_progess' style='top:" + ratio + "%'></div>",
           "</div>"
-        ].join("")))
-        .addTo(this.map);
-    })
+        ].join("");
+        marker = this.markers[id] = new mapboxgl.Marker({element: el}).setLngLat(coords);
+      }
+
+      newMarkers[id] = marker;
+
+      if(!this.markersOnScreen[id]){
+        marker.addTo(this.map);
+      }      
+    }
+
+    for(id in this.markersOnScreen){
+      if(!newMarkers[id]){
+        this.markersOnScreen[id].remove();
+      }
+    }
+    this.markersOnScreen = newMarkers;
+  }
+  createPopup(e:any){
+    this.map.getCanvas().style.cursor = 'pointer';
+    var coordinates = e.features[0].geometry.coordinates.slice();
+    var description = e.features[0].properties.addressStreet;
+    
+    // Ensure that if the map is zoomed out such that multiple
+    // copies of the feature are visible, the popup appears
+    // over the copy being pointed to.
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+    
+    // Populate the popup and set its coordinates
+    // based on the feature found.
+    this.popup.setLngLat(coordinates)
+      .setHTML([
+        "<div class='marker_header'>",
+          "<span class='title'>" + e.features[0].properties.addressStreet + "</span>",
+        "</div>",
+        "<div class='bike_dock_status'>",
+          "<span class='flex_col'>",
+            "<span class='status'>" + e.features[0].properties.bikesAvailable + "</span>",
+            "<span class='name'>Bikes</span>",
+          "</span>",
+          "<span class='flex_col'>",
+            "<span class='status'>" + e.features[0].properties.docksAvailable + "</span>",
+            "<span class='name'>Docks</span>",
+          "</span>",
+        "</div>"
+      ].join(""))
+      .addTo(this.map);
+  }
+
+  removePopup(){
+    this.map.getCanvas().style.cursor = '';
+    this.popup.remove();
   }
 }
