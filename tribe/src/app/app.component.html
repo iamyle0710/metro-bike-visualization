@@ -1,23 +1,4 @@
-<app-header></app-header>
-<h2>Data table</h2>
-<div class="table-responsive">
-  <table class="table">
-    <tr>
-      <th>manufacturer</th>
-      <th>model</th>
-      <th>displ</th>
-      <th>year</th>
-      <th>cyl</th>
-    </tr>
-    <tr *ngFor="let car of cars">
-      <td>{{ car.manufacturer }}</td>
-      <td>{{ car.model }}</td>
-      <td>{{ car.displ }}</td>
-      <td>{{ car.year }}</td>
-      <td>{{ car.cyl }}</td>
-    </tr>
-  </table>
+<div class="app">
+  <app-header></app-header>
+  <app-map></app-map>
 </div>
-<h2>Chart with D3</h2>
-<app-chart></app-chart>
-<router-outlet></router-outlet>
