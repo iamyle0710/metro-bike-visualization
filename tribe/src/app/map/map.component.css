@@ -1,0 +1,12 @@
+.mapContainer {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: unset;
+}
+
+#map {
+  height: calc(100vh - 56px);
+}
+
+
