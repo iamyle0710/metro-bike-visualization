@@ -1,0 +1,167 @@
+Station_ID,Station_Name,Go_live_date,Region ,Status,properties.kioskId,lat,lon
+3005,7th & Flower,7/7/2016,DTLA,Active,3005,34.0485,-118.25854
+3006,Olive & 8th,7/7/2016,DTLA,Active,3006,34.04554,-118.25667
+3007,5th & Grand,7/7/2016,DTLA,Active,3007,34.05048,-118.25459
+3008,Figueroa & 9th,7/7/2016,DTLA,Active,3008,34.04661,-118.26273
+3010,11th & Maple,7/10/2016,DTLA,Active,3010,34.03705,-118.25487
+3011,Figueroa & Pico,7/12/2016,DTLA,Active,3011,34.04113,-118.26798
+3014,Union Station West Portal,7/7/2016,DTLA,Active,3014,34.05661,-118.23721
+3016,Los Angeles & Temple,7/7/2016,DTLA,Active,3016,34.0529,-118.24156
+3018,Grand & Olympic,7/7/2016,DTLA,Active,3018,34.04373,-118.26014
+3019,12th & Hill,7/7/2016,DTLA,Active,3019,34.03861,-118.26086
+3020,Hill & Washington,7/7/2016,DTLA,Active,3020,34.03105,-118.26709
+3022,3rd & Santa Fe,7/7/2016,DTLA,Active,3022,34.04607,-118.23309
+3023,1st & Judge John Aiso,7/7/2016,DTLA,Active,3023,34.05091,-118.24097
+3024,Hope & 1st,7/13/2016,DTLA,Active,3024,34.05772,-118.24897
+3025,Grand & Washington,7/7/2016,DTLA,Active,3025,34.03286,-118.26808
+3026,Figueroa & Cesar Chavez,7/7/2016,DTLA,Active,3026,34.06318,-118.24588
+3027,Spring & 3rd,7/7/2016,DTLA,Active,3027,34.04998,-118.24716
+3028,Grand & Temple,7/7/2016,DTLA,Active,3028,34.05832,-118.24609
+3029,Main & 4th,7/7/2016,DTLA,Active,3029,34.04885,-118.24642
+3030,Main & 1st,7/7/2016,DTLA,Active,3030,34.05194,-118.24353
+3031,7th & Spring,7/7/2016,DTLA,Active,3031,34.0447,-118.25244
+3032,Hope & 6th,7/7/2016,DTLA,Active,3032,34.04989,-118.25588
+3033,Main & 9th,7/7/2016,DTLA,Active,3033,34.04099,-118.2558
+3034,Hope & 11th,7/7/2016,DTLA,Active,3034,34.04206,-118.26338
+3035,Figueroa & 8th,7/7/2016,DTLA,Active,3035,34.0484,-118.26095
+3036,Willow St & Mateo St,7/7/2016,DTLA,Active,3036,34.03919,-118.23253
+3037,Imperial & 7th,7/7/2016,DTLA,Active,3037,34.0348,-118.23128
+3038,Main & 5th,7/7/2016,DTLA,Active,3038,34.04682,-118.24835
+3040,Wilshire & Witmer,7/7/2016,DTLA,Active,3040,34.05357,-118.26636
+3042,1st & Central,7/7/2016,DTLA,Active,3042,34.0493,-118.23881
+3045,18th & San Pedro,7/7/2016,DTLA,Active,3045,34.02851,-118.25667
+3046,2nd & Hill,7/12/2016,DTLA,Active,3046,34.05287,-118.24749
+3047,Pico & Flower,7/7/2016,DTLA,Active,3047,34.03998,-118.2664
+3048,5th & Hewitt,7/13/2016,DTLA,Active,3048,34.04169,-118.23535
+3049,2nd & Figueroa,7/7/2016,DTLA,Active,3049,34.05697,-118.25359
+3051,7th & Broadway,7/7/2016,DTLA,Active,3051,34.04542,-118.25352
+3052,7th & Bixel,7/7/2016,DTLA,Active,3052,34.0511,-118.26456
+3054,Factory Place & Alameda,7/7/2016,DTLA,Active,3054,34.03922,-118.23649
+3056,Grand & 14th,7/7/2016,DTLA,Active,3056,34.03746,-118.26538
+3057,18th & Figueroa,7/7/2016,DTLA,Active,3057,34.03568,-118.27081
+3058,Industrial St & Mateo St,7/7/2016,DTLA,Active,3058,34.0358,-118.23317
+3062,3rd & San Pedro,7/7/2016,DTLA,Active,3062,34.04775,-118.24317
+3063,Olive & 5th,7/7/2016,DTLA,Active,3063,34.04804,-118.25374
+3064,Grand & 7th,7/11/2016,DTLA,Active,3064,34.04681,-118.25698
+3065,New High & Ord,7/7/2016,DTLA,Active,3065,34.06056,-118.23833
+3066,Spring & College,7/7/2016,DTLA,Active,3066,34.06339,-118.23616
+3067,Main & 6th,7/7/2016,DTLA,Active,3067,34.04518,-118.25024
+3068,Grand & 3rd,7/7/2016,DTLA,Active,3068,34.0532,-118.25095
+3069,Broadway & 3rd,7/7/2016,DTLA,Active,3069,34.05088,-118.24825
+3074,Hope & Olympic,7/7/2016,DTLA,Active,3074,34.04417,-118.26117
+3075,Broadway & 9th,7/7/2016,DTLA,Active,3075,34.04211,-118.25619
+3076,9th & Los Angeles,7/7/2016,DTLA,Active,3076,34.0406,-118.25384
+3077,8th & Wall,7/7/2016,DTLA,Active,3077,34.03987,-118.25004
+3078,Hill & College,7/7/2016,DTLA,Active,3078,34.06428,-118.23894
+3079,Temple & Vignes,7/7/2016,DTLA,Active,3079,34.05014,-118.23319
+3081,Stanford & 12th,7/13/2016,DTLA,Active,3081,34.03189,-118.25018
+3082,Traction & Rose,8/29/2016,DTLA,Active,3082,34.04652,-118.23741
+4220,Park & Echo Park,9/28/2017,DTLA,Active,4220,34.07483,-118.25873
+4227,Grand / LATTC,12/15/2017,DTLA,Active,4227,34.0298,-118.27031
+4245,University & Hoover,7/8/2018,DTLA,Active,4245,34.02404,-118.28341
+4246,32nd & Figueroa,7/3/2018,DTLA,Active,4246,34.02371,-118.27917
+4247,25th & Vermont,5/29/2019,DTLA,Active,4247,34.03364,-118.29131
+4248,29th & Ellendale,7/2/2018,DTLA,Active,4248,34.02835,-118.28867
+4249,Figueroa & McCarthy Way,6/29/2018,DTLA,Active,4249,34.0203,-118.28118
+4250,Severance & Adams,7/9/2018,DTLA,Active,4250,34.03017,-118.28095
+4254,Hoover & 29th,6/28/2018,DTLA,Active,4254,34.02868,-118.28411
+4266,28th & Figueroa,11/29/2018,DTLA,Active,4266,34.02629,-118.27769
+4267,28th & University,8/23/2018,DTLA,Active,4267,34.02762,-118.28068
+4273,Hoover & 32nd,10/8/2018,DTLA,Active,4273,34.02586,-118.2841
+4275,Expo Park/LAFC,12/18/2018,DTLA,Active,4275,34.01252,-118.2859
+4293,Westlake & 3rd,1/25/2019,DTLA,Active,4293,34.06228,-118.27152
+4300,Union & Olympic,1/24/2019,DTLA,Active,4300,34.04887,-118.2743
+4301,Maubert & Vermont,6/18/2019,DTLA,Active,4301,34.09905,-118.2915
+4302,Vermont Pl & Vermont,6/19/2019,DTLA,Active,4302,34.09249,-118.29144
+4303,Sunset & Virgil,6/18/2019,DTLA,Active,4303,34.09801,-118.28707
+4304,Shatto Pl & Wilshire,1/28/2019,DTLA,Active,4304,34.06258,-118.29009
+4306,8th & Vermont,1/29/2019,DTLA,Active,4306,34.05765,-118.29218
+4311,7th & Berendo,2/7/2019,DTLA,Active,4311,34.05969,-118.29466
+4312,4th & Vermont,2/7/2019,DTLA,Active,4312,34.06699,-118.29088
+4313,Westlake/Macarthur Park Station,2/6/2019,DTLA,Active,4313,34.05681,-118.275
+4314,7th & Park View,2/8/2019,DTLA,Active,4314,34.05771,-118.27976
+4315,Union & 7th,2/6/2019,DTLA,Active,4315,34.05403,-118.27092
+4322,Venice & Inglewood,2/27/2019,Westside,Active,4322,34.00587,-118.42916
+4323,Venice & Beethoven,2/27/2019,Westside,Active,4323,33.99958,-118.44136
+4324,Palms & Motor,2/27/2019,Westside,Active,4324,34.02655,-118.40846
+4325,Venice & Clarington,2/27/2019,Westside,Active,4325,34.02252,-118.40059
+4328,Sepulveda & Palms,2/27/2019,Westside,Active,4328,34.02006,-118.42268
+4329,Palms & National,2/27/2019,Westside,Active,4329,34.02912,-118.40317
+4330,Bagley & Venice,2/27/2019,Westside,Active,4330,34.02569,-118.3953
+4331,Venice & Colonial,2/27/2019,Westside,Active,4331,34.00351,-118.43438
+4332,National & Motor,2/27/2019,Westside,Active,4332,34.02948,-118.41047
+4333,Venice & Walgrove,2/27/2019,Westside,Active,4333,33.99723,-118.44597
+4334,Venice & Motor,2/27/2019,Westside,Active,4334,34.02018,-118.40403
+4335,Venice & Hughes,2/27/2019,Westside,Active,4335,34.02339,-118.39922
+4336,Barrington & National,2/28/2019,Westside,Active,4336,34.02245,-118.43833
+4337,Inglewood & Braddock,5/22/2019,Westside,Active,4337,33.99302,-118.41491
+4338,Sepulveda & Venice,7/2/2019,Westside,Active,4338,34.01376,-118.4178
+4340,17th St / SMC Expo Line Station,2/27/2019,Westside,Active,4340,34.02338,-118.47964
+4341,7th & Westminster,2/27/2019,Westside,Active,4341,33.9953,-118.46484
+4342,Abbot Kinney & Cadiz,2/27/2019,Westside,Active,4342,33.99116,-118.46829
+4343,California & Lincoln,2/27/2019,Westside,Active,4343,33.99832,-118.46098
+4344,Downtown Santa Monica Expo Line Station,2/27/2019,Westside,Active,4344,34.01431,-118.49134
+4345,Ocean Front Walk & Navy,2/27/2019,Westside,Active,4345,33.99556,-118.48155
+4346,Ocean Front Walk & North Venice,2/27/2019,Westside,Active,4346,33.98434,-118.47155
+4347,Pacific & North Venice,2/27/2019,Westside,Active,4347,33.98493,-118.46996
+4348,Rose & 7th,2/27/2019,Westside,Active,4348,34.00088,-118.46891
+4349,Rose & Main,2/27/2019,Westside,Active,4349,33.99624,-118.47745
+4350,Rose & Rennie,2/27/2019,Westside,Active,4350,33.9986,-118.47298
+4351,Venice & Lincoln,2/27/2019,Westside,Active,4351,33.99373,-118.45356
+4352,Washington & Abbot Kinney,2/27/2019,Westside,Active,4352,33.98842,-118.45163
+4353,Windward & Main,2/27/2019,Westside,Active,4353,33.98813,-118.47174
+4354,Venice & Glendon,2/27/2019,Westside,Active,4354,34.01768,-118.40908
+4372,Public Bike Rack: Culver City Expo Line,3/19/2019,Westside,Active,4372,34.02788,-118.3889
+4378,Palms & Kelton,3/21/2019,Westside,Active,4378,34.02233,-118.41577
+4379,Sepulveda & Charnock,3/20/2019,Westside,Active,4379,34.01737,-118.4206
+4380,Centinela & Lucile,3/20/2019,Westside,Active,4380,33.98292,-118.41093
+4381,Sepulveda & Lucerne,3/20/2019,Westside,Active,4381,33.9988,-118.40266
+4382,Westwood & National,3/20/2019,Westside,Active,4382,34.03047,-118.42098
+4383,McLaughlin & Venice,4/29/2019,Westside,Active,4383,34.00902,-118.42501
+4384,Inglewood & Ballona,7/2/2019,Westside,Active,4384,33.99032,-118.41205
+4385,Public Bike Rack: Westwood/Rancho Park Expo Line,3/19/2019,Westside,Active,4385,34.03668,-118.42534
+4387,Row DTLA,4/1/2019,DTLA,Active,4387,34.03352,-118.24184
+4389,Expo/Sepulveda Expo Line Station,5/6/2019,Westside,Active,4389,34.03535,-118.43414
+4390,Kenmore & 3rd,5/9/2019,DTLA,Active,4390,34.06927,-118.29659
+4393,Durango & Venice,7/3/2019,Westside,Active,4393,34.02683,-118.39352
+4394,Westlawn & Beatrice,7/3/2019,Westside,Active,4394,33.98079,-118.4149
+4396,Sepulveda & National,5/22/2019,Westside,Active,4396,34.02697,-118.42821
+4397,Mar Vista Rec Center,5/17/2019,Westside,Active,4397,34.01688,-118.42845
+4400,Newton & Central,6/11/2019,DTLA,Active,4400,34.02783,-118.24714
+4401,Vermont & Beverly,5/31/2019,DTLA,Active,4401,34.07561,-118.29186
+4404,Albany & Olympic,6/4/2019,DTLA,Active,4404,34.04813,-118.27103
+4405,Berendo & Olympic,6/25/2019,DTLA,Active,4405,34.0519,-118.29368
+4406,Normandie & Hollywood,8/15/2019,DTLA,Active,4406,34.10189,-118.30061
+4408,Venice & Sawtelle,6/5/2019,Westside,Active,4408,34.01137,-118.4197
+4409,Maxella & Del Ray,6/5/2019,Westside,Active,4409,33.98651,-118.44192
+4410,Kenmore & 6th,6/4/2019,DTLA,Active,4410,34.06335,-118.2968
+4413,Lankershim & Vineland,8/5/2019,North Hollywood,Active,4413,34.15832,-118.37081
+4414,Chandler & Colfax,8/5/2019,North Hollywood,Active,4414,34.16835,-118.3875
+4415,Chandler & Laurel Canyon,8/5/2019,North Hollywood,Active,4415,34.16833,-118.39616
+4416,Riverside & Colfax,8/5/2019,North Hollywood,Active,4416,34.15758,-118.38826
+4417,Magnolia & Cartwright,8/5/2019,North Hollywood,Active,4417,34.16495,-118.36363
+4418,Lankershim & Moorpark,8/5/2019,North Hollywood,Active,4418,34.15069,-118.36613
+4419,Magnolia & Clybourn,8/5/2019,North Hollywood,Active,4419,34.16522,-118.35515
+4420,North Hollywood Station,8/5/2019,North Hollywood,Active,4420,34.16863,-118.37707
+4422,Riverside & Cahuenga,8/5/2019,North Hollywood,Active,4422,34.15214,-118.36195
+4425,Mariota & Riverside,8/5/2019,North Hollywood,Active,4425,34.152,-118.3506
+4426,Tujunga & Moorpark,8/5/2019,North Hollywood,Active,4426,34.14987,-118.37889
+4427,Vineland & Otsego,8/5/2019,North Hollywood,Active,4427,34.16289,-118.37016
+4428,Lankershim & Hesby,8/5/2019,North Hollywood,Active,4428,34.16171,-118.37282
+4429,Chandler & Cahuenga,8/5/2019,North Hollywood,Active,4429,34.16875,-118.36187
+4430,Vineland & Burbank,8/5/2019,North Hollywood,Active,4430,34.17245,-118.37037
+4431,Lankershim & Califa,8/5/2019,North Hollywood,Active,4431,34.17766,-118.38228
+4432,Public Bike Rack: Universal City/Studio City Red Line Station,8/23/2019,North Hollywood,Active,4432,34.13957,-118.36225
+4436,Vermont & Franklin,9/4/2019,DTLA,Active,4436,34.10578,-118.29194
+4437,Franklin & Hillhurst,9/4/2019,DTLA,Active,4437,34.10536,-118.28727
+4438,Hoover & Fountain,9/5/2019,DTLA,Active,4438,34.09493,-118.28456
+4440,Wilshire & Alexandria,9/11/2019,DTLA,Active,4440,34.06166,-118.29824
+4441,University & 30th,9/11/2019,DTLA,Active,4441,34.02662,-118.28181
+4442,Normandie & Sunset,9/12/2019,DTLA,Active,4442,34.098,-118.30047
+4443,Flower & Jefferson,9/12/2019,DTLA,Active,4443,34.02166,-118.27869
+4444,Wilshire & Hobart,9/26/2019,DTLA,Active,4444,34.06162,-118.30557
+4445,Sunset & Douglas,9/18/2019,DTLA,Active,4445,34.07364,-118.25157
+4446,James M. Wood & Alvarado,10/2/2019,DTLA,Active,4446,34.05323,-118.27842
+4447,Rampart & Wilshire,10/2/2019,DTLA,Active,4447,34.0616,-118.28199
+4449,12th & Valencia,9/25/2019,DTLA,Active,4449,34.04557,-118.27419
+4453,Lucile & Hoover,9/25/2019,DTLA,Active,4453,34.08265,-118.28439
