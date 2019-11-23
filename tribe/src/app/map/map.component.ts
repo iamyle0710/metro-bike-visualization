@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { MapService } from "../core/services/map.service";
+import { StationService } from "../core/services/station.service";
+import { StationStatus } from '../share/station.model';
 import * as mapboxgl from "mapbox-gl";
-import * as turf from "turf";
+import * as d3 from "d3";
 
 @Component({
   selector: "app-map",
@@ -15,29 +16,21 @@ export class MapComponent implements OnInit {
   style: string = "mapbox://styles/mapbox/dark-v10";
   lat: number = 34.026283;
   lng: number = -118.272892;
+  station : StationStatus = new StationStatus();
+  selectDestinations : Array<number> = [];
   markers: {};
   markersOnScreen: {};
-  top5Destinations: {};
-  popup: mapboxgl.Popup = new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false
-  });
-  // Animation Line
-  // speedFactor = 30; // number of frames per longitude degree
-  // animation; // to store and cancel the animation
-  // startTime = 0;
-  // progress = 0; // progress = timestamp - startTime
-  // resetTime = false; // indicator of whether time reset is needed for the animation
+  stationInOut : {};
 
-  constructor(private mapService: MapService) {
+  constructor(private stationService: StationService) {
     this.markers = {};
     this.markersOnScreen = {};
-    this.mapService.getTop5Destinations().subscribe((data: any) => {
-      // console.log(data);
-      this.top5Destinations = data;
-    });
+    // this.stationService.stationsDemandSub.subscribe((data: any) => {
+    //   // console.log(data);
+    //   this.stationInOut = data;
+    // });
 
-    this.mapService.getStationJSON().subscribe((data: any) => {
+    this.stationService.stationsGeojsonSub.subscribe((data: any) => {
       this.map.on("load", () => {
 
         this.map.addSource("line-animation", {
@@ -66,12 +59,12 @@ export class MapComponent implements OnInit {
           },
           paint: {
             "circle-color": "transparent",
-            "circle-radius": 15
+            "circle-radius": 10
           }
         });
 
 
-        this.map.getSource("line-animation").setData(data);
+        // this.map.getSource("line-animation").setData(data);
 
         this.map.addLayer({
           id: "top5-destinations",
@@ -134,8 +127,9 @@ export class MapComponent implements OnInit {
 
       if (!marker) {
         var el = document.createElement("div");
+        // el.addEventListener('click', this.onClickSelectStation);
         el.innerHTML = [
-          "<div class='bike_station_marker'>",
+          "<div class='bike_station_marker' id='marker_"+id+"'>",
           "<div class='bike_station_progess' style='top:" + ratio + "%'></div>",
           "</div>"
         ].join("");
@@ -159,24 +153,140 @@ export class MapComponent implements OnInit {
     this.markersOnScreen = newMarkers;
   }
 
+  onClickSelectStation(e: any) {
+    console.log(e);
+  }
+
   onMouseHoverEvent(e: any) {
     // console.log(e);
-    this.animateDestinations(e);
-    this.createPopup(e);
+    var id = e.features[0].properties.kioskId;
+    var stationInOutRecords = this.stationService.getStationAllInOutRecords(id);
+    console.log(stationInOutRecords);
+    this.station.name = e.features[0].properties.name;
+    this.station.bikesAvailable = e.features[0].properties.bikesAvailable;
+    this.station.docksAvailable = e.features[0].properties.docksAvailable;
+    
+    var margin = { top: 40, right: 10, bottom : 30, left : 10};
+    var width = 190;
+    var height = 150;
+    var chart_width = width - margin.left - margin.right;
+    var chart_height = height - margin.top - margin.bottom;
+
+    var x = d3.scaleBand()
+      .range([0, chart_width])
+      .padding(0.05);
+
+    var y = d3.scaleLinear()
+      .range([chart_height, 0]);
+
+    var maxValue = d3.max(stationInOutRecords, function(d) { return d.value});
+    maxValue = maxValue === 0 ? 1 : maxValue;
+    var svg = d3.select("#inOutBarChart")
+      .attr("width", width)
+      .attr("height", height)
+      .selectAll("g")
+      .remove();
+
+    var g = d3.select("#inOutBarChart").append("g")
+      .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+
+    x.domain(stationInOutRecords.map(d => d.type));
+    y.domain([0, maxValue]);
+
+    var bars = g.selectAll(".bar")
+      .data(stationInOutRecords, function(d){ 
+        return d["id"];
+      })
+    
+    bars.enter()
+      .append("rect")
+      // .attr("class", "bar")      
+      .attr("x", function(d){
+        return x(d.type);
+      })
+      .attr("y", chart_height)
+      .attr("width", x.bandwidth())
+      .attr("height", 0)
+      .transition()
+      .duration(500)
+      .attr("y", function(d){
+        return y(d.value);
+      })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d){
+        return chart_height - y(d.value);
+      })
+      .attr("fill", "#529137")
+    
+    bars.enter()
+      .append("text")    
+      .attr("x", function(d){
+        return x(d.type) + x.bandwidth() / 2;
+      })
+      .attr("y", chart_height + 15)
+      .attr("opacity", 0)
+      .attr("text-anchor",  "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("text-transform", "uppercase")
+      .attr("fill", "#529137")
+      .transition()
+      .duration(500)
+      .attr("y", function(d){
+        return y(d.value) + 15;
+      })
+      .attr("fill", "#fff")
+      .attr("opacity", 1)
+      .text(d => d.value);
+
+    bars.exit()
+      .transition()
+      .duration(500)
+      .attr("height", 0)
+      .style("opacity", 0)
+      .remove();
+
+    bars.enter()
+      .append("text")
+      .attr("x", function(d){
+        return x(d.type) + x.bandwidth() / 2;
+      })
+      .attr("y", chart_height + 10)
+      .attr("text-anchor",  "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("text-transform", "uppercase")
+      .text(function(d){
+        return d.type
+      })
+
+    g.append("text")
+      .attr("y", -20)
+      .attr("x", chart_width / 2)
+      .attr("text-anchor",  "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("font-size", 20)
+      .attr("font-family", "sans-serif")
+      .text("Travel Times")
+
+    this.drawTopFiveStations(e);
+
+    // this.createPopup(e);
   }
 
   onMouseLeaveEvent() {
-    // this.map.getSource('line-animation').setData({});
-    this.removePopup();
+    // this.station.name = "";
+    this.map.getSource('line-animation').setData({
+      type: "FeatureCollection",
+      features: []
+    });
+    // this.removePopup();
+    this.showStations();
+    
   }
 
-  animateDestinations(e: any) {
+  drawTopFiveStations(e: any) {
     var stationId = e.features[0].properties.kioskId;
-    if (!this.top5Destinations[stationId]) {
-      return;
-    }
-    var destinations = this.top5Destinations[stationId];
-    // console.log(destinations);
+    var destinations = this.stationService.getStationTopNInOut(stationId, 5, true);
+    this.hideStations(stationId);
 
     // Create a GeoJSON source with an empty lineString.
     var geojson = {
@@ -208,45 +318,74 @@ export class MapComponent implements OnInit {
     // console.log(this.geojson);
   }
 
-  createPopup(e: any) {
-    this.map.getCanvas().style.cursor = "pointer";
-    var coordinates = e.features[0].geometry.coordinates.slice();
-    var description = e.features[0].properties.addressStreet;
+  // createPopup(e: any) {
+  //   this.map.getCanvas().style.cursor = "pointer";
+  //   var coordinates = e.features[0].geometry.coordinates.slice();
+  //   var description = e.features[0].properties.addressStreet;
 
-    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+  //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+  //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+  //   }
+
+  //   // Populate the popup and set its coordinates
+  //   // based on the feature found.
+  //   this.popup
+  //     .setLngLat(coordinates)
+  //     .setHTML(
+  //       [
+  //         "<div class='marker_header'>",
+  //         "<span class='title'>" + e.features[0].properties.name + "</span>",
+  //         "</div>",
+  //         "<div class='bike_dock_status'>",
+  //         "<span class='flex_col'>",
+  //         "<span class='status'>" +
+  //           e.features[0].properties.bikesAvailable +
+  //           "</span>",
+  //         "<span class='name'>Bikes</span>",
+  //         "</span>",
+  //         "<span class='flex_col'>",
+  //         "<span class='status'>" +
+  //           e.features[0].properties.docksAvailable +
+  //           "</span>",
+  //         "<span class='name'>Docks</span>",
+  //         "</span>",
+  //         "</div>"
+  //       ].join("")
+  //     )
+  //     .addTo(this.map);
+  // }
+
+  // removePopup() {
+  //   this.map.getCanvas().style.cursor = "";
+  //   this.popup.remove();
+  // }
+
+  showStations(){
+    var markers = document.querySelectorAll(".bike_station_marker");
+    for(var i = 0; i < markers.length; i++){
+      markers[i]["style"].opacity = 1;
     }
-
-    // Populate the popup and set its coordinates
-    // based on the feature found.
-    this.popup
-      .setLngLat(coordinates)
-      .setHTML(
-        [
-          "<div class='marker_header'>",
-          "<span class='title'>" + e.features[0].properties.name + "</span>",
-          "</div>",
-          "<div class='bike_dock_status'>",
-          "<span class='flex_col'>",
-          "<span class='status'>" +
-            e.features[0].properties.bikesAvailable +
-            "</span>",
-          "<span class='name'>Bikes</span>",
-          "</span>",
-          "<span class='flex_col'>",
-          "<span class='status'>" +
-            e.features[0].properties.docksAvailable +
-            "</span>",
-          "<span class='name'>Docks</span>",
-          "</span>",
-          "</div>"
-        ].join("")
-      )
-      .addTo(this.map);
   }
 
-  removePopup() {
-    this.map.getCanvas().style.cursor = "";
-    this.popup.remove();
+  hideStations(stationId){
+    var markers = document.querySelectorAll(".bike_station_marker");
+    for(var i = 0; i < markers.length; i++){
+      markers[i]["style"].opacity = 0.2;
+    }
+    // Change the current marker and destination markers opacity
+    if(stationId){
+      var id = stationId;
+      // var destinations = this.stationInOut[id]["out"];
+      var destinations = this.stationService.getStationTopNInOut(stationId, 5, true);
+      var current_marker = document.querySelector("#marker_" + id);
+      current_marker["style"].opacity = 1;
+
+      for(var i = 0; i < destinations.length; i++){
+        var marker = document.querySelector("#marker_" + destinations[i][0]);
+        if(marker){
+          marker["style"].opacity = 1;
+        }
+      }
+    }
   }
 }
