@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { HeaderComponent } from './header/header.component';
 import { MapComponent } from './map/map.component';
-import { MapService } from './core/services/map.service';
+import { StationService } from './core/services/station.service';
 
 const appRoutes = [
   { path : '', component : ChartComponent },
@@ -31,7 +31,7 @@ const appRoutes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    MapService
+    StationService
   ],
   bootstrap: [AppComponent]
 })
