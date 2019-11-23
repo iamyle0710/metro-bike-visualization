@@ -7,8 +7,12 @@ export class MapService  {
 
     constructor(private http : HttpClient){}
 
-    public getJSON() : Observable<any>{
+    public getStationJSON() : Observable<any>{
         return this.http.get("./assets/metro-bike-share-stations.json");
         // return this.http.get('https://bikeshare.metro.net/stations/json/')
+    }
+
+    public getTop5Destinations() : Observable<any>{
+        return this.http.get('./assets/station_out_top5.json')
     }
 }
