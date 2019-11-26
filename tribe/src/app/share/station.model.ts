@@ -1,4 +1,5 @@
 export class StationStatus {
+    public id : number;
     public name : string = '';
     public bikesAvailable : number = 0;
     public docksAvailable : number = 0;

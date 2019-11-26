@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
+import { StationStatus } from 'src/app/share/station.model';
 
 @Injectable()
 export class StationService  {
@@ -8,6 +9,9 @@ export class StationService  {
     stationsGeojsonSub = new EventEmitter<any>();
     stationsDemandSub = new EventEmitter<any>();
     stationsDemand = {};
+    hoverStation: StationStatus = new StationStatus();
+    hoverStationSub = new EventEmitter<StationStatus>();
+    
 
     constructor(private http : HttpClient){
         this.getStationJSON().subscribe((data) => {
@@ -40,31 +44,32 @@ export class StationService  {
 
     getStationAllInOutRecords(stationId: number){
         if(!this.stationsDemand.hasOwnProperty(stationId)){
-            return [
-                {
-                    id : stationId,
-                    type : "in",
-                    value :0  
-                },
-                {
-                    id : stationId,
-                    type : "out",
-                    value :0  
-                }
-            ]
+            return {
+                in : [],
+                out : []
+            }
         }
 
-        return [
-            {
-                id : stationId,
-                type : "in",
-                value : this.stationsDemand[stationId]["in"].map(x => x[2]).reduce((x:number,y:number) => x+y)
-            },
-            {
-                id : stationId,
-                type : "out",
-                value : this.stationsDemand[stationId]["out"].map(x => x[2]).reduce((x:number,y:number) => x+y)
-            }
-        ]
+        return {
+            in : this.stationsDemand[stationId]["in"],
+            out : this.stationsDemand[stationId]["out"]
+        }
+
+    }
+
+    setHoverStation(e:any){
+        if(!e){
+            return;
+        }
+        this.hoverStation.id = e.features[0].properties.kioskId;
+        this.hoverStation.name = e.features[0].properties.name;
+        this.hoverStation.bikesAvailable = e.features[0].properties.bikesAvailable;
+        this.hoverStation.docksAvailable = e.features[0].properties.docksAvailable;
+        // if(this.stationsDemand[this.hoverStation.id]){
+        //     this.hoverStation.totalInNumber = this.stationsDemand[this.hoverStation.id]["in"].map(x => x[2]).reduce((x:number,y:number) => x+y);
+        //     this.hoverStation.totalOutNumber = this.stationsDemand[this.hoverStation.id]["out"].map(x => x[2]).reduce((x:number,y:number) => x+y)
+        // }
+        
+        this.hoverStationSub.emit(this.hoverStation);
     }
 }
