@@ -1,0 +1,33 @@
+<div
+  class="map_station_tooltip"
+  (window:resize)="onResize($event)"
+  #station_tooltip
+>
+  <div class="marker_header">
+    <span class="title"> {{ this.station.name || "" }} </span>
+    <div class="bike_dock_status">
+      <span class="flex_col bike_status">
+        <span class="name">Bikes</span>
+        <span class="status">{{ this.station.bikesAvailable || 0 }} </span>
+      </span>
+      <span class="flex_col bike_status">
+        <span class="name">Docks</span>
+        <span class="status"> {{ this.station.docksAvailable || 0 }} </span>
+      </span>
+    </div>
+  </div>
+  <div class="chart_header flex_row">
+    <div class="chart_title">Travel Times</div>
+    <div class="chart_func flex_row">
+        <span class="sort_name sort_func" 
+            (click)="onClickChangeSort('BY_STATION')"
+            [ngClass]="{ selected : sort_method == 'BY_STATION'}"
+            >Sort by station</span>
+        <span class="sort_value sort_func" 
+            (click)="onClickChangeSort('BY_TIMES')"
+            [ngClass]="{ selected : sort_method == 'BY_TIMES'}"
+            >Sort by times</span>
+    </div>
+  </div>
+  <svg id="inOutBarChart" width="100%"></svg>
+</div>
