@@ -111,7 +111,7 @@ export class MapComponent implements OnInit {
     });
 
     // Add map controls
-    this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new mapboxgl.NavigationControl(), "top-left");
   }
 
   updateMarkers() {
@@ -160,112 +160,118 @@ export class MapComponent implements OnInit {
   onMouseHoverEvent(e: any) {
     // console.log(e);
     var id = e.features[0].properties.kioskId;
-    var stationInOutRecords = this.stationService.getStationAllInOutRecords(id);
-    console.log(stationInOutRecords);
-    this.station.name = e.features[0].properties.name;
-    this.station.bikesAvailable = e.features[0].properties.bikesAvailable;
-    this.station.docksAvailable = e.features[0].properties.docksAvailable;
+    if (e){
+      this.stationService.setHoverStation(e);
+    }
     
-    var margin = { top: 40, right: 10, bottom : 30, left : 10};
-    var width = 190;
-    var height = 150;
-    var chart_width = width - margin.left - margin.right;
-    var chart_height = height - margin.top - margin.bottom;
-
-    var x = d3.scaleBand()
-      .range([0, chart_width])
-      .padding(0.05);
-
-    var y = d3.scaleLinear()
-      .range([chart_height, 0]);
-
-    var maxValue = d3.max(stationInOutRecords, function(d) { return d.value});
-    maxValue = maxValue === 0 ? 1 : maxValue;
-    var svg = d3.select("#inOutBarChart")
-      .attr("width", width)
-      .attr("height", height)
-      .selectAll("g")
-      .remove();
-
-    var g = d3.select("#inOutBarChart").append("g")
-      .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
-
-    x.domain(stationInOutRecords.map(d => d.type));
-    y.domain([0, maxValue]);
-
-    var bars = g.selectAll(".bar")
-      .data(stationInOutRecords, function(d){ 
-        return d["id"];
-      })
     
-    bars.enter()
-      .append("rect")
-      // .attr("class", "bar")      
-      .attr("x", function(d){
-        return x(d.type);
-      })
-      .attr("y", chart_height)
-      .attr("width", x.bandwidth())
-      .attr("height", 0)
-      .transition()
-      .duration(500)
-      .attr("y", function(d){
-        return y(d.value);
-      })
-      .attr("width", x.bandwidth())
-      .attr("height", function(d){
-        return chart_height - y(d.value);
-      })
-      .attr("fill", "#529137")
+    // var stationInOutRecords = this.stationService.getStationAllInOutRecords(id);
+    // console.log(stationInOutRecords);
+    // this.station.name = e.features[0].properties.name;
+    // this.station.bikesAvailable = e.features[0].properties.bikesAvailable;
+    // this.station.docksAvailable = e.features[0].properties.docksAvailable;
     
-    bars.enter()
-      .append("text")    
-      .attr("x", function(d){
-        return x(d.type) + x.bandwidth() / 2;
-      })
-      .attr("y", chart_height + 15)
-      .attr("opacity", 0)
-      .attr("text-anchor",  "middle")
-      .attr("alignment-baseline", "middle")
-      .attr("text-transform", "uppercase")
-      .attr("fill", "#529137")
-      .transition()
-      .duration(500)
-      .attr("y", function(d){
-        return y(d.value) + 15;
-      })
-      .attr("fill", "#fff")
-      .attr("opacity", 1)
-      .text(d => d.value);
+    // var margin = { top: 40, right: 10, bottom : 30, left : 10};
+    // var width = 190;
+    // var height = 150;
+    // var chart_width = width - margin.left - margin.right;
+    // var chart_height = height - margin.top - margin.bottom;
 
-    bars.exit()
-      .transition()
-      .duration(500)
-      .attr("height", 0)
-      .style("opacity", 0)
-      .remove();
+    // var x = d3.scaleBand()
+    //   .range([0, chart_width])
+    //   .padding(0.05);
 
-    bars.enter()
-      .append("text")
-      .attr("x", function(d){
-        return x(d.type) + x.bandwidth() / 2;
-      })
-      .attr("y", chart_height + 10)
-      .attr("text-anchor",  "middle")
-      .attr("alignment-baseline", "middle")
-      .attr("text-transform", "uppercase")
-      .text(function(d){
-        return d.type
-      })
+    // var y = d3.scaleLinear()
+    //   .range([chart_height, 0]);
 
-    g.append("text")
-      .attr("y", -20)
-      .attr("x", chart_width / 2)
-      .attr("text-anchor",  "middle")
-      .attr("alignment-baseline", "middle")
-      .attr("font-size", 20)
-      .attr("font-family", "sans-serif")
-      .text("Travel Times")
+    // var maxValue = d3.max(stationInOutRecords, function(d) { return d.value});
+    // maxValue = maxValue === 0 ? 1 : maxValue;
+    // var svg = d3.select("#inOutBarChart")
+    //   .attr("width", width)
+    //   .attr("height", height)
+    //   .selectAll("g")
+    //   .remove();
+
+    // var g = d3.select("#inOutBarChart").append("g")
+    //   .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+
+    // x.domain(stationInOutRecords.map(d => d.type));
+    // y.domain([0, maxValue]);
+
+    // var bars = g.selectAll(".bar")
+    //   .data(stationInOutRecords, function(d){ 
+    //     return d["id"];
+    //   })
+    
+    // bars.enter()
+    //   .append("rect")
+    //   // .attr("class", "bar")      
+    //   .attr("x", function(d){
+    //     return x(d.type);
+    //   })
+    //   .attr("y", chart_height)
+    //   .attr("width", x.bandwidth())
+    //   .attr("height", 0)
+    //   .transition()
+    //   .duration(500)
+    //   .attr("y", function(d){
+    //     return y(d.value);
+    //   })
+    //   .attr("width", x.bandwidth())
+    //   .attr("height", function(d){
+    //     return chart_height - y(d.value);
+    //   })
+    //   .attr("fill", "#529137")
+    
+    // bars.enter()
+    //   .append("text")    
+    //   .attr("x", function(d){
+    //     return x(d.type) + x.bandwidth() / 2;
+    //   })
+    //   .attr("y", chart_height + 15)
+    //   .attr("opacity", 0)
+    //   .attr("text-anchor",  "middle")
+    //   .attr("alignment-baseline", "middle")
+    //   .attr("text-transform", "uppercase")
+    //   .attr("fill", "#529137")
+    //   .transition()
+    //   .duration(500)
+    //   .attr("y", function(d){
+    //     return y(d.value) + 15;
+    //   })
+    //   .attr("fill", "#fff")
+    //   .attr("opacity", 1)
+    //   .text(d => d.value);
+
+    // bars.exit()
+    //   .transition()
+    //   .duration(500)
+    //   .attr("height", 0)
+    //   .style("opacity", 0)
+    //   .remove();
+
+    // bars.enter()
+    //   .append("text")
+    //   .attr("x", function(d){
+    //     return x(d.type) + x.bandwidth() / 2;
+    //   })
+    //   .attr("y", chart_height + 10)
+    //   .attr("text-anchor",  "middle")
+    //   .attr("alignment-baseline", "middle")
+    //   .attr("text-transform", "uppercase")
+    //   .attr("font-size", 10)
+    //   .text(function(d){
+    //     return d.type.toUpperCase();
+    //   })
+
+    // g.append("text")
+    //   .attr("y", -20)
+    //   .attr("x", chart_width / 2)
+    //   .attr("text-anchor",  "middle")
+    //   .attr("alignment-baseline", "middle")
+    //   .attr("font-size", 20)
+    //   .attr("font-family", "sans-serif")
+    //   .text("Travel Times")
 
     this.drawTopFiveStations(e);
 
@@ -294,7 +300,7 @@ export class MapComponent implements OnInit {
       features: []
     };
     for (var i = 0; i < destinations.length; i++) {
-      if(!isNaN(+destinations[i][1][0]) && !isNaN(+destinations[i][1][1])){
+      if(!isNaN(+destinations[i].latLng[0]) && !isNaN(+destinations[i].latLng[1])){
         geojson.features.push({
           type: "Feature",
           geometry: {
@@ -304,7 +310,7 @@ export class MapComponent implements OnInit {
                 e.features[0].properties.longitude,
                 e.features[0].properties.latitude
               ],
-              [+destinations[i][1][0], +destinations[i][1][1]]
+              [+destinations[i].latLng[0], +destinations[i].latLng[1]]
             ]
           }
         });
@@ -381,7 +387,7 @@ export class MapComponent implements OnInit {
       current_marker["style"].opacity = 1;
 
       for(var i = 0; i < destinations.length; i++){
-        var marker = document.querySelector("#marker_" + destinations[i][0]);
+        var marker = document.querySelector("#marker_" + destinations[i].stationId);
         if(marker){
           marker["style"].opacity = 1;
         }
