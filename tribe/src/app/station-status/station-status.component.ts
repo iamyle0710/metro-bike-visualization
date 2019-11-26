@@ -20,7 +20,7 @@ export class StationStatusComponent implements OnInit {
   @Input() station : StationStatus;
 
   constructor(private stationService: StationService) {
-    
+    this.topFiveStations = [];
   }
 
   ngOnInit() {}
@@ -92,8 +92,15 @@ export class StationStatusComponent implements OnInit {
       return;
     }
     var data = this.topFiveStations;
+    if(data.length == 0){
+      d3.select("#inOutBarChart")
+        .style("display", "none")
+    }
+    else{
+      d3.select("#inOutBarChart")
+        .style("display", "block")
+    }
     this.width = this.tooltipRef.nativeElement.offsetWidth;
-    // this.height = 150;
     var chart_width = this.width - this.margin.left - this.margin.right;
     var chart_height = this.height - this.margin.top - this.margin.bottom;
 
@@ -144,7 +151,7 @@ export class StationStatusComponent implements OnInit {
       .attr("height", y.bandwidth())
       .attr("width", 0)
       .transition()
-      .duration(500)
+      .duration(300)
       .attr("y", function(d: any) {
         return y(d.stationId);
       })
@@ -169,7 +176,7 @@ export class StationStatusComponent implements OnInit {
     bars
       .exit()
       .transition()
-      .duration(500)
+      .duration(300)
       .attr("height", 0)
       .style("opacity", 0)
       .remove();
@@ -193,7 +200,7 @@ export class StationStatusComponent implements OnInit {
       .attr("fill", "#fff")
       .attr("font-size", 10)
       .transition()
-      .duration(600)
+      .duration(400)
       .attr("x", function(d: any) {
         return x(d.numberOftimes) - 5 < 0 ? 0 : x(d.numberOftimes) - 5;
       })
@@ -204,7 +211,7 @@ export class StationStatusComponent implements OnInit {
 
     bar_values
       .transition()
-      .duration(600)
+      .duration(400)
       .attr("x", function(d: any) {
         return x(d.numberOftimes) - 5 < 0 ? 0 : x(d.numberOftimes) - 5;
       })
@@ -218,7 +225,7 @@ export class StationStatusComponent implements OnInit {
     bar_values
       .exit()
       .transition()
-      .duration(600)
+      .duration(400)
       .style("opacity", 0)
       .remove();
 
@@ -247,7 +254,7 @@ export class StationStatusComponent implements OnInit {
 
     stations
       .transition()
-      .duration(500)
+      .duration(300)
       .attr("x", -5)
       .attr("y", function(d: any) {
         return y(d.stationId) + y.bandwidth() / 2;
@@ -256,7 +263,7 @@ export class StationStatusComponent implements OnInit {
     stations
       .exit()
       .transition()
-      .duration(500)
+      .duration(300)
       .attr("height", 0)
       .style("opacity", 0)
       .remove();
