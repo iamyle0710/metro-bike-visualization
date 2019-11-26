@@ -2,13 +2,13 @@
 .flex_col {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .flex_row {
   display: flex;
   flex-direction: row;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .bike_station_marker {
@@ -20,6 +20,13 @@
   overflow: hidden;
   cursor: pointer;
   background: #77d64b;
+  transition: width 0.3s, height 0.3s;
+}
+
+.bike_station_marker:hover{
+  border: 2px solid #ffffff;
+  width: 30px;
+  height: 30px;
 }
 
 .bike_station_progess {

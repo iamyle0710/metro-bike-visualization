@@ -10,6 +10,7 @@ import { ChartComponent } from './chart/chart.component';
 import { HeaderComponent } from './header/header.component';
 import { MapComponent } from './map/map.component';
 import { StationService } from './core/services/station.service';
+import { StationStatusComponent } from './station-status/station-status.component';
 
 const appRoutes = [
   { path : '', component : ChartComponent },
@@ -21,7 +22,8 @@ const appRoutes = [
     AppComponent,
     ChartComponent,
     HeaderComponent,
-    MapComponent
+    MapComponent,
+    StationStatusComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,17 @@
 <div class="app">
   <app-header></app-header>
-  <app-map></app-map>
+  <!-- <app-map></app-map> -->
+  <div class='app-container container-fluid'>
+    <div class="row">
+      <div 
+        class="order-2 order-lg-1 pl-0 pr-1"
+        [ngClass]="{ 'col-lg-8' : this.station != null, 'col-lg-12' : this.station == null}">
+        <app-map></app-map>
+      </div>
+      <div *ngIf="station" class="col-lg-4 order-1 order-lg-2 pl-0 pr-0">
+        <app-station-status [station]="station"></app-station-status>
+      </div>
+    </div>
+  </div>
+  
 </div>
