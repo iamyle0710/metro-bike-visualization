@@ -1,0 +1,10 @@
+.app{
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container{
+    background: #343333;
+    overflow: auto;
+    max-height: calc(100vh - 56px);
+}
