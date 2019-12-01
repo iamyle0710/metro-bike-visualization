@@ -25,12 +25,11 @@ export class MapComponent implements OnInit {
   constructor(private stationService: StationService) {
     this.markers = {};
     this.markersOnScreen = {};
-    // this.stationService.stationsDemandSub.subscribe((data: any) => {
-    //   // console.log(data);
-    //   this.stationInOut = data;
-    // });
 
     this.stationService.stationsGeojsonSub.subscribe((data: any) => {
+
+      this.initMap();
+      
       this.map.on("load", () => {
 
         this.map.addSource("line-animation", {
