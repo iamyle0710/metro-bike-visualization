@@ -88,8 +88,8 @@ export class ChartComponent implements OnInit {
       .scaleBand()
       .domain(bikeTypeArr)
       .range([0, x.bandwidth()]);
-    var y_max = d3.max(data, (d: any) => {
-      var values = d.values.map((obj: any) => {
+    var y_max:number = d3.max(data, (d: any) => {
+      var values : Array<number> = d.values.map((obj: any) => {
         return obj.counts;
       });
       return isNaN(d3.max(values)) ?  1 : d3.max(values);
@@ -370,25 +370,24 @@ export class ChartComponent implements OnInit {
       .x((d: any) => x(d.date))
       .y((d: any) => y(d.duration));
 
-    var x_min = d3.min(data, (d: any) => {
-      return d3.min(d.values, (d1: any) => {
+    var x_min : any = d3.min(data, (d: any) => {
+      var value: any = d3.min(d.values, (d1: any) => {
         return d1.date;
       });
+      return value;
     });
-    var x_max = d3.max(data, (d: any) => {
-      return d3.max(d.values, (d1: any) => {
+    var x_max : any = d3.max(data, (d: any) => {
+      var value : any =  d3.max(d.values, (d1: any) => {
         return d1.date;
       });
+      return value;
     });
-    var y_min = d3.min(data, (d: any) => {
-      return d3.min(d.values, (d1: any) => {
-        return d1.duration;
+    var y_max : number = d3.max(data, (d: any) => {
+      var value : number =  d3.max(d.values, (d1: any) => {
+        var v1 : number = d1.duration;
+        return v1;
       });
-    });
-    var y_max = d3.max(data, (d: any) => {
-      return d3.max(d.values, (d1: any) => {
-        return d1.duration;
-      });
+      return value;
     });
 
     x.domain([x_min, x_max]);

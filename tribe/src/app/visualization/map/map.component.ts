@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
     this.stationService.stationsGeojsonSub.subscribe((data: any) => {
 
       this.initMap();
-      
+
       this.map.on("load", () => {
 
         this.map.addSource("line-animation", {
@@ -99,7 +99,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.initMap();
   }
-
+  
   initMap() {
     mapboxgl.accessToken = environment.mapbox.accessToken;
     this.map = new mapboxgl.Map({
