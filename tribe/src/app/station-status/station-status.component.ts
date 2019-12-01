@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
 import { StationService } from "../core/services/station.service";
 import { StationStatus } from "../share/station.model";
+import { DataModel } from 'src/app/share/data.model';
+
 import * as d3 from "d3";
 
 @Component({
@@ -16,11 +18,16 @@ export class StationStatusComponent implements OnInit {
   sort_method: string = "BY_STATION";
   topFiveStations: [];
   svg;
+
+  stationData: DataModel[];
+  hourly;
+
   @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
   @Input() station : StationStatus;
 
   constructor(private stationService: StationService) {
     this.topFiveStations = [];
+    this.stationData = [];
   }
 
   ngOnInit() {}
@@ -34,9 +41,13 @@ export class StationStatusComponent implements OnInit {
         5,
         true
       );
+      this.stationData = this.stationService.getStation(this.station.id);
+      // console.log(this.stationData);
+
       this.updateData();
       this.updateSize();
       this.renderTravelTimesChart();
+      this.renderHourlyChart();
     });
   }
 
@@ -59,6 +70,19 @@ export class StationStatusComponent implements OnInit {
       if(this.svg){
         d3.select("#inOutBarChart")
           .attr("width", this.width);
+      }
+      if(this.hourly){
+        d3.select("#hourlyChart")
+          .attr("width", this.width);
+        
+        var dash = document.getElementById("hover-tip");
+          if (dash != null){
+            d3.select('#hover-tip').remove()
+          }
+        var listener = document.getElementById("listeners");
+          if (listener != null){
+            d3.select('#listeners').remove()
+          }
       }
       // this.height = this.tooltipRef.nativeElement.offsetHeight;
     }
@@ -85,6 +109,7 @@ export class StationStatusComponent implements OnInit {
     );
     this.updateSize();
     this.renderTravelTimesChart();
+    this.renderHourlyChart();
   }
 
   renderTravelTimesChart() {
@@ -267,5 +292,309 @@ export class StationStatusComponent implements OnInit {
       .attr("height", 0)
       .style("opacity", 0)
       .remove();
+  }
+  
+  
+  renderHourlyChart() {
+    var height = 300;
+    var margin = { top: 50, right: 30, bottom: 30, left: 70 };
+    var palette = ['#FFCF21', '#0191B4']
+    // console.log('Hello!!')
+    if (!this.tooltipRef) {
+      return;
+    }
+    var data = this.stationData;
+    console.log(data)
+    
+    if(data.length == 0){
+      d3.select("#hourlyChart")
+        .style("display", "none")
+    }
+    else{
+      d3.select("#hourlyChart")
+        .style("display", "block")
+    }
+
+    var hourly_d= [];
+    var hourly_s= [];
+    var houraly_list = []
+
+    for (var i = 0; i < 24; i++) {
+      var d = data.filter(row => row.start_station == this.station.id && row.start_time_hour == i)
+      var s = data.filter(row => row.end_station == this.station.id && row.end_time_hour == i)
+
+      hourly_d.push({time: i, value: d.length})
+      hourly_s.push({time: i, value: s.length})
+      houraly_list.push([d.length, s.length])
+    };
+
+    var hourly = [{type: 'demand', values: hourly_d},
+                  {type: 'supply', values: hourly_s}]
+
+
+    console.log(hourly)
+
+    this.width = this.tooltipRef.nativeElement.offsetWidth;
+    // var chart_width = this.width - this.margin.left - this.margin.right;
+    // var chart_height = this.height - this.margin.top - this.margin.bottom;
+    var chart_width = this.width - margin.left - margin.right;
+    var chart_height = height - margin.top - margin.bottom;
+
+    var x = d3.scaleLinear().range([0, chart_width]);
+    x.domain([0, 23]);
+
+    var y = d3.scaleLinear().range([chart_height, 0]);
+
+    // var maxValue = d3.max(data, function(d: any) {
+    //   return +d.numberOftimes;
+    // });
+    // // maxValue = d3.max(stationInOutRecords["out"], function(d:any) { return +d.numberOftimes});
+    // maxValue = maxValue === 0 ? 1 : maxValue;
+
+    if (!this.hourly) {
+      this.hourly = d3
+        .select("#hourlyChart")
+        .attr("width", this.width)
+        // .attr("height", this.height)
+        .attr("height", height)
+        .append("g")
+        .attr(
+          "transform",
+          // "translate(" + this.margin.left + "," + this.margin.top + ")"
+          "translate(" + margin.left + "," + margin.top + ")"
+        );
+    }
+
+    y.domain([
+      d3.min(hourly, function(h) {
+          return d3.min(h.values, function(v) {
+          return v.value;
+          });
+      }),
+      d3.max(hourly, function(h) {
+          return d3.max(h.values, function(v) {
+          return v.value;
+          });
+      })
+    ]);
+
+    var hourlyX = document.getElementById("hourlyX");
+    var hourlyY= document.getElementById("hourlyY");
+
+    var xAxis = d3.axisBottom().scale(x);
+    var yAxis = d3.axisLeft().scale(y);
+
+    if (hourlyX != null){
+      // d3.select('#hourlyX').remove()
+      d3.select('#hourlyX')
+      .transition()
+      .duration(500)
+      .call(xAxis.ticks(23).tickFormat(function(d){ return String(d) }));
+
+    }else{
+      this.hourly.append("g")
+      .attr('id', 'hourlyX')
+      .attr("transform", "translate(0," + chart_height + ")")
+      .call(xAxis.ticks(23).tickFormat(function(d){ return String(d) }));
+
+    }
+    
+    if (hourlyY != null){
+      // d3.select('#hourlyY').remove()
+      d3.select('#hourlyY')
+      .transition()
+      .duration(200)
+      .call(yAxis.ticks(4))
+    }else{
+      this.hourly.append('g')
+      .attr('id', 'hourlyY')
+      .call(yAxis.ticks(4))
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 3)
+      .attr('dy', '.7em')
+      .style('text-anchor', 'end')
+      .text('Total Trips');
+
+    }
+
+    var color = d3
+      .scaleOrdinal()
+      .domain(['demand', 'supply'])
+      .range(palette)
+
+
+    var lines = this.hourly.selectAll(".path")
+    .data(hourly);
+
+    lines
+      .enter()
+      .append("path")
+      .attr("class", "path")
+      .attr("fill", "none")
+      .attr("stroke", function(d){ return color(d.type) })
+      .attr("stroke-width", 2)
+      .attr("d", function(d){
+          return d3.line()
+                    .x(function(d: any) { return x(d.time);})
+                    .y(function(d: any) { return y(d.value);})
+                    (d.values)
+      })
+      .attr('opacity', 0.8)
+
+
+    
+    lines
+      .transition()
+      .duration(500)
+      .attr("stroke", function(d){ return color(d.type) })
+      .attr("stroke-width", 2)
+      .attr("d", function(d){
+          return d3.line()
+                    .x(function(d: any) { return x(d.time);})
+                    .y(function(d: any) { return y(d.value);})
+                    (d.values)
+      })
+      .attr('opacity', 0.8)
+
+    lines
+      .exit()
+      .transition()
+      .duration(300)
+      // .attr("height", 0)
+      .style("opacity", 0)
+      .remove();
+
+
+    const intervalListeners = this.hourly.append('g')
+    .attr('id', 'listeners')
+    .selectAll(".listeners").data(houraly_list)
+
+    const hover = this.hourly.append('g').attr("id", "hover-tip")
+
+    var listenwidth = chart_width/24
+    intervalListeners
+      .enter()
+      .append("rect")
+      .attr("class", "listeners")
+      .attr("x", function(d, i) { return x(i)-listenwidth/2;})
+      // .attr("y", -this.margin.top)
+      .attr("y", -margin.top)
+      // .attr("height", this.height)
+      .attr("height", height)
+      .attr("width", listenwidth)
+      .style('fill', 'transparent')
+      .on("mouseenter", onMouseEnter)
+      .on("mouseleave", onMouseLeave)
+
+      function onMouseEnter(datum, index) {
+        // d3.select(this).style('fill', 'rgb(6,120,155)')
+        hover
+        .append("line")
+        .attr("id", "hover-dash")
+        .attr("fill", "none")
+        .style("stroke", "#6D6D6D")
+        .style("stroke-dasharray", "4")
+        .attr("stroke-width", 2)
+        .attr("x1", x(index) )
+        .attr("y1", 0)
+        .attr("x2", x(index) )
+        .attr("y2", chart_height)
+        .attr('opacity', 0.8)
+
+        // circle
+        hover
+        .append('g')
+        .attr("id", "hover-points")
+        .selectAll(".hover-point")
+        .data(datum)
+        .enter()
+        .append("circle")
+        .attr("class", "hover-point")
+        .attr("fill", function(d, i){ 
+          if (i == 0){
+            return color('demand')
+          }
+          else{
+            return color('supply')
+          }
+        })
+        .style("stroke", "#fff")
+        .style("stroke-width", "2")
+        .attr("cx", x(index) )
+        .attr("cy", d => y(d))
+        .attr("r", "4")
+        .attr('opacity', 0.8)
+
+        // tooltip
+        var tooltip = hover
+            .append('g')
+            .attr("id", "mytooltip")
+            .attr("transform", "translate(" + (x(index)-30)+"," + -margin.top + ")")
+        
+        var tooltip_width = 80
+        
+        tooltip
+        .append("rect")
+        .style('fill', '#37464D')
+        .attr("x", -tooltip_width/2)								
+        .attr("y", 0)							
+        .attr("rx", 2)								
+        .attr("ry", 2)								
+        .attr("width", tooltip_width)						
+        .attr("height", margin.top-5);
+
+        // left word
+        var rowname = ['Time', 'Demand', 'Supply', 'Difference']
+        var rowheight = [12, 22, 32, 42]
+        var rowcolor = ['#EEEEEE',palette[0],palette[1], '#EEEEEE']
+        var filldata = [index, datum[0], datum[1], datum[0]-datum[1]]
+
+        tooltip
+        .append('g')
+        .attr('id', 'myleft')
+        .selectAll('text')
+        .data(rowname)
+        .enter()
+        .append('text')
+        .attr("x", -tooltip_width/2+5)
+        .attr("y", function(d, i){return rowheight[i]})
+        .text(d=>d)
+        .style('font-size', '10px')
+        .style("fill", function(d, i){return rowcolor[i]})
+
+        tooltip
+        .append('g')
+        .attr('id', 'myright')
+        .selectAll('text')
+        .data(filldata)
+        .enter()
+        .append('text')
+        .attr("x", tooltip_width/2-5)
+        .attr("y", function(d, i){return rowheight[i]})
+        .text(d=>d)
+        .style('font-size', '10px')
+        .style("fill", function(d, i){return rowcolor[i]})
+        .style('text-anchor', 'end')
+        
+        // .style('fill', datum[0]-datum[1] > 0 ? '#FF3D20': '#b5b5b5')		
+      }
+
+
+      function onMouseLeave() {
+        var dash = document.getElementById("hover-dash");
+        var points = document.getElementById("hover-points");
+        var tooltip = document.getElementById("mytooltip");
+        if (dash != null){
+          d3.select('#hover-dash').remove()
+        }
+        if (points != null){
+          d3.select('#hover-points').remove()
+        }
+        if (tooltip != null){
+          d3.select('#mytooltip').remove()
+        }
+
+      }
   }
 }
