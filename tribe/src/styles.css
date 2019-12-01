@@ -35,3 +35,29 @@
   height: 100%;
   position: relative;
 }
+
+path.line{
+  stroke-width: 1;
+  fill: none;
+}
+
+.axis.axis--x g.tick line,
+.axis.axis--y g.tick line{
+  display: none;
+}
+
+.axis.axis--x g.tick text,
+.axis.axis--y g.tick text{
+  fill : #9b9b9b;
+}
+
+.axis.axis--x .domain,
+.axis.axis--y .domain{
+  color: #484c4f;
+}
+
+.xlabel,
+.ylabel{
+  fill: #9d9d9d;
+  font-size: 10px;
+}

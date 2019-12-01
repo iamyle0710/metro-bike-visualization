@@ -6,15 +6,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ChartComponent } from './chart/chart.component';
+import { ChartComponent } from './analysis/chart/chart.component';
 import { HeaderComponent } from './header/header.component';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './visualization/map/map.component';
 import { StationService } from './core/services/station.service';
-import { StationStatusComponent } from './station-status/station-status.component';
+import { StationStatusComponent } from './visualization/station-status/station-status.component';
+import { VisualizationComponent } from './visualization/visualization.component';
+import { AnalysisComponent } from './analysis/analysis.component';
+import { ResizeService } from './core/services/resize.service';
 
 const appRoutes = [
-  { path : '', component : ChartComponent },
-  { path : 'map', component : MapComponent }
+  { path : '', component : VisualizationComponent },
+  { path : 'visualization', component : VisualizationComponent },
+  { path : 'analysis', component : AnalysisComponent}
 ]
 
 @NgModule({
@@ -23,7 +27,9 @@ const appRoutes = [
     ChartComponent,
     HeaderComponent,
     MapComponent,
-    StationStatusComponent
+    StationStatusComponent,
+    VisualizationComponent,
+    AnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ const appRoutes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    StationService
+    StationService,
+    ResizeService
   ],
   bootstrap: [AppComponent]
 })
