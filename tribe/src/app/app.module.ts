@@ -10,6 +10,7 @@ import { ChartComponent } from './analysis/chart/chart.component';
 import { HeaderComponent } from './header/header.component';
 import { MapComponent } from './visualization/map/map.component';
 import { StationService } from './core/services/station.service';
+import { HourlyChartComponent } from './hourly-chart/hourly-chart.component';
 import { StationStatusComponent } from './visualization/station-status/station-status.component';
 import { VisualizationComponent } from './visualization/visualization.component';
 import { AnalysisComponent } from './analysis/analysis.component';
@@ -28,6 +29,7 @@ const appRoutes = [
     HeaderComponent,
     MapComponent,
     StationStatusComponent,
+    HourlyChartComponent,
     VisualizationComponent,
     AnalysisComponent
   ],

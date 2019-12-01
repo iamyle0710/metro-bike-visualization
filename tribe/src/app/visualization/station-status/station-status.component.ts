@@ -3,6 +3,8 @@ import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
 import { ResizeService } from 'src/app/core/services/resize.service';
+import { DataModel } from 'src/app/share/data.model';
+
 
 @Component({
   selector: "app-station-status",
@@ -18,13 +20,17 @@ export class StationStatusComponent implements OnInit {
   years : Array<number> = [2017, 2018, 2019];
   filterYear: number = 2019;
   topFiveStations: [];
+  stationData: DataModel[];
   svg;
+  hourly;
+  
   @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
   @Input() station : StationStatus;
 
   constructor(private stationService: StationService,
     private reszieService : ResizeService) {
     this.topFiveStations = [];
+    this.stationData = [];
   }
 
   ngOnInit() {}
@@ -38,9 +44,13 @@ export class StationStatusComponent implements OnInit {
         5,
         true
       );
+
+      this.stationData = this.stationService.getStation(this.station.id);
+      
       this.updateData();
       this.updateSize();
       this.renderTravelTimesChart();
+      this.renderHourlyChart();
     });
 
     this.reszieService.resizeSub.subscribe(() => {
@@ -98,6 +108,7 @@ export class StationStatusComponent implements OnInit {
     );
     this.updateSize();
     this.renderTravelTimesChart();
+    this.renderHourlyChart();
   }
 
   renderTravelTimesChart() {
@@ -113,6 +124,7 @@ export class StationStatusComponent implements OnInit {
       d3.select("#inOutBarChart")
         .style("display", "block")
     }
+
     this.width = this.tooltipRef.nativeElement.offsetWidth;
     var chart_width = this.width - this.margin.left - this.margin.right;
     var chart_height = this.height - this.margin.top - this.margin.bottom;
@@ -280,5 +292,37 @@ export class StationStatusComponent implements OnInit {
       .attr("height", 0)
       .style("opacity", 0)
       .remove();
+  }
+  
+  
+  renderHourlyChart() {
+    console.log('hello!!!')
+
+    if (!this.tooltipRef) {
+      return;
+    }
+    var data = this.stationData;
+    console.log(data)
+    if(!data || data.length == 0){
+      d3.select("#hourlyChart")
+        .style("display", "none")
+    }
+    else{
+      d3.select("#hourlyChart")
+        .style("display", "block")
+    }
+    console.log(data)
+    if (!this.hourly) {
+      this.hourly = d3
+        .select("#hourlyChart")
+        .attr("width", this.width)
+        .attr("height", this.height)
+        .append("g")
+        .attr(
+          "transform",
+          "translate(" + this.margin.left + "," + this.margin.top + ")"
+        );
+    }
+
   }
 }

@@ -36,6 +36,44 @@
   position: relative;
 }
 
+
+#hourlyX line{
+  stroke: #ffffff;
+}
+
+#hourlyY line{
+  stroke: #ffffff;
+  opacity: 0;
+}
+
+#hourlyX path{
+  stroke: #ffffff;
+  opacity: 0;
+}
+
+#hourlyY path{
+  stroke: #ffffff;
+}
+
+#hourlyX text, #hourlyY text{
+  fill: #ffffff;
+}
+
+.hover-rect{
+  fill: #b5b5b5;
+}
+
+.listeners {
+  fill: transparent;
+} 
+
+
+.hover-text {
+  text-transform: uppercase;
+  font-size: 8px;
+  color: #333333;
+}
+
 path.line{
   stroke-width: 1;
   fill: none;

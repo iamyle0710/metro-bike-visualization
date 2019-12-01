@@ -1,5 +1,6 @@
 <div
   class="map_station_tooltip"
+  (window:resize)="onResize($event)"
   #station_tooltip
 >
   <div class="marker_header">
@@ -15,19 +16,16 @@
       </span>
     </div>
   </div>
-  <div class='filter_func flex_row'>
-    <div class='filter_year' [ngClass]="{'selected' : filterYear == year}" (click)="onClickChangeYear(year)" *ngFor="let year of years">{{ year }}</div>
-  </div>
   <div class="chart_header flex_row">
-    <div class="chart_title">Top 5 Destinations</div>
+    <div class="chart_title">Travel Times</div>
     <div class="chart_func flex_row">
         <span class="sort_name sort_func" 
             (click)="onClickChangeSort('BY_STATION')"
-            [ngClass]="{ selected : sortMethod == 'BY_STATION'}"
+            [ngClass]="{ selected : sort_method == 'BY_STATION'}"
             >Sort by station</span>
         <span class="sort_value sort_func" 
             (click)="onClickChangeSort('BY_TIMES')"
-            [ngClass]="{ selected : sortMethod == 'BY_TIMES'}"
+            [ngClass]="{ selected : sort_method == 'BY_TIMES'}"
             >Sort by times</span>
     </div>
   </div>
