@@ -1,0 +1,848 @@
+[
+    {
+        "year": "2017",
+        "month": "1",
+        "passholder_type": "Flex Pass",
+        "duration": "951.4925373134329"
+    },
+    {
+        "year": "2017",
+        "month": "1",
+        "passholder_type": "Monthly Pass",
+        "duration": "939.518825183565"
+    },
+    {
+        "year": "2017",
+        "month": "1",
+        "passholder_type": "Walk-up",
+        "duration": "3579.139194139194"
+    },
+    {
+        "year": "2017",
+        "month": "2",
+        "passholder_type": "Flex Pass",
+        "duration": "1297.5626043405675"
+    },
+    {
+        "year": "2017",
+        "month": "2",
+        "passholder_type": "Monthly Pass",
+        "duration": "988.5036555645817"
+    },
+    {
+        "year": "2017",
+        "month": "2",
+        "passholder_type": "Walk-up",
+        "duration": "3729.175962576466"
+    },
+    {
+        "year": "2017",
+        "month": "3",
+        "passholder_type": "Flex Pass",
+        "duration": "1437.9472140762464"
+    },
+    {
+        "year": "2017",
+        "month": "3",
+        "passholder_type": "Monthly Pass",
+        "duration": "921.6755413560526"
+    },
+    {
+        "year": "2017",
+        "month": "3",
+        "passholder_type": "Walk-up",
+        "duration": "3561.416967509025"
+    },
+    {
+        "year": "2017",
+        "month": "4",
+        "passholder_type": "Flex Pass",
+        "duration": "16.477406679764243"
+    },
+    {
+        "year": "2017",
+        "month": "4",
+        "passholder_type": "Monthly Pass",
+        "duration": "14.259581670898319"
+    },
+    {
+        "year": "2017",
+        "month": "4",
+        "passholder_type": "Walk-up",
+        "duration": "57.78074398249453"
+    },
+    {
+        "year": "2017",
+        "month": "5",
+        "passholder_type": "Flex Pass",
+        "duration": "15.87421944692239"
+    },
+    {
+        "year": "2017",
+        "month": "5",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.716113978646682"
+    },
+    {
+        "year": "2017",
+        "month": "5",
+        "passholder_type": "Walk-up",
+        "duration": "47.606413994169095"
+    },
+    {
+        "year": "2017",
+        "month": "6",
+        "passholder_type": "Flex Pass",
+        "duration": "17.10542797494781"
+    },
+    {
+        "year": "2017",
+        "month": "6",
+        "passholder_type": "Monthly Pass",
+        "duration": "14.616677925392178"
+    },
+    {
+        "year": "2017",
+        "month": "6",
+        "passholder_type": "Walk-up",
+        "duration": "51.58162801273306"
+    },
+    {
+        "year": "2017",
+        "month": "7",
+        "passholder_type": "Flex Pass",
+        "duration": "21.3609239653513"
+    },
+    {
+        "year": "2017",
+        "month": "7",
+        "passholder_type": "Monthly Pass",
+        "duration": "15.599667332002662"
+    },
+    {
+        "year": "2017",
+        "month": "7",
+        "passholder_type": "Walk-up",
+        "duration": "55.66112680737909"
+    },
+    {
+        "year": "2017",
+        "month": "8",
+        "passholder_type": "Flex Pass",
+        "duration": "23.377396569122098"
+    },
+    {
+        "year": "2017",
+        "month": "8",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.858347676419967"
+    },
+    {
+        "year": "2017",
+        "month": "8",
+        "passholder_type": "Walk-up",
+        "duration": "53.91703507220748"
+    },
+    {
+        "year": "2017",
+        "month": "9",
+        "passholder_type": "Flex Pass",
+        "duration": "23.309330628803245"
+    },
+    {
+        "year": "2017",
+        "month": "9",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.907814328435833"
+    },
+    {
+        "year": "2017",
+        "month": "9",
+        "passholder_type": "Walk-up",
+        "duration": "61.82538035961272"
+    },
+    {
+        "year": "2017",
+        "month": "10",
+        "passholder_type": "Flex Pass",
+        "duration": "20.334288443170966"
+    },
+    {
+        "year": "2017",
+        "month": "10",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.373343430518744"
+    },
+    {
+        "year": "2017",
+        "month": "10",
+        "passholder_type": "One Day Pass",
+        "duration": "73.94618834080717"
+    },
+    {
+        "year": "2017",
+        "month": "10",
+        "passholder_type": "Walk-up",
+        "duration": "62.99735662567521"
+    },
+    {
+        "year": "2017",
+        "month": "11",
+        "passholder_type": "Flex Pass",
+        "duration": "18.192784667418263"
+    },
+    {
+        "year": "2017",
+        "month": "11",
+        "passholder_type": "Monthly Pass",
+        "duration": "17.395071118886438"
+    },
+    {
+        "year": "2017",
+        "month": "11",
+        "passholder_type": "One Day Pass",
+        "duration": "67.25409338993329"
+    },
+    {
+        "year": "2017",
+        "month": "11",
+        "passholder_type": "Walk-up",
+        "duration": "66.83364512879551"
+    },
+    {
+        "year": "2017",
+        "month": "12",
+        "passholder_type": "Flex Pass",
+        "duration": "28.60251572327044"
+    },
+    {
+        "year": "2017",
+        "month": "12",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.66029398503021"
+    },
+    {
+        "year": "2017",
+        "month": "12",
+        "passholder_type": "One Day Pass",
+        "duration": "68.53514299563741"
+    },
+    {
+        "year": "2017",
+        "month": "12",
+        "passholder_type": "Walk-up",
+        "duration": "68.4936132726472"
+    },
+    {
+        "year": "2018",
+        "month": "1",
+        "passholder_type": "Flex Pass",
+        "duration": "24.2184655396619"
+    },
+    {
+        "year": "2018",
+        "month": "1",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.896246885799243"
+    },
+    {
+        "year": "2018",
+        "month": "1",
+        "passholder_type": "One Day Pass",
+        "duration": "64.2681843420322"
+    },
+    {
+        "year": "2018",
+        "month": "1",
+        "passholder_type": "Walk-up",
+        "duration": "69.67993895671476"
+    },
+    {
+        "year": "2018",
+        "month": "2",
+        "passholder_type": "Flex Pass",
+        "duration": "26.397142857142857"
+    },
+    {
+        "year": "2018",
+        "month": "2",
+        "passholder_type": "Monthly Pass",
+        "duration": "15.006924964936886"
+    },
+    {
+        "year": "2018",
+        "month": "2",
+        "passholder_type": "One Day Pass",
+        "duration": "69.1437125748503"
+    },
+    {
+        "year": "2018",
+        "month": "2",
+        "passholder_type": "Walk-up",
+        "duration": "67.24168757841908"
+    },
+    {
+        "year": "2018",
+        "month": "3",
+        "passholder_type": "Flex Pass",
+        "duration": "18.122535211267607"
+    },
+    {
+        "year": "2018",
+        "month": "3",
+        "passholder_type": "Monthly Pass",
+        "duration": "15.556852911213854"
+    },
+    {
+        "year": "2018",
+        "month": "3",
+        "passholder_type": "One Day Pass",
+        "duration": "74.23092998955067"
+    },
+    {
+        "year": "2018",
+        "month": "3",
+        "passholder_type": "Walk-up",
+        "duration": "69.09776751347191"
+    },
+    {
+        "year": "2018",
+        "month": "4",
+        "passholder_type": "Flex Pass",
+        "duration": "17.196969696969695"
+    },
+    {
+        "year": "2018",
+        "month": "4",
+        "passholder_type": "Monthly Pass",
+        "duration": "14.26211486688603"
+    },
+    {
+        "year": "2018",
+        "month": "4",
+        "passholder_type": "One Day Pass",
+        "duration": "69.03117144293616"
+    },
+    {
+        "year": "2018",
+        "month": "4",
+        "passholder_type": "Walk-up",
+        "duration": "60.20761166818596"
+    },
+    {
+        "year": "2018",
+        "month": "5",
+        "passholder_type": "Flex Pass",
+        "duration": "15.1631299734748"
+    },
+    {
+        "year": "2018",
+        "month": "5",
+        "passholder_type": "Monthly Pass",
+        "duration": "18.239535768645357"
+    },
+    {
+        "year": "2018",
+        "month": "5",
+        "passholder_type": "One Day Pass",
+        "duration": "69.75109489051096"
+    },
+    {
+        "year": "2018",
+        "month": "5",
+        "passholder_type": "Walk-up",
+        "duration": "66.57108111394868"
+    },
+    {
+        "year": "2018",
+        "month": "6",
+        "passholder_type": "Flex Pass",
+        "duration": "21.96063829787234"
+    },
+    {
+        "year": "2018",
+        "month": "6",
+        "passholder_type": "Monthly Pass",
+        "duration": "18.03485092667204"
+    },
+    {
+        "year": "2018",
+        "month": "6",
+        "passholder_type": "One Day Pass",
+        "duration": "73.27453341360626"
+    },
+    {
+        "year": "2018",
+        "month": "6",
+        "passholder_type": "Walk-up",
+        "duration": "70.206054467702"
+    },
+    {
+        "year": "2018",
+        "month": "7",
+        "passholder_type": "Flex Pass",
+        "duration": "17.139470013947"
+    },
+    {
+        "year": "2018",
+        "month": "7",
+        "passholder_type": "Monthly Pass",
+        "duration": "17.91027112322479"
+    },
+    {
+        "year": "2018",
+        "month": "7",
+        "passholder_type": "One Day Pass",
+        "duration": "62.62631905648666"
+    },
+    {
+        "year": "2018",
+        "month": "7",
+        "passholder_type": "Walk-up",
+        "duration": "72.54808238636363"
+    },
+    {
+        "year": "2018",
+        "month": "8",
+        "passholder_type": "Flex Pass",
+        "duration": "23.01937984496124"
+    },
+    {
+        "year": "2018",
+        "month": "8",
+        "passholder_type": "Monthly Pass",
+        "duration": "20.999546720196854"
+    },
+    {
+        "year": "2018",
+        "month": "8",
+        "passholder_type": "One Day Pass",
+        "duration": "72.6370320855615"
+    },
+    {
+        "year": "2018",
+        "month": "8",
+        "passholder_type": "Walk-up",
+        "duration": "70.60977760977761"
+    },
+    {
+        "year": "2018",
+        "month": "9",
+        "passholder_type": "Annual Pass",
+        "duration": "121.58333333333333"
+    },
+    {
+        "year": "2018",
+        "month": "9",
+        "passholder_type": "Flex Pass",
+        "duration": "21.851744186046513"
+    },
+    {
+        "year": "2018",
+        "month": "9",
+        "passholder_type": "Monthly Pass",
+        "duration": "21.223014675627486"
+    },
+    {
+        "year": "2018",
+        "month": "9",
+        "passholder_type": "One Day Pass",
+        "duration": "92.96625766871166"
+    },
+    {
+        "year": "2018",
+        "month": "9",
+        "passholder_type": "Walk-up",
+        "duration": "78.7373811265545"
+    },
+    {
+        "year": "2018",
+        "month": "10",
+        "passholder_type": "Annual Pass",
+        "duration": "14.507507507507508"
+    },
+    {
+        "year": "2018",
+        "month": "10",
+        "passholder_type": "Flex Pass",
+        "duration": "11.903345724907064"
+    },
+    {
+        "year": "2018",
+        "month": "10",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.446012387459295"
+    },
+    {
+        "year": "2018",
+        "month": "10",
+        "passholder_type": "One Day Pass",
+        "duration": "60.28867924528302"
+    },
+    {
+        "year": "2018",
+        "month": "10",
+        "passholder_type": "Walk-up",
+        "duration": "66.85641279261458"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "passholder_type": "Annual Pass",
+        "duration": "9.967821782178218"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "passholder_type": "Flex Pass",
+        "duration": "25.986175115207374"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.5078916763582"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "passholder_type": "One Day Pass",
+        "duration": "58.564687975646876"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "passholder_type": "Walk-up",
+        "duration": "67.0279487931203"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "passholder_type": "Annual Pass",
+        "duration": "14.702433628318584"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "passholder_type": "Flex Pass",
+        "duration": "18.597122302158272"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "passholder_type": "Monthly Pass",
+        "duration": "15.675866427894238"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "passholder_type": "One Day Pass",
+        "duration": "65.68641975308643"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "passholder_type": "Walk-up",
+        "duration": "69.04513964061485"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "passholder_type": "Annual Pass",
+        "duration": "12.255852842809364"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "passholder_type": "Flex Pass",
+        "duration": "13.474358974358974"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "passholder_type": "Monthly Pass",
+        "duration": "13.496658784825742"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "passholder_type": "One Day Pass",
+        "duration": "46.01143451143451"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "passholder_type": "Walk-up",
+        "duration": "70.2710442194992"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "passholder_type": "Annual Pass",
+        "duration": "16.612466124661246"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "passholder_type": "Flex Pass",
+        "duration": "36.71186440677966"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "passholder_type": "Monthly Pass",
+        "duration": "14.61169991687448"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "passholder_type": "One Day Pass",
+        "duration": "67.58700696055685"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "passholder_type": "Walk-up",
+        "duration": "71.01932451253482"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "Annual Pass",
+        "duration": "18.505277044854882"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "Flex Pass",
+        "duration": "28.228915662650603"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "Monthly Pass",
+        "duration": "13.167293806569715"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "One Day Pass",
+        "duration": "40.91629297458894"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "Testing",
+        "duration": "1.1818181818181819"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "passholder_type": "Walk-up",
+        "duration": "54.759611841297136"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "Annual Pass",
+        "duration": "16.625742574257426"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "Flex Pass",
+        "duration": "8.215686274509803"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "Monthly Pass",
+        "duration": "13.260489328474753"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "One Day Pass",
+        "duration": "39.3557457212714"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "Testing",
+        "duration": "2.5"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "passholder_type": "Walk-up",
+        "duration": "54.215462234752934"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "Annual Pass",
+        "duration": "12.447398843930635"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "Flex Pass",
+        "duration": "9.208333333333334"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "Monthly Pass",
+        "duration": "14.265821550463189"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "One Day Pass",
+        "duration": "69.62385321100918"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "Testing",
+        "duration": "88.23529411764706"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "passholder_type": "Walk-up",
+        "duration": "60.84442076419546"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "Annual Pass",
+        "duration": "13.842441860465117"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "Flex Pass",
+        "duration": "81.3157894736842"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "Monthly Pass",
+        "duration": "13.072858769168954"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "One Day Pass",
+        "duration": "66.58350305498982"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "Testing",
+        "duration": "4.166666666666667"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "passholder_type": "Walk-up",
+        "duration": "63.87148899251708"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "Annual Pass",
+        "duration": "14.36092882382635"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "Flex Pass",
+        "duration": "7.333333333333333"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "Monthly Pass",
+        "duration": "13.15737561645546"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "One Day Pass",
+        "duration": "58.323607427055705"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "Testing",
+        "duration": "19.916666666666668"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "passholder_type": "Walk-up",
+        "duration": "77.66827713815789"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "passholder_type": "Annual Pass",
+        "duration": "16.853831598864712"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "passholder_type": "Monthly Pass",
+        "duration": "17.08405481620739"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "passholder_type": "One Day Pass",
+        "duration": "88.87215556474969"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "passholder_type": "Testing",
+        "duration": "59.416666666666664"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "passholder_type": "Walk-up",
+        "duration": "74.73438852479288"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "passholder_type": "Annual Pass",
+        "duration": "15.695529411764706"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "passholder_type": "Monthly Pass",
+        "duration": "16.731939072721197"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "passholder_type": "One Day Pass",
+        "duration": "76.28942115768463"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "passholder_type": "Testing",
+        "duration": "18.636363636363637"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "passholder_type": "Walk-up",
+        "duration": "49.00351679268507"
+    }
+]
