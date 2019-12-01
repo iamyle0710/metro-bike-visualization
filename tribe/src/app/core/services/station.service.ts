@@ -9,6 +9,7 @@ export class StationService  {
     stationsGeojsonSub = new EventEmitter<any>();
     stationsDemandSub = new EventEmitter<any>();
     stationsDemand = {};
+    filterYear : number = 2019;
     hoverStation: StationStatus = new StationStatus();
     hoverStationSub = new EventEmitter<StationStatus>();
     
@@ -25,17 +26,17 @@ export class StationService  {
     }
 
     private getStationJSON() : Observable<any>{
-        // return this.http.get("./assets/metro-bike-share-stations.json");
-        return this.http.get('https://bikeshare.metro.net/stations/json/')
+        return this.http.get("./assets/metro-bike-share-stations.json");
+        // return this.http.get('https://bikeshare.metro.net/stations/json/')
     }
 
     private getStationInOut() : Observable<any>{
         return this.http.get('./assets/station_in_out.json')
     }
 
-    getStationTopNInOut(stationId : number, n : number, out : boolean){
-        if(this.stationsDemand.hasOwnProperty(stationId)){
-            return out ? this.stationsDemand[stationId]["out"].slice(0, n) : this.stationsDemand[stationId]["in"].slice(0, n)
+    getStationTopNInOut(stationId : number, n : number, out : boolean = true){
+        if(this.stationsDemand[this.filterYear].hasOwnProperty(stationId)){
+            return out ? this.stationsDemand[this.filterYear][stationId]["out"].slice(0, n) : this.stationsDemand[this.filterYear][stationId]["in"].slice(0, n)
         }
         else{
             return []
@@ -70,6 +71,11 @@ export class StationService  {
         //     this.hoverStation.totalOutNumber = this.stationsDemand[this.hoverStation.id]["out"].map(x => x[2]).reduce((x:number,y:number) => x+y)
         // }
         
+        this.hoverStationSub.emit(this.hoverStation);
+    }
+
+    setFilterYear(year: number){
+        this.filterYear = year;
         this.hoverStationSub.emit(this.hoverStation);
     }
 }
