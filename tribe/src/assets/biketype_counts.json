@@ -1,0 +1,176 @@
+[
+    {
+        "year": "2018",
+        "month": "10",
+        "bike_type": "standard",
+        "counts": "28925"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "bike_type": "electric",
+        "counts": "1156"
+    },
+    {
+        "year": "2018",
+        "month": "11",
+        "bike_type": "standard",
+        "counts": "22797"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "bike_type": "electric",
+        "counts": "1358"
+    },
+    {
+        "year": "2018",
+        "month": "12",
+        "bike_type": "standard",
+        "counts": "19631"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "bike_type": "electric",
+        "counts": "1176"
+    },
+    {
+        "year": "2019",
+        "month": "1",
+        "bike_type": "standard",
+        "counts": "18295"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "bike_type": "electric",
+        "counts": "1000"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "bike_type": "smart",
+        "counts": "49"
+    },
+    {
+        "year": "2019",
+        "month": "2",
+        "bike_type": "standard",
+        "counts": "15916"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "bike_type": "smart",
+        "counts": "2809"
+    },
+    {
+        "year": "2019",
+        "month": "3",
+        "bike_type": "standard",
+        "counts": "18113"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "bike_type": "smart",
+        "counts": "2565"
+    },
+    {
+        "year": "2019",
+        "month": "4",
+        "bike_type": "standard",
+        "counts": "16177"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "bike_type": "electric",
+        "counts": "486"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "bike_type": "smart",
+        "counts": "3472"
+    },
+    {
+        "year": "2019",
+        "month": "5",
+        "bike_type": "standard",
+        "counts": "14964"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "bike_type": "electric",
+        "counts": "11203"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "bike_type": "smart",
+        "counts": "4371"
+    },
+    {
+        "year": "2019",
+        "month": "6",
+        "bike_type": "standard",
+        "counts": "11307"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "bike_type": "electric",
+        "counts": "14655"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "bike_type": "smart",
+        "counts": "4354"
+    },
+    {
+        "year": "2019",
+        "month": "7",
+        "bike_type": "standard",
+        "counts": "9491"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "bike_type": "electric",
+        "counts": "17320"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "bike_type": "smart",
+        "counts": "5858"
+    },
+    {
+        "year": "2019",
+        "month": "8",
+        "bike_type": "standard",
+        "counts": "9665"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "bike_type": "electric",
+        "counts": "14471"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "bike_type": "smart",
+        "counts": "5989"
+    },
+    {
+        "year": "2019",
+        "month": "9",
+        "bike_type": "standard",
+        "counts": "10321"
+    }
+]
