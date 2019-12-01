@@ -1,0 +1,56 @@
+.analysis {
+  background-color: #23282c;
+}
+
+.analysis_header {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #d7d7d7;
+}
+
+.analysis_content {
+  font-size: 18px;
+  font-weight: 100;
+  color: #9b9b9b;
+}
+
+.filter_func {
+  padding: 0 0 0 10px;
+}
+
+.filter_year {
+  margin: 0px 10px 5px;
+  color: #bebebe;
+  border: none;
+  font-size: 18px;
+  padding: 5px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color 0.5s, background-color 0.5s;
+}
+
+.filter_year:first-child {
+  margin-left: 0;
+}
+
+.filter_year:hover,
+.filter_year.selected {
+  background: #fff;
+  color: #519137;
+}
+
+.analysis_title{
+    color: #d7d7d7;
+    text-transform: uppercase;
+    margin-top: 25px;
+    font-weight: 100;
+}
+
+.foundings{
+  color: #d9d9d9;
+  font-size: 18px;
+  font-style: italic;
+  border-left: 2px solid;
+  padding-left: 10px;
+}

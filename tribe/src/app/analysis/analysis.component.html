@@ -1,0 +1,72 @@
+<div class="analysis container-fluid">
+  <div class="row pl-0 pr-0 mr-0 ml-0 pt-3">
+    <div class="col-lg-5 pl-0 pr-0">
+      <span class="analysis_header">Ride Duration By Passholder Type</span>
+      <p class="analysis_content">
+        We want to analyze the difference of each passholder type. We
+        grouped by passholder type and month to get the average riding duration
+        time. This analysis also allows users to be able to see whether specific passholder type affects the trip duration.
+      </p>
+      <div class='foundings'>
+            People who hold monthly pass or walk-up tend to ride the
+        bike for between 10 - 20 minutes on average and people who hold one-day
+        pass tend to ride their bikes between 40 - 90 minutes
+          </div>
+      <p class="analysis_title">
+        Select years to be shown in the chart :
+      </p>
+      <div class="filter_func flex_row">
+        <div
+          *ngFor="let year of passholderYears"
+          class="filter_year"
+          [ngClass]="{ selected: passholderFilterYears.indexOf(year) != -1 }"
+          (click)="onClickChangeYear('PASSHOLDER', year)"
+        >
+          {{ year }}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 pl-0 pr-0">
+      <app-chart
+        [type]="'LINE'"
+        [chartData]="passholderData"
+        [chartId]="'duration_by_passholder'"
+      ></app-chart>
+    </div>
+  </div>
+  <div class="row pl-0 pr-0 mr-0 ml-0 pt-3">
+    <div class="col-lg-5 pl-0 pr-0">
+      <span class="analysis_header">Bike Type Usage Growth</span>
+      <p class="analysis_content">
+        We also want to see whether people like to use electric bike over the
+        years. The bike type data has been collected since Oct 2018. The chart
+        will be able to present the duration between 2018 Oct to 2019 Sep. We
+        grouped by bike type and month to get the used times of each bike type.
+      </p>
+      <div class='foundings'>
+        The usage of electric bike started to grow up since May and people who
+        use standard bike tend to decrease through time.
+      </div>
+      <p class="analysis_title">
+        Select years to be shown in the chart :
+      </p>
+      <div class="filter_func flex_row">
+        <div
+          *ngFor="let year of bikeUsagesYears"
+          class="filter_year"
+          [ngClass]="{ selected: bikeUsagesFilterYears.indexOf(year) != -1 }"
+          (click)="onClickChangeYear('BIKEUSAGE', year)"
+        >
+          {{ year }}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 pl-0 pr-0">
+      <app-chart
+        [type]="'GROUOBARS'"
+        [chartData]="bikeUsageData"
+        [chartId]="'biketype_usage'"
+      ></app-chart>
+    </div>
+  </div>
+</div>
