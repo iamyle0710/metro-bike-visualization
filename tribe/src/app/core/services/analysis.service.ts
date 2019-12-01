@@ -50,7 +50,7 @@ export class AnalysisService{
 
             this.bikeUsage = data;
             
-            console.log(this.bikeUsage);
+            // console.log(this.bikeUsage);
             this.updateBikeUsageData();
         })
     }
