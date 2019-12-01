@@ -11,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { MapComponent } from './map/map.component';
 import { StationService } from './core/services/station.service';
 import { StationStatusComponent } from './station-status/station-status.component';
+import { HourlyChartComponent } from './hourly-chart/hourly-chart.component';
 
 const appRoutes = [
   { path : '', component : ChartComponent },
@@ -23,7 +24,8 @@ const appRoutes = [
     ChartComponent,
     HeaderComponent,
     MapComponent,
-    StationStatusComponent
+    StationStatusComponent,
+    HourlyChartComponent
   ],
   imports: [
     BrowserModule,

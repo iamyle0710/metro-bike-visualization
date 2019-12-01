@@ -48,6 +48,7 @@
 }
 
 
+
 .chart_header{
 
 }
@@ -94,3 +95,30 @@
     align-items: center;
     justify-content: center;
 }
+
+#hourlyX line, #hourlyY line{
+  stroke: red;
+}
+
+#hourlyX path, #hourlyY path{
+  stroke: red;
+}
+
+#hourlyX text, #hourlyY text{
+  fill: red;
+}
+
+/* .hover-rect{
+  fill: #b5b5b5;
+} */
+
+/* .listeners {
+  fill: transparent;
+}  */
+
+
+/* .hover-text {
+  text-transform: uppercase;
+  font-size: 8px;
+  color: #333333;
+} */
