@@ -36,6 +36,7 @@ export class ChartComponent implements OnInit {
   }
 
   updateChart() {
+    this.updateSize();
     switch (this.type.toUpperCase()) {
       case "LINE":
         this.renderLineChart();
