@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { StationStatus } from 'src/app/share/station.model';
+import { DataModel } from 'src/app/share/data.model';
 
 @Injectable()
 export class StationService  {
@@ -9,8 +10,12 @@ export class StationService  {
     stationsGeojsonSub = new EventEmitter<any>();
     stationsDemandSub = new EventEmitter<any>();
     stationsDemand = {};
+
     hoverStation: StationStatus = new StationStatus();
     hoverStationSub = new EventEmitter<StationStatus>();
+    
+    // metroJsonOb: {};
+    metroJson: DataModel[];
     
 
     constructor(private http : HttpClient){
@@ -22,6 +27,18 @@ export class StationService  {
             this.stationsDemandSub.emit(data);
             this.stationsDemand = data;
         })
+
+        this.getMetro().subscribe((data) => {
+            this.metroJson = Object.values(data)
+            // console.log(this.metroJson.filter(row => row.start_station == 3046 ||row.end_station == 3046))
+            // console.log(typeof(this.metroJson))
+
+            // console.log(typeof(this.metroJson))
+            // console.log(this.metroJson)
+
+        })
+
+        
     }
 
     private getStationJSON() : Observable<any>{
@@ -31,6 +48,10 @@ export class StationService  {
 
     private getStationInOut() : Observable<any>{
         return this.http.get('./assets/station_in_out.json')
+    }
+
+    private getMetro() : Observable<DataModel>{
+        return this.http.get<DataModel>('assets/metro-small.json');
     }
 
     getStationTopNInOut(stationId : number, n : number, out : boolean){
@@ -55,6 +76,10 @@ export class StationService  {
             out : this.stationsDemand[stationId]["out"]
         }
 
+    }
+
+    getStation(stationId : number){
+        return this.metroJson.filter(row => row.start_station == stationId ||row.end_station == stationId);
     }
 
     setHoverStation(e:any){
