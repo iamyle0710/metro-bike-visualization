@@ -355,7 +355,7 @@ export class ChartComponent implements OnInit {
 
     var x = d3.scaleTime().range([0, chart_width]);
     var y = d3.scaleLinear().range([chart_height, 0]);
-    var color = d3.scaleOrdinal(d3.schemeAccent);
+    var color = d3.scaleOrdinal(['#DB9E89', '#A55220', '#144642', '#848B7E', '#C19426']);
     
     var xAxis = d3.axisBottom(x).ticks(5),
       yAxis = d3.axisLeft(y).ticks(5);
