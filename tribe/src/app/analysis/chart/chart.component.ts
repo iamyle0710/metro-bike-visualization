@@ -229,6 +229,9 @@ export class ChartComponent implements OnInit {
       })
       .enter()
       .append("rect")
+      .attr("class", (d:any) => {
+        return d.bike_type
+      })
       .attr("fill", (d,i) => {
         return color(d.bike_type);
       })
@@ -298,6 +301,9 @@ export class ChartComponent implements OnInit {
       .data(bikeTypeArr)
       .enter()
       .append("rect")
+      .attr("class", (d:String) => {
+        return d
+      })
       .attr("width", 15)
       .attr("height", 15)
       .attr("x", function(d, i) {
@@ -308,7 +314,8 @@ export class ChartComponent implements OnInit {
       })
       .attr("fill", function(d) {
         return color(d);
-      });
+      })
+      .on("click", this.toggleBarSeries.bind(this));
 
     this.svg
       .select("g.legend")
@@ -316,6 +323,9 @@ export class ChartComponent implements OnInit {
       .data(bikeTypeArr)
       .enter()
       .append("text")
+      .attr("class", (d:String) => {
+        return d
+      })
       .attr("alignment-baseline", "middle")
       .attr("text-anchor", "start")
       .attr("font-size", 12)
@@ -328,7 +338,8 @@ export class ChartComponent implements OnInit {
       })
       .text(function(d) {
         return d;
-      });
+      })
+      .on("click", this.toggleBarSeries.bind(this));
 
     this.svg
       .select("g.axis--x")
@@ -529,7 +540,8 @@ export class ChartComponent implements OnInit {
       })
       .attr("y", function(d, i) {
         return i * 10 + 10;
-      });
+      })
+      .on("click", this.toggleLineSeries.bind(this));
 
     this.svg
       .select("g.legend")
@@ -561,6 +573,28 @@ export class ChartComponent implements OnInit {
         .classed("selected", true);
 
       this.svg.select(".line_group#" + id)
+        .transition()
+        .attr("opacity", 0);
+    }
+  }
+
+  toggleBarSeries(d:String){
+    var id = d;
+    if(this.svg.select(".legend").selectAll("." + id).classed("selected")){
+      this.svg.select(".legend").selectAll("." + id)
+        .attr("opacity", 1)
+        .classed("selected", false);
+
+      this.svg.selectAll(".bargroup ." + id)
+        .transition()
+        .attr("opacity", 1);
+    }
+    else{
+      this.svg.select(".legend").selectAll("." + id)
+        .attr("opacity", 0.1)
+        .classed("selected", true);
+
+      this.svg.selectAll(".bargroup ." + id)
         .transition()
         .attr("opacity", 0);
     }
