@@ -540,8 +540,7 @@ export class ChartComponent implements OnInit {
       })
       .attr("y", function(d, i) {
         return i * 10 + 10;
-      })
-      .on("click", this.toggleLineSeries.bind(this));
+      });
 
     this.svg
       .select("g.legend")
@@ -565,6 +564,7 @@ export class ChartComponent implements OnInit {
 
       this.svg.select(".line_group#" + id)
         .transition()
+        .duration(300)
         .attr("opacity", 1);
     }
     else{
@@ -574,6 +574,7 @@ export class ChartComponent implements OnInit {
 
       this.svg.select(".line_group#" + id)
         .transition()
+        .duration(300)
         .attr("opacity", 0);
     }
   }
@@ -587,6 +588,7 @@ export class ChartComponent implements OnInit {
 
       this.svg.selectAll(".bargroup ." + id)
         .transition()
+        .duration(300)
         .attr("opacity", 1);
     }
     else{
@@ -596,6 +598,7 @@ export class ChartComponent implements OnInit {
 
       this.svg.selectAll(".bargroup ." + id)
         .transition()
+        .duration(300)
         .attr("opacity", 0);
     }
   }
