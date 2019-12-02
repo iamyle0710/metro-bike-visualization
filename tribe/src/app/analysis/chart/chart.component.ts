@@ -439,6 +439,7 @@ export class ChartComponent implements OnInit {
         })
         .enter()
         .append("rect")
+        .attr("class", (d:any) => d.key.replace(/\s/g, "_"))
         .attr("width", 20)
         .attr("height", 3)
         .attr("x", function(d, i) {
@@ -449,7 +450,8 @@ export class ChartComponent implements OnInit {
         })
         .attr("fill", function(d, i) {
           return color(d.key);
-        });
+        })
+        .on("click", this.toggleLineSeries.bind(this));
 
       this.svg
         .select("g.legend")
@@ -459,6 +461,7 @@ export class ChartComponent implements OnInit {
         })
         .enter()
         .append("text")
+        .attr("class", (d:any) => d.key.replace(/\s/g, "_"))
         .attr("alignment-baseline", "middle")
         .attr("text-anchor", "start")
         .attr("font-size", 10)
@@ -471,7 +474,8 @@ export class ChartComponent implements OnInit {
         })
         .text(function(d) {
           return d.key;
-        });
+        })
+        .on("click", this.toggleLineSeries.bind(this));
     }
 
     
@@ -482,6 +486,7 @@ export class ChartComponent implements OnInit {
       this.svg
         .append("g")
         .attr("class", "line_group")
+        .attr("id", d.key.replace(/\s/g, "_"))
         .append("path")
         .attr("class", "line")
         .style("stroke", color(d.key))
@@ -537,5 +542,27 @@ export class ChartComponent implements OnInit {
       .attr("y", function(d, i) {
         return i * 10 + 12;
       });
+  }
+
+  toggleLineSeries(d:any){
+    var id = d.key.replace(/\s/g, "_");
+    if(this.svg.select(".legend").selectAll("." + id).classed("selected")){
+      this.svg.select(".legend").selectAll("." + id)
+        .attr("opacity", 1)
+        .classed("selected", false);
+
+      this.svg.select(".line_group#" + id)
+        .transition()
+        .attr("opacity", 1);
+    }
+    else{
+      this.svg.select(".legend").selectAll("." + id)
+        .attr("opacity", 0.1)
+        .classed("selected", true);
+
+      this.svg.select(".line_group#" + id)
+        .transition()
+        .attr("opacity", 0);
+    }
   }
 }
