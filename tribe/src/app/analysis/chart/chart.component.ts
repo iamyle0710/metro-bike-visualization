@@ -101,15 +101,19 @@ export class ChartComponent implements OnInit {
       .domain([0, y_max])
       .range([chart_height, 0]);
     var color = d3.scaleOrdinal([
-      "#fbb4ae",
-      "#b3cde3",
-      "#ccebc5",
-      "#decbe4",
-      "#fed9a6",
-      "#ffffcc",
-      "#e5d8bd",
-      "#fddaec",
-      "#f2f2f2"
+      // "#fbb4ae",
+      // "#b3cde3",
+      // "#ccebc5",
+      // "#decbe4",
+      // "#fed9a6",
+      // "#ffffcc",
+      // "#e5d8bd",
+      // "#fddaec",
+      // "#f2f2f2"
+      '#22bb33',
+      '#5be16a',
+      '#cdf6d2',
+      '#ffffff'
     ]);
 
     var xAxis = d3.axisBottom(x).ticks(5),
@@ -351,17 +355,8 @@ export class ChartComponent implements OnInit {
 
     var x = d3.scaleTime().range([0, chart_width]);
     var y = d3.scaleLinear().range([chart_height, 0]);
-    var color = d3.scaleOrdinal([
-      "#fbb4ae",
-      "#b3cde3",
-      "#ccebc5",
-      "#decbe4",
-      "#fed9a6",
-      "#ffffcc",
-      "#e5d8bd",
-      "#fddaec",
-      "#f2f2f2"
-    ]);
+    var color = d3.scaleOrdinal(d3.schemeAccent);
+    
     var xAxis = d3.axisBottom(x).ticks(5),
       yAxis = d3.axisLeft(y).ticks(5);
 
