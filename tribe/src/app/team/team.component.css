@@ -1,0 +1,52 @@
+.team{
+    background-color: #23282c;
+    min-height: 650px;
+}
+.header{
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px 0 0;
+    text-transform: uppercase;
+}
+
+.profile{
+    width: 350px;
+    align-items: center;
+}
+
+.profile_pic{
+    width: 300px;
+    height: 300px;
+    background: #fff;
+    border-radius: 100%;
+    border: 2px solid #b6b6b6;
+    overflow: hidden;
+}
+
+.profile_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding : 20px;
+}
+
+.profile_content{
+    color : #fff;
+}
+
+.profile_content .name{
+    margin: 10px 0 0 0;
+    font-size: 26px;
+    text-align: center;
+    color: #b6b6b6;
+}
+.profile_content .contact{
+    text-align: center;
+    color: #b6b6b6;
+}
+.profile_content .jobs{
+    text-align: center;
+    padding: 10px;
+    color: #888;
+}

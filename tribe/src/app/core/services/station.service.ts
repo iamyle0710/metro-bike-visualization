@@ -8,6 +8,7 @@ import { DataModel } from 'src/app/share/data.model';
 export class StationService  {
 
     stationsGeojsonSub = new EventEmitter<any>();
+    stationGeojson = {};
     stationsDemandSub = new EventEmitter<any>();
     stationsDemand = {};
     filterYear : number = 2019;
@@ -20,6 +21,7 @@ export class StationService  {
 
     constructor(private http : HttpClient){
         this.getStationJSON().subscribe((data) => {
+            this.stationGeojson = data;
             this.stationsGeojsonSub.emit(data);
         })
 
@@ -37,8 +39,6 @@ export class StationService  {
             // console.log(this.metroJson)
 
         })
-
-        
     }
 
     private getStationJSON() : Observable<any>{
@@ -52,6 +52,10 @@ export class StationService  {
 
     private getMetro() : Observable<DataModel>{
         return this.http.get<DataModel>('assets/metro-small.json');
+    }
+
+    getStationGeojson(){
+        this.stationsGeojsonSub.emit(this.stationGeojson);
     }
 
     getStationTopNInOut(stationId : number, n : number, out : boolean = true){
