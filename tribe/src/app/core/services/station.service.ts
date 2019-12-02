@@ -79,7 +79,7 @@ export class StationService  {
     }
 
     getStation(stationId : number){
-        return this.metroJson.filter(row => row.start_station == stationId ||row.end_station == stationId);
+        return this.metroJson.filter(row => (row.start_station == stationId  ||row.end_station == stationId) && row.end_time_year == this.filterYear);
     }
 
     setHoverStation(e:any){
