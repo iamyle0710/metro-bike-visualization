@@ -311,7 +311,7 @@ export class StationStatusComponent implements OnInit {
       return;
     }
     var data = this.stationData;
-    console.log(data);
+    // console.log(data);
 
     if (data.length == 0) {
       d3.select("#hourlyChart").style("display", "none");

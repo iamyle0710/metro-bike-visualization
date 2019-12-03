@@ -42,12 +42,12 @@ export class StationService  {
     }
 
     private getStationJSON() : Observable<any>{
-        return this.http.get("./assets/metro-bike-share-stations.json");
+        return this.http.get("assets/metro-bike-share-stations.json");
         // return this.http.get('https://bikeshare.metro.net/stations/json/')
     }
 
     private getStationInOut() : Observable<any>{
-        return this.http.get('./assets/station_in_out.json')
+        return this.http.get('assets/station_in_out.json')
     }
 
     private getMetro() : Observable<DataModel>{
