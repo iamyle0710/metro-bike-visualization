@@ -14,7 +14,7 @@
 ### PROJECT ARTIFACTS
 
 - [Demonstration URL](http://pdms.usc.edu/~linmingy/tribe/)
-- [Presentation PDF](<presentation-pdf-url>) and [transcript](<presentation-transcript-md-url>)
+- [Presentation PDF](<presentation-pdf-url>) and [transcript](https://github.com/INF554/a5-zhaoyans/blob/master/PRESENTATION_TRANSCRIPT.md)
 - [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/read/vnpnvkwvddft)
 - [YouTube video](<youtube-video-url>)
 
