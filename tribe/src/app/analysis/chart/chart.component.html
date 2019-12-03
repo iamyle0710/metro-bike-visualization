@@ -1,4 +1,9 @@
 <div class="row pl-0 pr-0 ml-0 mr-0" #chart>
     <svg [id]="chartId" width="100%" height="500"></svg>
+    <div class='noData' [ngClass]="{'show' : noData}">
+        <span>
+            No available data for the selected station and years
+        </span>
+     </div>
 </div>
 

@@ -19,7 +19,11 @@ export class ChartComponent implements OnInit {
   margin = { top: 20, right: 20, bottom: 70, left: 70 };
   width: number = 500;
   height: number = 400;
+  noData : boolean  = false;
   svg;
+  node;
+  label;
+  view;
 
   constructor(private resizeService: ResizeService) {}
 
@@ -44,6 +48,9 @@ export class ChartComponent implements OnInit {
       case "GROUOBARS":
         this.renderGroupBars();
         break;
+      case "CIRCLE_PACKING":
+        this.renderCirclePacking();
+        break;
     }
   }
   updateSize() {
@@ -53,6 +60,114 @@ export class ChartComponent implements OnInit {
         d3.select("#" + this.chartId).attr("width", this.width);
       }
     }
+  }
+
+  renderCirclePacking() {
+    var data = this.chartData;
+
+    if (!this.chartRef || data.name == "" || data.children.length == 0) {
+      d3.select("#" + this.chartId)
+        .selectAll("g")
+        .remove();
+      this.noData = true;
+      return;
+    }
+
+    this.noData = false;
+    
+    console.log(data);
+    this.width = this.chartRef.nativeElement.offsetWidth * 0.6;
+    this.height = this.width;
+
+    var color = d3.scaleOrdinal([
+      "#74d7ca",
+      "#51b7c4",
+      "#51b7c4",
+      "#4196b7",
+      "#4275a2",
+      "#475385"
+    ]);
+    var format = d3.format(",d");
+    var pack = data =>
+      d3
+        .pack()
+        .size([this.width, this.height])
+        .padding(10)(
+        d3
+          .hierarchy(data)
+          .sum(d => d.value)
+          .sort((a, b) => b.value - a.value)
+      );
+
+    const root = pack(data);
+    let focus = root;
+    
+    if(!this.svg){
+      this.svg = d3
+        .select("#" + this.chartId)
+        // .attr("width", this.width)
+        .attr("height", this.height)
+        .attr(
+          "viewBox",
+          `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`
+        )
+        .style("display", "block")
+        .style("margin", "0 -14px")
+        .style("cursor", "pointer")
+        .on("click", () => this.zoomCirclePacking(root));
+    }
+    
+    this.svg.attr("height", this.height)
+        .attr(
+          "viewBox",
+          `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`
+        )
+        .selectAll("g").remove();
+
+    this.node = this.svg
+      .append("g")
+      .selectAll("circle")
+      .data(root.descendants())
+      .join("circle")
+      .attr("fill", (d: any) => (
+        d.children ? color(d.depth) : "white"
+      ))
+      .attr("pointer-events", (d: any) => (!d.children ? "none" : null))
+      .on("mouseover", function() {
+        d3.select(this).attr("stroke", "#000");
+      })
+      .on("mouseout", function() {
+        d3.select(this).attr("stroke", null);
+      })
+      .on(
+        "click",
+        d =>
+          focus !== d &&
+          (this.zoomCirclePacking(d), d3.event.stopPropagation())
+      );
+
+    this.label = this.svg
+      .append("g")
+      .style("font", "10px sans-serif")
+      .attr("pointer-events", "none")
+      .attr("text-anchor", "middle")
+      .selectAll("text")
+      .data(root.descendants())
+      .join("text")
+      .style("fill-opacity", d => (d.parent === root ? 1 : 0))
+      .style("font-size", 16)
+      .style("fill", "#22272c")
+      .style("display", d => (d.parent === root ? "inline" : "none"))
+      .text(d => {
+        var text = d.data.name;
+        // if (d.data.value) {
+        //   text = text + "(" + d.data.value + ")";
+        // }
+        return text;
+      });
+
+      this.zoomCirclePackingTo([root.x, root.y, root.r * 2]);
+  
   }
 
   renderGroupBars() {
@@ -89,11 +204,11 @@ export class ChartComponent implements OnInit {
       .scaleBand()
       .domain(bikeTypeArr)
       .range([0, x.bandwidth()]);
-    var y_max:number = d3.max(data, (d: any) => {
-      var values : Array<number> = d.values.map((obj: any) => {
+    var y_max: number = d3.max(data, (d: any) => {
+      var values: Array<number> = d.values.map((obj: any) => {
         return obj.counts;
       });
-      return isNaN(d3.max(values)) ?  1 : d3.max(values);
+      return isNaN(d3.max(values)) ? 1 : d3.max(values);
     });
 
     var y = d3
@@ -101,19 +216,13 @@ export class ChartComponent implements OnInit {
       .domain([0, y_max])
       .range([chart_height, 0]);
     var color = d3.scaleOrdinal([
-      // "#fbb4ae",
-      // "#b3cde3",
-      // "#ccebc5",
-      // "#decbe4",
-      // "#fed9a6",
-      // "#ffffcc",
-      // "#e5d8bd",
-      // "#fddaec",
-      // "#f2f2f2"
-      '#22bb33',
-      '#5be16a',
-      '#cdf6d2',
-      '#ffffff'
+      "#74d7ca",
+      "#51b7c4",
+      "#4196b7",
+      // "#22bb33",
+      // "#5be16a",
+      // "#cdf6d2",
+      // "#ffffff"
     ]);
 
     var xAxis = d3.axisBottom(x).ticks(5),
@@ -133,8 +242,7 @@ export class ChartComponent implements OnInit {
           "translate(" + this.margin.left + "," + this.margin.top + ")"
         );
 
-      this.svg.append("g")
-        .attr("class", "main_chart");
+      this.svg.append("g").attr("class", "main_chart");
 
       this.svg
         .append("g")
@@ -142,7 +250,8 @@ export class ChartComponent implements OnInit {
         .attr("transform", "translate(0, " + chart_height + ")")
         .call(xAxis);
 
-      this.svg.append("g")
+      this.svg
+        .append("g")
         .attr("class", "axis axis--y")
         .call(yAxis);
 
@@ -164,7 +273,7 @@ export class ChartComponent implements OnInit {
         .attr("y", chart_height + 30)
         .text("Date");
 
-        // Add Legend
+      // Add Legend
       this.svg
         .append("g")
         .attr("class", "legend")
@@ -210,84 +319,88 @@ export class ChartComponent implements OnInit {
     }
 
     // this.svg.selectAll(".months").remove();
-    var groups = this.svg.select("g.main_chart")
+    var groups = this.svg
+      .select("g.main_chart")
       .selectAll("g.bargroup")
-      .data(data, (d) => {
+      .data(data, d => {
         return d.key;
-      })
-    
-    groups.enter()
+      });
+
+    groups
+      .enter()
       .append("g")
       .attr("class", "bargroup")
       .attr("transform", d => {
         return "translate(" + x(d.key) + ",0)";
       })
       .selectAll("rect")
-      .data(function(d){
+      .data(function(d) {
         // console.log(d);
-        return d.counts.slice()
+        return d.counts.slice();
       })
       .enter()
       .append("rect")
-      .attr("class", (d:any) => {
-        return d.bike_type
+      .attr("class", (d: any) => {
+        return d.bike_type;
       })
-      .attr("fill", (d,i) => {
+      .attr("fill", (d, i) => {
         return color(d.bike_type);
       })
       .attr("width", xInScale.bandwidth())
-      .attr("height", (d) => {
+      .attr("height", d => {
         return chart_height - y(d.usage);
       })
-      .attr("x", function(d, i) { 
-        return xInScale(d.bike_type); 
+      .attr("x", function(d, i) {
+        return xInScale(d.bike_type);
       })
-      .attr("y", function(d) { 
-        return y(d.usage); 
+      .attr("y", function(d) {
+        return y(d.usage);
       });
 
-    groups.transition()
-      .attr("transform", d => {
-        return "translate(" + x(d.key) + ",0)";
-      });
+    groups.transition().attr("transform", d => {
+      return "translate(" + x(d.key) + ",0)";
+    });
 
-    groups.exit()
+    groups
+      .exit()
       // .transition()
       .remove();
 
-    var bars = this.svg.selectAll(".bargroup")
+    var bars = this.svg
+      .selectAll(".bargroup")
       .selectAll("rect")
-      .data(function(d:any){
-        return d.counts.slice()
-      })
+      .data(function(d: any) {
+        return d.counts.slice();
+      });
 
-    bars.transition()
-      .attr("x", function(d) { 
-        return xInScale(d.bike_type); 
+    bars
+      .transition()
+      .attr("x", function(d) {
+        return xInScale(d.bike_type);
       })
-      .attr("y", function(d) { 
-        return y(d.usage); 
+      .attr("y", function(d) {
+        return y(d.usage);
       })
-      .attr("height", function(d) { 
-        return chart_height - y(d.usage); 
+      .attr("height", function(d) {
+        return chart_height - y(d.usage);
       })
       .attr("width", xInScale.bandwidth())
-      .attr("fill", function(d) { 
-        return color(d.bike_type); 
+      .attr("fill", function(d) {
+        return color(d.bike_type);
       })
       .duration(500);
-    
-    bars.exit()
+
+    bars
+      .exit()
       .transition()
-      .attr("y", function(d) { return chart_height; })
+      .attr("y", function(d) {
+        return chart_height;
+      })
       .attr("height", 0)
       .attr("width", 0)
       .remove();
 
-
-    this.svg
-      .select("g.legend")
-      .remove();
+    this.svg.select("g.legend").remove();
 
     // Add Legend
     this.svg
@@ -301,8 +414,8 @@ export class ChartComponent implements OnInit {
       .data(bikeTypeArr)
       .enter()
       .append("rect")
-      .attr("class", (d:String) => {
-        return d
+      .attr("class", (d: String) => {
+        return d;
       })
       .attr("width", 15)
       .attr("height", 15)
@@ -323,8 +436,8 @@ export class ChartComponent implements OnInit {
       .data(bikeTypeArr)
       .enter()
       .append("text")
-      .attr("class", (d:String) => {
-        return d
+      .attr("class", (d: String) => {
+        return d;
       })
       .attr("alignment-baseline", "middle")
       .attr("text-anchor", "start")
@@ -366,8 +479,15 @@ export class ChartComponent implements OnInit {
 
     var x = d3.scaleTime().range([0, chart_width]);
     var y = d3.scaleLinear().range([chart_height, 0]);
-    var color = d3.scaleOrdinal(['#DB9E89', '#A55220', '#144642', '#848B7E', '#C19426']);
-    
+    var color = d3.scaleOrdinal([
+      "#74d7ca",
+      "#51b7c4",
+      "#51b7c4",
+      "#4196b7",
+      "#4275a2",
+      "#475385"
+    ]);
+
     var xAxis = d3.axisBottom(x).ticks(5),
       yAxis = d3.axisLeft(y).ticks(5);
 
@@ -377,21 +497,21 @@ export class ChartComponent implements OnInit {
       .x((d: any) => x(d.date))
       .y((d: any) => y(d.duration));
 
-    var x_min : any = d3.min(data, (d: any) => {
+    var x_min: any = d3.min(data, (d: any) => {
       var value: any = d3.min(d.values, (d1: any) => {
         return d1.date;
       });
       return value;
     });
-    var x_max : any = d3.max(data, (d: any) => {
-      var value : any =  d3.max(d.values, (d1: any) => {
+    var x_max: any = d3.max(data, (d: any) => {
+      var value: any = d3.max(d.values, (d1: any) => {
         return d1.date;
       });
       return value;
     });
-    var y_max : number = d3.max(data, (d: any) => {
-      var value : number =  d3.max(d.values, (d1: any) => {
-        var v1 : number = d1.duration;
+    var y_max: number = d3.max(data, (d: any) => {
+      var value: number = d3.max(d.values, (d1: any) => {
+        var v1: number = d1.duration;
         return v1;
       });
       return value;
@@ -450,7 +570,7 @@ export class ChartComponent implements OnInit {
         })
         .enter()
         .append("rect")
-        .attr("class", (d:any) => d.key.replace(/\s/g, "_"))
+        .attr("class", (d: any) => d.key.replace(/\s/g, "_"))
         .attr("width", 20)
         .attr("height", 3)
         .attr("x", function(d, i) {
@@ -472,7 +592,7 @@ export class ChartComponent implements OnInit {
         })
         .enter()
         .append("text")
-        .attr("class", (d:any) => d.key.replace(/\s/g, "_"))
+        .attr("class", (d: any) => d.key.replace(/\s/g, "_"))
         .attr("alignment-baseline", "middle")
         .attr("text-anchor", "start")
         .attr("font-size", 10)
@@ -488,8 +608,6 @@ export class ChartComponent implements OnInit {
         })
         .on("click", this.toggleLineSeries.bind(this));
     }
-
-    
 
     this.svg.selectAll(".line_group").remove();
 
@@ -555,51 +673,107 @@ export class ChartComponent implements OnInit {
       });
   }
 
-  toggleLineSeries(d:any){
+  toggleLineSeries(d: any) {
     var id = d.key.replace(/\s/g, "_");
-    if(this.svg.select(".legend").selectAll("." + id).classed("selected")){
-      this.svg.select(".legend").selectAll("." + id)
+    if (
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
+        .classed("selected")
+    ) {
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
         .attr("opacity", 1)
         .classed("selected", false);
 
-      this.svg.select(".line_group#" + id)
+      this.svg
+        .select(".line_group#" + id)
         .transition()
         .duration(300)
         .attr("opacity", 1);
-    }
-    else{
-      this.svg.select(".legend").selectAll("." + id)
+    } else {
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
         .attr("opacity", 0.1)
         .classed("selected", true);
 
-      this.svg.select(".line_group#" + id)
+      this.svg
+        .select(".line_group#" + id)
         .transition()
         .duration(300)
         .attr("opacity", 0);
     }
   }
 
-  toggleBarSeries(d:String){
+  toggleBarSeries(d: String) {
     var id = d;
-    if(this.svg.select(".legend").selectAll("." + id).classed("selected")){
-      this.svg.select(".legend").selectAll("." + id)
+    if (
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
+        .classed("selected")
+    ) {
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
         .attr("opacity", 1)
         .classed("selected", false);
 
-      this.svg.selectAll(".bargroup ." + id)
+      this.svg
+        .selectAll(".bargroup ." + id)
         .transition()
         .duration(300)
         .attr("opacity", 1);
-    }
-    else{
-      this.svg.select(".legend").selectAll("." + id)
+    } else {
+      this.svg
+        .select(".legend")
+        .selectAll("." + id)
         .attr("opacity", 0.1)
         .classed("selected", true);
 
-      this.svg.selectAll(".bargroup ." + id)
+      this.svg
+        .selectAll(".bargroup ." + id)
         .transition()
         .duration(300)
         .attr("opacity", 0);
     }
+  }
+
+  zoomCirclePacking(d) {
+    const focus0 = focus;
+
+    var focus = d;
+
+    const transition = this.svg
+      .transition()
+      .duration(d3.event.altKey ? 7500 : 750)
+      .tween("zoom", d => {
+        const i = d3.interpolateZoom(this.view, [focus.x, focus.y, focus.r * 2]);
+        return t => this.zoomCirclePackingTo(i(t));
+      });
+
+    this.label
+      .filter(function(d) {
+        return d.parent === focus || this.style.display === "inline";
+      })
+      .transition(transition)
+      .style("fill-opacity", d => (d.parent === focus ? 1 : 0))
+      .on("start", function(d) {
+        if (d.parent === focus) this.style.display = "inline";
+      })
+      .on("end", function(d) {
+        if (d.parent !== focus) this.style.display = "none";
+      });
+  }
+
+  zoomCirclePackingTo(v) {
+    const k = this.width / v[2];
+
+    this.view = v;
+    this.label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+    this.node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+    this.node.attr("r", d => d.r * k);
   }
 }
