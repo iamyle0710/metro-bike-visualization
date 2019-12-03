@@ -13,7 +13,7 @@
 
 ### PROJECT ARTIFACTS
 
-- [Demonstration URL](<demo-url>)
+- [Demonstration URL](http://pdms.usc.edu/~linmingy/tribe/)
 - [Presentation PDF](<presentation-pdf-url>) and [transcript](<presentation-transcript-md-url>)
 - [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/read/vnpnvkwvddft)
 - [YouTube video](<youtube-video-url>)
