@@ -35,7 +35,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
   };
-  
+
   ngOnChanges() {
     this.updateChart();
   };
@@ -44,7 +44,7 @@ export class WelcomeComponent implements OnInit {
     this.resizeService.resizeSub.subscribe(() => {
       this.updateChart();
     });
-    this.updateSize();
+    this.updateChart();
   }
 
   updateChart() {
@@ -60,14 +60,15 @@ export class WelcomeComponent implements OnInit {
   }
   
   renderChart(){
-    if(this.locationData.length !=0 && this.mapData.length != 0){
+    if(this.locationData.length !=0 && this.mapData.length != 0 && this.chartRef){
       if (!this.station) {
         var station = this.locationData;
         var la = this.mapData;
 
         this.width = this.chartRef.nativeElement.offsetWidth;
         this.height = this.chartRef.nativeElement.offsetWidth;
-        
+        var width = this.width;
+        var height = this.height;
         // var region = {};
         // station.forEach(function(item) {
         //   region[item.Region] = (region[item.Region] || 0) + 1;
@@ -127,9 +128,14 @@ export class WelcomeComponent implements OnInit {
         // console.log(station)
 
         // var center = 
+        var scaleLinear = d3.scaleLinear()
+          .domain([400, 1600])
+          .range([25000, 40000]);
+        
+        var scale = scaleLinear(width);
 
         var projection = d3.geoMercator()
-                    .scale(32000)
+                    .scale(scale)
                     .center([-118.408703, 33.946042])
                     // .center([-119.012550, 33.960832])
                     // .center([-118.949379, 33.927794])
@@ -162,8 +168,8 @@ export class WelcomeComponent implements OnInit {
         .attr("id", "hover-box")
         // .attr('rx', 5)
         // .attr('ry', 5)
-        .attr('width', this.width/5 )
-        .attr('height', this.height/15)
+        .attr('width', width/5 )
+        .attr('height', height/15)
         .attr('fill', '#3B3E4A')
         .attr('opacity', 1)
         // .style('opacity', '100%')
@@ -174,7 +180,7 @@ export class WelcomeComponent implements OnInit {
         .attr("id", "hover-region")
         .attr('text-anchor',"start")
         .attr('x', "5")
-        .attr('y', this.height/24-10)
+        .attr('y', height/24-10)
 
         hover
         .append('text')
@@ -184,7 +190,7 @@ export class WelcomeComponent implements OnInit {
         // .attr('x', width/5-5)
         // .attr('y', height/24)
         .attr('x', "5")
-        .attr('y', this.height/24+10)
+        .attr('y', height/24+10)
 
         var points = this.station.selectAll("circle")
         // .delay(5)  
@@ -218,8 +224,8 @@ export class WelcomeComponent implements OnInit {
           (projection(datum.point)[0]+bubble(datum.stations))+"," + 
           (projection(datum.point)[1]+bubble(datum.stations)) + ")":
           "translate(" + 
-          (projection(datum.point)[0]-bubble(datum.stations)-this.width/5)+"," + 
-          (projection(datum.point)[1]-bubble(datum.stations)-this.height/12) + ")")
+          (projection(datum.point)[0]-bubble(datum.stations)-width/5)+"," + 
+          (projection(datum.point)[1]-bubble(datum.stations)-height/12) + ")")
 
           d3.select('#hover-region')
           .text(datum.area)
@@ -229,7 +235,7 @@ export class WelcomeComponent implements OnInit {
           
 
           d3.select('#hover-station')
-          .attr('transform', "translate("+this.width*4/25+",0)")
+          .attr('transform', "translate("+width*4/25+",0)")
 
           d3.select('#hover-box')
           .attr('display', 'block')
