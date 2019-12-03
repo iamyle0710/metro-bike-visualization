@@ -13,10 +13,12 @@
   font-size: 18px;
   font-weight: 100;
   color: #9b9b9b;
+  margin: 15px 0;
 }
 
 .filter_func {
   padding: 0 0 0 10px;
+  margin: 0 0 15px;
 }
 
 .filter_year {
@@ -53,4 +55,9 @@
   font-style: italic;
   border-left: 2px solid;
   padding-left: 10px;
+}
+
+.dropdown-menu{
+  max-height : 300px;
+  overflow-y:  auto;
 }
