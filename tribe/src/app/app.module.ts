@@ -15,9 +15,10 @@ import { VisualizationComponent } from './visualization/visualization.component'
 import { AnalysisComponent } from './analysis/analysis.component';
 import { ResizeService } from './core/services/resize.service';
 import { TeamComponent } from './team/team.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes = [
-  { path : '', component : VisualizationComponent },
+  { path : '', component : WelcomeComponent },
   { path : 'visualization', component : VisualizationComponent },
   { path : 'analysis', component : AnalysisComponent},
   { path : 'team', component : TeamComponent}
@@ -32,7 +33,8 @@ const appRoutes = [
     StationStatusComponent,
     VisualizationComponent,
     AnalysisComponent,
-    TeamComponent
+    TeamComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

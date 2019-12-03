@@ -1,0 +1,26 @@
+.welcome {
+    background-color: #23282c;
+    height: 100vh;
+  }
+
+.mymap {
+    background-color: #23282c;
+    height: 100vh;
+  }
+
+/* .title-container{
+    background-color: #23282c;
+} */
+
+h1 {
+    color: #586371;
+    font-size: 5.5vw;
+    line-height: 5.5vw;
+    margin:0;
+    text-shadow: 8px 6px 13px rgba(0, 0, 0, .1)
+}
+
+path.states{
+    fill: transparent;
+    stroke: #B4A995;
+}

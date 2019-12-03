@@ -99,3 +99,8 @@ path.line{
   fill: #9d9d9d;
   font-size: 10px;
 }
+
+path.states{
+  fill: transparent;
+  stroke: #B4A995;
+}
