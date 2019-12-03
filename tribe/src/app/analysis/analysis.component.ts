@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import * as d3 from "d3";
 import { AnalysisService } from "../core/services/analysis.service";
 import { ResizeService } from "../core/services/resize.service";
+import { StationService } from '../core/services/station.service';
 
 @Component({
   selector: "app-analysis",
@@ -20,8 +21,18 @@ export class AnalysisComponent implements OnInit {
   bikeUsagesYears = ['2018', '2019'];
   bikeUsagesFilterYears = ['2018', '2019'];
   bikeUsageData = [];
+  bikeStation = {
+    id : '3005',
+    name : "7th & Flower"
+  };
+  bikeStations = [];
+  bikeStationInOutData : any = {};
+  bikeStationYears = ['2017','2018', '2019'];
+  bikeStationFilterYears = ['2018', '2019'];
+  
 
-  constructor(private analysisService: AnalysisService) {
+  constructor(private analysisService: AnalysisService,
+    private stationService : StationService) {
 
     this.analysisService.passholderTypeSub.subscribe(data => {
       // console.log(data);
@@ -32,7 +43,12 @@ export class AnalysisComponent implements OnInit {
       // console.log(data);
       this.bikeUsageData = data;
     });
-    
+
+    this.stationService.stationsDemandSub.subscribe((data)=>{
+      this.bikeStations = this.stationService.getStations();
+      console.log(this.bikeStations);
+      this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
+    })
   }
 
   ngOnInit() {
@@ -63,9 +79,23 @@ export class AnalysisComponent implements OnInit {
         }
         this.analysisService.setBikeUsageFilterYears(this.bikeUsagesFilterYears);
         break;
+      case "BIKESTATION":
+        var data = this.bikeStationFilterYears;
+        var index = data.indexOf(year);
+        if(index == -1){
+          data.push(year);
+        }
+        else{
+          data.splice(index, 1);
+        }
+        this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
+        break;
     }
-    
-   
+  }
+
+  onClickChangeStation(station : { id: string, name : string}){
+    this.bikeStation = station;
+    this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
   }
 
   

@@ -2,9 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
 import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
-import { ResizeService } from 'src/app/core/services/resize.service';
-import { DataModel } from 'src/app/share/data.model';
-
+import { ResizeService } from "src/app/core/services/resize.service";
+import { DataModel } from "src/app/share/data.model";
 
 @Component({
   selector: "app-station-status",
@@ -17,19 +16,21 @@ export class StationStatusComponent implements OnInit {
   height: number = 100;
   margin = { top: 5, right: 20, bottom: 10, left: 100 };
   sortMethod: string = "BY_STATION";
-  years : Array<number> = [2017, 2018, 2019];
+  years: Array<number> = [2017, 2018, 2019];
   filterYear: number = 2019;
   topFiveStations: [];
   svg;
 
   stationData: DataModel[];
   hourly;
-  
-  @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
-  @Input() station : StationStatus;
 
-  constructor(private stationService: StationService,
-    private reszieService : ResizeService) {
+  @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
+  @Input() station: StationStatus;
+
+  constructor(
+    private stationService: StationService,
+    private reszieService: ResizeService
+  ) {
     this.topFiveStations = [];
     this.stationData = [];
   }
@@ -47,7 +48,7 @@ export class StationStatusComponent implements OnInit {
       );
 
       this.stationData = this.stationService.getStation(this.station.id);
-      
+
       this.updateData();
       this.updateSize();
       this.renderTravelTimesChart();
@@ -56,7 +57,7 @@ export class StationStatusComponent implements OnInit {
 
     this.reszieService.resizeSub.subscribe(() => {
       this.updateChart();
-    })
+    });
   }
 
   updateData() {
@@ -72,31 +73,29 @@ export class StationStatusComponent implements OnInit {
     });
   }
 
-  updateSize(){
-    if(this.tooltipRef){
+  updateSize() {
+    if (this.tooltipRef) {
       this.width = this.tooltipRef.nativeElement.offsetWidth;
-      if(this.svg){
-        d3.select("#inOutBarChart")
-          .attr("width", this.width);
+      if (this.svg) {
+        d3.select("#inOutBarChart").attr("width", this.width);
       }
-    if(this.hourly){
-      d3.select("#hourlyChart")
-        .attr("width", this.width);
-      
-      var dash = document.getElementById("hover-tip");
-        if (dash != null){
-          d3.select('#hover-tip').remove()
+      if (this.hourly) {
+        d3.select("#hourlyChart").attr("width", this.width);
+
+        var dash = document.getElementById("hover-tip");
+        if (dash != null) {
+          d3.select("#hover-tip").remove();
         }
-      var listener = document.getElementById("listeners");
-        if (listener != null){
-          d3.select('#listeners').remove()
+        var listener = document.getElementById("listeners");
+        if (listener != null) {
+          d3.select("#listeners").remove();
         }
-    }
+      }
       // this.height = this.tooltipRef.nativeElement.offsetHeight;
     }
   }
 
-  onClickChangeYear(year){
+  onClickChangeYear(year) {
     this.filterYear = year;
     this.stationService.setFilterYear(year);
   }
@@ -130,13 +129,10 @@ export class StationStatusComponent implements OnInit {
       return;
     }
     var data = this.topFiveStations;
-    if(!data || data.length == 0){
-      d3.select("#inOutBarChart")
-        .style("display", "none")
-    }
-    else{
-      d3.select("#inOutBarChart")
-        .style("display", "block")
+    if (!data || data.length == 0) {
+      d3.select("#inOutBarChart").style("display", "none");
+    } else {
+      d3.select("#inOutBarChart").style("display", "block");
     }
 
     this.width = this.tooltipRef.nativeElement.offsetWidth;
@@ -268,11 +264,9 @@ export class StationStatusComponent implements OnInit {
       .style("opacity", 0)
       .remove();
 
-    var stations = this.svg
-      .selectAll(".stations")
-      .data(data, function(d: any) {
-        return d.stationId;
-      });
+    var stations = this.svg.selectAll(".stations").data(data, function(d: any) {
+      return d.stationId;
+    });
 
     stations
       .enter()
@@ -307,44 +301,45 @@ export class StationStatusComponent implements OnInit {
       .style("opacity", 0)
       .remove();
   }
-  
-  
+
   renderHourlyChart() {
     var height = 300;
     var margin = { top: 50, right: 50, bottom: 30, left: 70 };
-    var palette = ['#FFCF21', '#0191B4']
+    var palette = ["#FFCF21", "#0191B4"];
     // console.log('Hello!!')
     if (!this.tooltipRef) {
       return;
     }
     var data = this.stationData;
-    console.log(data)
-    
-    if(data.length == 0){
-      d3.select("#hourlyChart")
-        .style("display", "none")
-    }
-    else{
-      d3.select("#hourlyChart")
-        .style("display", "block")
+    // console.log(data);
+
+    if (data.length == 0) {
+      d3.select("#hourlyChart").style("display", "none");
+    } else {
+      d3.select("#hourlyChart").style("display", "block");
     }
 
-    var hourly_d= [];
-    var hourly_s= [];
-    var houraly_list = []
+    var hourly_d = [];
+    var hourly_s = [];
+    var houraly_list = [];
 
     for (var i = 0; i < 24; i++) {
-      var d = data.filter(row => row.start_station == this.station.id && row.start_time_hour == i)
-      var s = data.filter(row => row.end_station == this.station.id && row.end_time_hour == i)
+      var d = data.filter(
+        row => row.start_station == this.station.id && row.start_time_hour == i
+      );
+      var s = data.filter(
+        row => row.end_station == this.station.id && row.end_time_hour == i
+      );
 
-      hourly_d.push({time: i, value: d.length})
-      hourly_s.push({time: i, value: s.length})
-      houraly_list.push([d.length, s.length])
-    };
+      hourly_d.push({ time: i, value: d.length });
+      hourly_s.push({ time: i, value: s.length });
+      houraly_list.push([d.length, s.length]);
+    }
 
-    var hourly = [{type: 'demand', values: hourly_d},
-                  {type: 'supply', values: hourly_s}]
-
+    var hourly = [
+      { type: "demand", values: hourly_d },
+      { type: "supply", values: hourly_s }
+    ];
 
     // console.log(hourly)
 
@@ -375,96 +370,110 @@ export class StationStatusComponent implements OnInit {
 
     y.domain([
       d3.min(hourly, function(h) {
-          return d3.min(h.values, function(v) {
+        return d3.min(h.values, function(v) {
           return v.value;
-          });
+        });
       }),
       d3.max(hourly, function(h) {
-          return d3.max(h.values, function(v) {
+        return d3.max(h.values, function(v) {
           return v.value;
-          });
+        });
       })
     ]);
 
     var hourlyX = document.getElementById("hourlyX");
-    var hourlyY= document.getElementById("hourlyY");
-  
+    var hourlyY = document.getElementById("hourlyY");
 
-    var xAxis = d3.axisBottom(x);
-    var yAxis = d3.axisLeft(y);
+    var xAxis : any = d3.axisBottom(x);
+    var yAxis : any = d3.axisLeft(y).ticks(4);
 
-    if (hourlyX != null){
+    if (hourlyX != null) {
       // d3.select('#hourlyX').remove()
-      d3.select('#hourlyX')
-      // .transition()
-      // .duration(500)
-      .call(xAxis.ticks(23).tickFormat(function(d){ return String(d) }));
-
-    }else{
-      this.hourly.append("g")
-      .attr('id', 'hourlyX')
-      .attr("transform", "translate(0," + chart_height + ")")
-      .call(xAxis.ticks(23).tickFormat(function(d){ return String(d) }));
-
+      d3.select("#hourlyX")
+        // .transition()
+        // .duration(500)
+        .call(
+          xAxis.ticks(23).tickFormat(function(d) {
+            return String(d);
+          })
+        );
+    } else {
+      this.hourly
+        .append("g")
+        .attr("id", "hourlyX")
+        .attr("transform", "translate(0," + chart_height + ")")
+        .call(
+          xAxis.ticks(23).tickFormat(function(d) {
+            return String(d);
+          })
+        );
     }
-    
-    if (hourlyY != null){
+
+    if (hourlyY != null) {
       // d3.select('#hourlyY').remove()
-      d3.select('#hourlyY')
-      .transition()
-      .duration(200)
-      .call(yAxis.ticks(4))
-    }else{
-      this.hourly.append('g')
-      .attr('id', 'hourlyY')
-      .call(yAxis.ticks(4))
-      .append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', 3)
-      .attr('dy', '.7em')
-      .style('text-anchor', 'end')
-      .text('Total Trips');
-
+      d3.select("#hourlyY")
+        .transition()
+        .duration(200)
+        .call(yAxis);
+    } else {
+      this.hourly
+        .append("g")
+        .attr("id", "hourlyY")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 3)
+        .attr("dy", ".7em")
+        .style("text-anchor", "end")
+        .text("Total Trips");
     }
 
-    var color = d3
+    var color : any = d3
       .scaleOrdinal()
-      .domain(['demand', 'supply'])
-      .range(palette)
+      .domain(["demand", "supply"])
+      .range(palette);
 
-
-    var lines = this.hourly.selectAll(".path")
-    .data(hourly);
+    var lines = this.hourly.selectAll(".path").data(hourly);
 
     lines
       .enter()
       .append("path")
       .attr("class", "path")
       .attr("fill", "none")
-      .attr("stroke", function(d){ return color(d.type) })
-      .attr("stroke-width", 2)
-      .attr("d", function(d){
-          return d3.line()
-                    .x(function(d: any) { return x(d.time);})
-                    .y(function(d: any) { return y(d.value);})
-                    (d.values)
+      .attr("stroke", function(d) {
+        return color(d.type);
       })
-      .attr('opacity', 0.8)
+      .attr("stroke-width", 2)
+      .attr("d", function(d) {
+        return d3
+          .line()
+          .x(function(d: any) {
+            return x(d.time);
+          })
+          .y(function(d: any) {
+            return y(d.value);
+          })(d.values);
+      })
+      .attr("opacity", 0.8);
 
-
-    
     lines
       .transition()
       .duration(500)
-      .attr("stroke", function(d){ return color(d.type) })
-      .attr("stroke-width", 2)
-      .attr("d", function(d){
-          return d3.line()
-                    .x(function(d: any) { return x(d.time);})
-                    .y(function(d: any) { return y(d.value);})
-                    (d.values)
+      .attr("stroke", function(d) {
+        return color(d.type);
       })
-      .attr('opacity', 0.8)
+      .attr("stroke-width", 2)
+      .attr("d", function(d) {
+        return d3
+          .line()
+          .x(function(d: any) {
+            return x(d.time);
+          })
+          .y(function(d: any) {
+            return y(d.value);
+          })(d.values);
+      })
+      .attr("opacity", 0.8);
 
     lines
       .exit()
@@ -474,33 +483,40 @@ export class StationStatusComponent implements OnInit {
       .style("opacity", 0)
       .remove();
 
+    this.hourly.append("g").attr("id", "legend");
 
-    this.hourly.append('g').attr('id', 'legend');
-      
-    var legendstr = ['Demand', 'Supply']
-    
-    var legend = d3.select('#legend').selectAll("text")
-      .data(legendstr)
-    
-    
+    var legendstr = ["Demand", "Supply"];
+
+    var legend = d3
+      .select("#legend")
+      .selectAll("text")
+      .data(legendstr);
+
     legend
       .enter()
-      .append('text')
-      .attr("x", chart_width+5)
-      .attr("y", function(d, i){return y(houraly_list[23][i])})
-      .text(d=>d)
-      .style('font-size', '10px')
-      .style("fill", function(d: any){return color(d);})
-
+      .append("text")
+      .attr("x", chart_width + 5)
+      .attr("y", function(d, i) {
+        return y(houraly_list[23][i]);
+      })
+      .text(d => d)
+      .style("font-size", "10px")
+      .style("fill", (d: String) => {
+        return color(d);
+      });
 
     legend
       .transition()
       .duration(500)
-      .attr("x", chart_width+5)
-      .attr("y", function(d, i){return y(houraly_list[23][i])})
-      .text(d=>d)
-      .style('font-size', '10px')
-      .style("fill", function(d){return color(d);})
+      .attr("x", chart_width + 5)
+      .attr("y", function(d, i) {
+        return y(houraly_list[23][i]);
+      })
+      .text(d => d)
+      .style("font-size", "10px")
+      .style("fill", function(d) {
+        return color(d);
+      });
 
     legend
       .exit()
@@ -510,135 +526,147 @@ export class StationStatusComponent implements OnInit {
       .style("opacity", 0)
       .remove();
 
-    const intervalListeners = this.hourly.append('g')
-    .attr('id', 'listeners')
-    .selectAll(".listeners").data(houraly_list)
+    const intervalListeners = this.hourly
+      .append("g")
+      .attr("id", "listeners")
+      .selectAll(".listeners")
+      .data(houraly_list);
 
-    const hover = this.hourly.append('g').attr("id", "hover-tip")
+    const hover = this.hourly.append("g").attr("id", "hover-tip");
 
-    var listenwidth = chart_width/24
+    var listenwidth = chart_width / 24;
     intervalListeners
       .enter()
       .append("rect")
       .attr("class", "listeners")
-      .attr("x", function(d, i) { return x(i)-listenwidth/2;})
+      .attr("x", function(d, i) {
+        return x(i) - listenwidth / 2;
+      })
       // .attr("y", -this.margin.top)
       .attr("y", -margin.top)
       // .attr("height", this.height)
       .attr("height", height)
       .attr("width", listenwidth)
-      .style('fill', 'transparent')
+      .style("fill", "transparent")
       .on("mouseenter", onMouseEnter)
-      .on("mouseleave", onMouseLeave)
+      .on("mouseleave", onMouseLeave);
 
-      function onMouseEnter(datum, index) {
-        // d3.select(this).style('fill', 'rgb(6,120,155)')
-        hover
+    function onMouseEnter(datum, index) {
+      // d3.select(this).style('fill', 'rgb(6,120,155)')
+      hover
         .append("line")
         .attr("id", "hover-dash")
         .attr("fill", "none")
         .style("stroke", "#6D6D6D")
         .style("stroke-dasharray", "4")
         .attr("stroke-width", 2)
-        .attr("x1", x(index) )
+        .attr("x1", x(index))
         .attr("y1", 0)
-        .attr("x2", x(index) )
+        .attr("x2", x(index))
         .attr("y2", chart_height)
-        .attr('opacity', 0.8)
+        .attr("opacity", 0.8);
 
-        // circle
-        hover
-        .append('g')
+      // circle
+      hover
+        .append("g")
         .attr("id", "hover-points")
         .selectAll(".hover-point")
         .data(datum)
         .enter()
         .append("circle")
         .attr("class", "hover-point")
-        .attr("fill", function(d, i){ 
-          if (i == 0){
-            return color('demand')
-          }
-          else{
-            return color('supply')
+        .attr("fill", function(d, i) {
+          if (i == 0) {
+            return color("demand");
+          } else {
+            return color("supply");
           }
         })
         .style("stroke", "#fff")
         .style("stroke-width", "2")
-        .attr("cx", x(index) )
+        .attr("cx", x(index))
         .attr("cy", d => y(d))
         .attr("r", "4")
-        .attr('opacity', 0.8)
+        .attr("opacity", 0.8);
 
-        // tooltip
-        var tooltip = hover
-            .append('g')
-            .attr("id", "mytooltip")
-            .attr("transform", "translate(" + (x(index)-30)+"," + -margin.top + ")")
-        
-        var tooltip_width = 80
-        
-        tooltip
+      // tooltip
+      var tooltip = hover
+        .append("g")
+        .attr("id", "mytooltip")
+        .attr(
+          "transform",
+          "translate(" + (x(index) - 30) + "," + -margin.top + ")"
+        );
+
+      var tooltip_width = 80;
+
+      tooltip
         .append("rect")
-        .style('fill', '#37464D')
-        .attr("x", -tooltip_width/2)                
-        .attr("y", 0)             
-        .attr("rx", 2)                
-        .attr("ry", 2)                
-        .attr("width", tooltip_width)           
-        .attr("height", margin.top-5);
+        .style("fill", "#37464D")
+        .attr("x", -tooltip_width / 2)
+        .attr("y", 0)
+        .attr("rx", 2)
+        .attr("ry", 2)
+        .attr("width", tooltip_width)
+        .attr("height", margin.top - 5);
 
-        // left word
-        var rowname = ['Time', 'Demand', 'Supply', 'Difference']
-        var rowheight = [12, 22, 32, 42]
-        var rowcolor = ['#EEEEEE',palette[0],palette[1], '#EEEEEE']
-        var filldata = [index, datum[0], datum[1], datum[0]-datum[1]]
+      // left word
+      var rowname = ["Time", "Demand", "Supply", "Difference"];
+      var rowheight = [12, 22, 32, 42];
+      var rowcolor = ["#EEEEEE", palette[0], palette[1], "#EEEEEE"];
+      var filldata = [index, datum[0], datum[1], datum[0] - datum[1]];
 
-        tooltip
-        .append('g')
-        .attr('id', 'myleft')
-        .selectAll('text')
+      tooltip
+        .append("g")
+        .attr("id", "myleft")
+        .selectAll("text")
         .data(rowname)
         .enter()
-        .append('text')
-        .attr("x", -tooltip_width/2+5)
-        .attr("y", function(d, i){return rowheight[i]})
-        .text(d=>d)
-        .style('font-size', '10px')
-        .style("fill", function(d, i){return rowcolor[i]})
+        .append("text")
+        .attr("x", -tooltip_width / 2 + 5)
+        .attr("y", function(d, i) {
+          return rowheight[i];
+        })
+        .text(d => d)
+        .style("font-size", "10px")
+        .style("fill", function(d, i) {
+          return rowcolor[i];
+        });
 
-        tooltip
-        .append('g')
-        .attr('id', 'myright')
-        .selectAll('text')
+      tooltip
+        .append("g")
+        .attr("id", "myright")
+        .selectAll("text")
         .data(filldata)
         .enter()
-        .append('text')
-        .attr("x", tooltip_width/2-5)
-        .attr("y", function(d, i){return rowheight[i]})
-        .text(d=>d)
-        .style('font-size', '10px')
-        .style("fill", function(d, i){return rowcolor[i]})
-        .style('text-anchor', 'end')
-        
-        // .style('fill', datum[0]-datum[1] > 0 ? '#FF3D20': '#b5b5b5')   
+        .append("text")
+        .attr("x", tooltip_width / 2 - 5)
+        .attr("y", function(d, i) {
+          return rowheight[i];
+        })
+        .text(d => d)
+        .style("font-size", "10px")
+        .style("fill", function(d, i) {
+          return rowcolor[i];
+        })
+        .style("text-anchor", "end");
+
+      // .style('fill', datum[0]-datum[1] > 0 ? '#FF3D20': '#b5b5b5')
+    }
+
+    function onMouseLeave() {
+      var dash = document.getElementById("hover-dash");
+      var points = document.getElementById("hover-points");
+      var tooltip = document.getElementById("mytooltip");
+      if (dash != null) {
+        d3.select("#hover-dash").remove();
       }
-
-
-      function onMouseLeave() {
-        var dash = document.getElementById("hover-dash");
-        var points = document.getElementById("hover-points");
-        var tooltip = document.getElementById("mytooltip");
-        if (dash != null){
-          d3.select('#hover-dash').remove()
-        }
-        if (points != null){
-          d3.select('#hover-points').remove()
-        }
-        if (tooltip != null){
-          d3.select('#mytooltip').remove()
-        }
-
+      if (points != null) {
+        d3.select("#hover-points").remove();
       }
+      if (tooltip != null) {
+        d3.select("#mytooltip").remove();
+      }
+    }
   }
 }
