@@ -35,9 +35,7 @@ export class StationStatusComponent implements OnInit {
     this.stationData = [];
   }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
     this.stationService.hoverStationSub.subscribe((station: StationStatus) => {
       // console.log(station);
       this.station = station;
@@ -58,6 +56,10 @@ export class StationStatusComponent implements OnInit {
     this.reszieService.resizeSub.subscribe(() => {
       this.updateChart();
     });
+  }
+
+  ngAfterViewInit() {
+    
   }
 
   updateData() {
@@ -125,7 +127,7 @@ export class StationStatusComponent implements OnInit {
   }
 
   renderTravelTimesChart() {
-    if (!this.tooltipRef) {
+    if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
       return;
     }
     var data = this.topFiveStations;
@@ -307,7 +309,7 @@ export class StationStatusComponent implements OnInit {
     var margin = { top: 50, right: 50, bottom: 30, left: 70 };
     var palette = ["#FFCF21", "#0191B4"];
     // console.log('Hello!!')
-    if (!this.tooltipRef) {
+    if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
       return;
     }
     var data = this.stationData;
