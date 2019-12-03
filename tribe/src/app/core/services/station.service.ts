@@ -26,8 +26,8 @@ export class StationService  {
         })
 
         this.getStationInOut().subscribe((data) => {
-            this.stationsDemandSub.emit(data);
             this.stationsDemand = data;
+            this.stationsDemandSub.emit(data);
         })
 
         this.getMetro().subscribe((data) => {
@@ -80,6 +80,76 @@ export class StationService  {
             out : this.stationsDemand[stationId]["out"]
         }
 
+    }
+
+    getStations(){
+        var stations = {};
+        for(var year in this.stationsDemand){
+            for(var station_id in this.stationsDemand[year]){
+                if(!this.stationsDemand[year][station_id].name || this.stationsDemand[year][station_id].name.toUpperCase() == "UNKNOWN" || this.stationsDemand[year][station_id].name == ""){
+                    continue;
+                }
+                stations[station_id] = {
+                    id : station_id,
+                    name : this.stationsDemand[year][station_id].name
+                }
+            }
+        }
+
+        return Object.values(stations);
+    }
+
+    getStationCircleLayout(stationId: String, filterYears : Array<string>){
+        var data = {
+            name : "",
+            children : []
+        };
+
+        var summary = {
+            inbound : {},
+            outbound : {}
+        };
+
+        for(var i = 0; i < filterYears.length; i++){
+            var year = filterYears[i];
+            if(!this.stationsDemand[year] || !this.stationsDemand[year][stationId]){
+                continue;
+            }
+            data.name = this.stationsDemand[year][stationId].name;
+            this.stationsDemand[year][stationId]["in"].forEach((item: any) => {
+                if(!summary.inbound.hasOwnProperty(item.name)){
+                    summary.inbound[item.name] = 0;
+                };
+                summary.inbound[item.name] += +item.numberOftimes
+            });
+
+            this.stationsDemand[year][stationId]["out"].forEach((item: any) => {
+                if(!summary.outbound.hasOwnProperty(item.name)){
+                    summary.outbound[item.name] = 0;
+                };
+                summary.outbound[item.name] += +item.numberOftimes
+            })
+        }
+
+        for(var type in summary){
+            var child = {
+                name : type,
+                children : []
+            };
+            
+            for(var stationName in summary[type]){
+                child.children.push({
+                    name : stationName,
+                    value : summary[type][stationName]
+                })
+            }
+
+            if(child.children.length > 0){
+                data.children.push(child);
+            }
+        }
+        
+        return data;
     }
 
     getStation(stationId : number){
