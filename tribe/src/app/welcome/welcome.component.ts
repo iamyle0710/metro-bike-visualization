@@ -10,7 +10,7 @@ import { ResizeService } from "../core/services/resize.service";
   providers: [LocationService]
 })
 export class WelcomeComponent implements OnInit {
-  @ViewChild("stations", { static: false }) chartRef: ElementRef;
+  @ViewChild("stations", { static: true }) chartRef: ElementRef;
 
   width: number;
   height: number;
