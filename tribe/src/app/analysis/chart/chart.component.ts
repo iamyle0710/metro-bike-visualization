@@ -75,7 +75,7 @@ export class ChartComponent implements OnInit {
 
     this.noData = false;
     
-    console.log(data);
+    // console.log(data);
     this.width = this.chartRef.nativeElement.offsetWidth * 0.6;
     this.height = this.width;
 

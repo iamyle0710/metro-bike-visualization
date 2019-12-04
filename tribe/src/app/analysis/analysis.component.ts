@@ -51,7 +51,8 @@ export class AnalysisComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.bikeStations = this.stationService.getStations();
+    this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
   }
 
   ngAfterViewInit(){
