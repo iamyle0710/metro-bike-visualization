@@ -24,13 +24,17 @@ export class WelcomeComponent implements OnInit {
   constructor(private locationService: LocationService, private resizeService: ResizeService) {
     this.locationService.locationDataSub.subscribe(data => {
       this.locationData = data;
+      // console.log('1')
       this.updateChart();
+      
       // console.log(this.locationData);
     });
 
     this.locationService.mapDataSub.subscribe(data => {
       this.mapData= data;
+      // console.log('2');
       this.updateChart();
+      
       // console.log(this.mapData);
     });
    }
@@ -39,14 +43,20 @@ export class WelcomeComponent implements OnInit {
   };
 
   ngOnChanges() {
+    // console.log('3');
     this.updateChart();
+    
   };
 
   ngAfterViewInit() {
     this.resizeService.resizeSub.subscribe(() => {
+      // console.log('4');
       this.updateChart();
+      
     });
+    // console.log('5');
     this.updateChart();
+    
   }
 
   updateChart() {
@@ -64,16 +74,26 @@ export class WelcomeComponent implements OnInit {
       this.pageWidth = this.welcomePageRef.nativeElement.offsetWidth;
       this.pageHeight = this.welcomePageRef.nativeElement.offsetHeight;
     }
+
+    if (this.width && this.height){
+      this.station = d3.select("#stations")
+    }
+
+    // console.log(this.width)
+    // console.log(this.height)
   }
   
   renderChart(){
+    // console.log(this.locationData.length, this.mapData.length, this.chartRef);
     if(this.locationData.length !=0 && this.mapData.length != 0 && this.chartRef){
-      if (!this.station) {
+      if (this.station) {
+        // console.log('hi')
+        
         var station = this.locationData;
         var la = this.mapData;
 
-        this.width = this.chartRef.nativeElement.offsetWidth;
-        this.height = this.chartRef.nativeElement.offsetWidth;
+        // this.width = this.chartRef.nativeElement.offsetWidth;
+        // this.height = this.chartRef.nativeElement.offsetWidth;
         var width = this.width;
         var height = this.height;
         // var region = {};
@@ -103,7 +123,7 @@ export class WelcomeComponent implements OnInit {
         // console.log(la);
         // console.log(la);
         
-        this.station = d3.select("#stations")
+        // this.station = d3.select("#stations")
         // var width = +this.station.attr("width");
         // var height = +this.station.attr("height");
         // var width = +this.station.offsetWidth;
@@ -135,38 +155,61 @@ export class WelcomeComponent implements OnInit {
         // console.log(station)
 
         // var center = 
-        var scaleLinear = d3.scaleLinear()
-          .domain([400, 1600])
-          .range([25000, 40000]);
+        // var scaleLinear = d3.scaleLinear()
+        //   .domain([400, 1600])
+        //   .range([25000, 40000]);
         
-        var scale = scaleLinear(width);
+        // var scale = scaleLinear(width);
+
+        var scale;
+        var center;
+
+        if (this.pageWidth<1000){
+          scale = 26000;
+          center = [-118.284424, 33.945776];
+        }else{
+          scale = 40000;
+          center = [-118.408703, 33.946042];
+        }
 
         var projection = d3.geoMercator()
                     .scale(scale)
-                    .center([-118.408703, 33.946042])
+                    .center(center)
                     // .center([-119.012550, 33.960832])
                     // .center([-118.949379, 33.927794])
                     // .center([-118.517528, 33.939066])
                     // .center([-118.3592, 34.0639])
                     // .fitSize([width, height], la);
+        console.log(projection)
         var path = d3.geoPath().projection(projection);
-        var graticule = d3.geoGraticule()  // graticule generator
-                    .step([10, 10]);
+        // var graticule = d3.geoGraticule()  // graticule generator
+        //             .step([10, 10]);
 
      
-        this.station.append("path")
-        .datum(graticule)  //data join with a single path
-        .attr("class", "graticule")
-        .attr("d", path);
+        // this.station.append("path")
+        // .datum(graticule)  //data join with a single path
+        // .attr("class", "graticule")
+        // .attr("d", path);
 
-        this.station.selectAll(".states")
+        var border = this.station.selectAll(".states")
         .data(la["features"])
+        
+        
+        border
         .enter()
         .append("path")
+        .attr("class", "states")
         .attr("fill", "white")
         .attr("stroke", "black")
-        .attr("class", "states")
         .attr("d", path);
+
+        border
+        .transition()
+        .attr("d", path);
+
+        border
+        .exit()
+        .remove()
 
         const hover = this.station.append('g')
         .attr("id", "hover-bubbletip")
@@ -175,8 +218,8 @@ export class WelcomeComponent implements OnInit {
         .attr("id", "hover-box")
         // .attr('rx', 5)
         // .attr('ry', 5)
-        .attr('width', width/5 )
-        .attr('height', height/15)
+        .attr('width', this.width/5 )
+        .attr('height', this.height/15)
         .attr('fill', '#3B3E4A')
         .attr('opacity', 1)
         // .style('opacity', '100%')
@@ -187,7 +230,7 @@ export class WelcomeComponent implements OnInit {
         .attr("id", "hover-region")
         .attr('text-anchor',"start")
         .attr('x', "5")
-        .attr('y', height/24-10)
+        .attr('y', this.height/24-10)
 
         hover
         .append('text')
@@ -197,7 +240,7 @@ export class WelcomeComponent implements OnInit {
         // .attr('x', width/5-5)
         // .attr('y', height/24)
         .attr('x', "5")
-        .attr('y', height/24+10)
+        .attr('y', this.height/24+10)
 
         var points = this.station.selectAll("circle")
         // .delay(5)  
@@ -224,6 +267,9 @@ export class WelcomeComponent implements OnInit {
           .style("fill", '#77d64b')
           .style("stroke", '#fff')
           .style("stroke-width", '2')
+
+          d3.select('#hover-bubbletip')
+          .attr('display', 'block')
           
           hover
           .attr("transform", datum.area != 'North Hollywood'?
@@ -231,8 +277,8 @@ export class WelcomeComponent implements OnInit {
           (projection(datum.point)[0]+bubble(datum.stations))+"," + 
           (projection(datum.point)[1]+bubble(datum.stations)) + ")":
           "translate(" + 
-          (projection(datum.point)[0]-bubble(datum.stations)-width/5)+"," + 
-          (projection(datum.point)[1]-bubble(datum.stations)-height/12) + ")")
+          (projection(datum.point)[0]-bubble(datum.stations)-this.width/5)+"," + 
+          (projection(datum.point)[1]-bubble(datum.stations)-this.height/12) + ")")
 
           d3.select('#hover-region')
           .text(datum.area)
@@ -242,7 +288,7 @@ export class WelcomeComponent implements OnInit {
           
 
           d3.select('#hover-station')
-          .attr('transform', "translate("+width*4/25+",0)")
+          .attr('transform', "translate("+this.width*4/25+",0)")
 
           d3.select('#hover-box')
           .attr('display', 'block')
@@ -267,6 +313,9 @@ export class WelcomeComponent implements OnInit {
           d3.select(this)
           .style("fill", 'black')
           .style("stroke-width", '0')
+
+          d3.select('#hover-bubbletip')
+          .attr('display', 'none')
 
         }
 
