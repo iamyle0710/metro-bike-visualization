@@ -46,13 +46,17 @@ export class AnalysisComponent implements OnInit {
 
     this.stationService.stationsDemandSub.subscribe((data)=>{
       this.bikeStations = this.stationService.getStations();
-      console.log(this.bikeStations);
       this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
-    })
+    });
   }
 
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit(){
+    this.bikeStations = this.stationService.getStations();
+    this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
   }
 
   onClickChangeYear(type, year){
@@ -98,5 +102,4 @@ export class AnalysisComponent implements OnInit {
     this.bikeStationInOutData = this.stationService.getStationCircleLayout(this.bikeStation.id, this.bikeStationFilterYears);
   }
 
-  
 }
