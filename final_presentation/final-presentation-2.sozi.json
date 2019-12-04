@@ -10,74 +10,6 @@
   "enableMouseNavigation": true,
   "frames": [
     {
-      "frameId": "frame2160",
-      "title": "New frame",
-      "titleLevel": 0,
-      "notes": "",
-      "timeoutMs": 20000,
-      "timeoutEnable": true,
-      "transitionDurationMs": 1000,
-      "showInFrameList": true,
-      "showFrameNumber": true,
-      "layerProperties": {
-        "Artboard": {
-          "link": false,
-          "referenceElementId": "Shape",
-          "outlineElementId": "Shape",
-          "outlineElementAuto": true,
-          "transitionTimingFunction": "linear",
-          "transitionRelativeZoom": 0,
-          "transitionPathId": ""
-        },
-        "__sozi_auto__": {
-          "link": false,
-          "referenceElementId": "",
-          "outlineElementId": "Shape",
-          "outlineElementAuto": true,
-          "transitionTimingFunction": "linear",
-          "transitionRelativeZoom": 0,
-          "transitionPathId": ""
-        }
-      },
-      "cameraStates": {
-        "Artboard": {
-          "cx": 3209.408286115262,
-          "cy": 2517.6199628424283,
-          "width": 1159.468235068878,
-          "height": 653.3609691743517,
-          "opacity": 1,
-          "angle": 0,
-          "clipped": true,
-          "clipXOffset": 0,
-          "clipYOffset": 0,
-          "clipWidthFactor": 0.9999999999999833,
-          "clipHeightFactor": 0.9999999999999892
-        },
-        "__sozi_auto__": {
-          "cx": 3209.408286115262,
-          "cy": 2517.6199628424283,
-          "width": 1159.468235068878,
-          "height": 653.3609691743517,
-          "opacity": 1,
-          "angle": 0,
-          "clipped": true,
-          "clipXOffset": 0,
-          "clipYOffset": 0,
-          "clipWidthFactor": 0.9999999999999833,
-          "clipHeightFactor": 0.9999999999999892
-        }
-      },
-      "cameraOffsets": {
-        "Artboard": {
-          "deltaX": 127.90828611526194,
-          "deltaY": 39.11996284242832,
-          "widthFactor": 1.8611047111859997,
-          "heightFactor": 1.3361165013790424,
-          "deltaAngle": 0
-        }
-      }
-    },
-    {
       "frameId": "frame9116",
       "title": "New frame",
       "titleLevel": 0,
@@ -209,6 +141,74 @@
           "deltaY": 1878.6910327939331,
           "widthFactor": 7.117883264660154,
           "heightFactor": 13.019087566188414,
+          "deltaAngle": 0
+        }
+      }
+    },
+    {
+      "frameId": "frame2160",
+      "title": "New frame",
+      "titleLevel": 0,
+      "notes": "",
+      "timeoutMs": 20000,
+      "timeoutEnable": true,
+      "transitionDurationMs": 1000,
+      "showInFrameList": true,
+      "showFrameNumber": true,
+      "layerProperties": {
+        "Artboard": {
+          "link": false,
+          "referenceElementId": "Shape",
+          "outlineElementId": "Shape",
+          "outlineElementAuto": true,
+          "transitionTimingFunction": "linear",
+          "transitionRelativeZoom": 0,
+          "transitionPathId": ""
+        },
+        "__sozi_auto__": {
+          "link": false,
+          "referenceElementId": "",
+          "outlineElementId": "Shape",
+          "outlineElementAuto": true,
+          "transitionTimingFunction": "linear",
+          "transitionRelativeZoom": 0,
+          "transitionPathId": ""
+        }
+      },
+      "cameraStates": {
+        "Artboard": {
+          "cx": 3300.439458202864,
+          "cy": 2567.428851834441,
+          "width": 1342.2294156216144,
+          "height": 756.3469919404616,
+          "opacity": 1,
+          "angle": 0,
+          "clipped": true,
+          "clipXOffset": 0,
+          "clipYOffset": 0,
+          "clipWidthFactor": 0.9999999999999793,
+          "clipHeightFactor": 0.9999999999999871
+        },
+        "__sozi_auto__": {
+          "cx": 3300.439458202864,
+          "cy": 2567.428851834441,
+          "width": 1342.2294156216146,
+          "height": 756.3469919404616,
+          "opacity": 1,
+          "angle": 0,
+          "clipped": true,
+          "clipXOffset": 0,
+          "clipYOffset": 0,
+          "clipWidthFactor": 0.9999999999999793,
+          "clipHeightFactor": 0.9999999999999871
+        }
+      },
+      "cameraOffsets": {
+        "Artboard": {
+          "deltaX": 218.939458202864,
+          "deltaY": 88.92885183444105,
+          "widthFactor": 2.1544613412867006,
+          "heightFactor": 1.5467218649089196,
           "deltaAngle": 0
         }
       }
@@ -828,7 +828,7 @@
   ],
   "elementsToHide": [],
   "selectedFrames": [
-    "frame9820"
+    "frame2160"
   ],
   "selectedLayers": [
     "Artboard",
