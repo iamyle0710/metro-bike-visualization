@@ -1,4 +1,4 @@
-# INF 554 Assignment for 5 - Metro Bike Sharing
+# INF 554 Final Project - Metro Bike Sharing
 
 ### TRIBE - Zhaoyang Song | Hsin-Yu Chang | Ming-Yi Lin
 ![Introduction](images/inf554_project_final.001.png)
