@@ -21,15 +21,17 @@
 ### PROJECT CONTRIBUTIONS
 
 - Demonstration: [<member-name> (<member-USC-username>) ...]
-- Presentation: [<member-name> (<member-USC-username>) ...]
-- Transcript: [<member-name> (<member-USC-username>) ...]
+- Presentation: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)]
+- Transcript: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)]
 - Paper: [<member-name> (<member-USC-username>) ...]
 - YouTube video: [<member-name> (<member-USC-username>) ...]
-- Web site: [Ming-Yi Lin (linmingy), <member-name> (<member-USC-username>) ...]
+- Web site: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch) ...]
 - Top 5 Destinations (bar chart) : [Ming-Yi Lin (linmingy)] 
 - Ride Duration By Passholder Type : [Ming-Yi Lin (linmingy)]
 - Bike Type Usage Growth : [Ming-Yi Lin (linmingy)]
 - Bike Station Inbound and Outbound : [Ming-Yi Lin (linmingy)]
+- Bike share station proportional map : [Hsin-Yu Chang (hsinyuch)]
+- Bike Trips Time Series Chart : [Hsin-Yu Chang (hsinyuch)]
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
 
