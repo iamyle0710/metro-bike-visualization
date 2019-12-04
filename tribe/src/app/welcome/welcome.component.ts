@@ -11,9 +11,11 @@ import { ResizeService } from "../core/services/resize.service";
 })
 export class WelcomeComponent implements OnInit {
   @ViewChild("stations", { static: true }) chartRef: ElementRef;
-
+  @ViewChild("welcome_page", {static: true}) welcomePageRef : ElementRef;
   width: number;
   height: number;
+  pageWidth: number;
+  pageHeight: number;
   locationData = [];
   mapData = [];
   station;
@@ -56,6 +58,11 @@ export class WelcomeComponent implements OnInit {
     if (this.chartRef) {
       this.width = this.chartRef.nativeElement.offsetWidth;
       this.height = this.chartRef.nativeElement.offsetHeight;
+    }
+
+    if (this.welcomePageRef && this.welcomePageRef.nativeElement.offsetWidth !== 0){
+      this.pageWidth = this.welcomePageRef.nativeElement.offsetWidth;
+      this.pageHeight = this.welcomePageRef.nativeElement.offsetHeight;
     }
   }
   
