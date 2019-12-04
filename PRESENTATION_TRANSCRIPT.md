@@ -27,7 +27,7 @@ shareholders get an overall concept of the usages in each station right away. ==
 
 ## Slide 5 Data
 - We retrieved data from the LA Bikeshare Metro Website (https://bikeshare.metro.net/about/data/). 
-- This is the major dataset we use is [Trip Data]. The data has been refined according to years. We select the trip data from 2017 Q1 to 2019 Q4. 
+- This is the major dataset we use is [Trip Data]. The data has been refined according to years. We select the trip data from 2017 Q1 to 2019 Q3. 
 - To generate the map, we also link two other datasets: [Station Table] and [Station Status].
  
 
