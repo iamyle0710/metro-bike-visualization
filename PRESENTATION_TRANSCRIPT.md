@@ -36,12 +36,22 @@ shareholders get an overall concept of the usages in each station right away. ==
 - LA Bike Data Analysis, LA Bike Data Official, NYC citi bike
 
 
+
+## Slide 6 Visual Design
+- Design process:
+Since we have data from 2016 to 2019 and each record catains all data (where/when/who) about one bike trip, we  
+- Rationale for the layout:
+For
+- Choice of forms
+To 
+- Visual queries and User Interaction.
+
+
 ## Slide 6 7 8  How your work is original
 
--
-- 
--
--
+- Real-time share bike availability, which shows the percentage of metro share bikes in station.
+- Top 5 destinations for each metro bike share station, which provides insights on relatios between bike stations.
+
 
 
 ## Slide 9 Design timeline
