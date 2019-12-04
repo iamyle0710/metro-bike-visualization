@@ -20,8 +20,8 @@ shareholders get an overall concept of the usages in each station right away. ==
 
 ## Slide 5 Who did what
 
-- Hsin-Yu Chang: Data analysis and charts including hourly line chart, usage growth chart, etc.
-- Ming-Yi Lin: The framework, Homepage map, Destinations Charts, etc.
+- Hsin-Yu Chang: Data analysis and charts including Hourly Line Chart, Welcome page, Usage Growth Chart, etc.
+- Ming-Yi Lin: Implementing Angular framework, Homepage map, Destinations Charts, Analysis Charts, etc.
 - Zhao-Yang Song: Map-based charts including yearly performance, etc.
 
 
@@ -56,20 +56,57 @@ In the 4th phase we published our project and rendering feedback forms.
 
 In the last phase tried to improve the system based on the feedbacks acquired.
 
-## Slide 10 Design Consideration
+## Slide ? Design Consideration
 - Cairo wheel: we followed the cairo wheel to maintain balance between all functionalities such as unidimensionality and multidimensionality, abstraction and figuration.
 
-## Slide 11 Technologies used 
-- We  used different web technologies for the frontend and backend. Bootstrap is a CSS library which we 
- used which made our website scalable at different resolution and screen size. D3.js is 
-what we've learnt in this class and we used it to create visualizations for this website. We used angular framework. Apart from this we used CSS, HTML,Javascript, particles.js and python.
-
-## Slide 12 Color Scheme
+## Slide ? Color Scheme
 - We have used blue color throughout our project so that it would address colour blind people as well. D3 scaleLinear and scaleOrdinal have been used for the visualizations.
 
-## Slide 13 D3 Usage: Maps
+## Slide ? D3 Usage: Maps
 
-
-
-## Slide 14 Responsive
+## Slide ? Responsive
 - The webiste is responsive and can be accessible from any device.
+
+## Slide 14 Technologies Usage 
+- We used different web technologies to build our project : 
+    - `Bootstrap` is used to construct our application's responsive layout, which allows our website can automatically adjust the layout based on different screen dimension
+    - `d3` is used to render our statistic charts and LA map
+    - `mapbox` is mainly used to show our bike station locations
+    - `python` to process our LA metro bike data in order to support rendering different type of charts in different formats 
+
+## Slide 15 Map that shows all bike stations
+- In this chart, we implemented a map that shows all the bike stations. Each circle also represents the available bikes in each station. 
+
+## Slide 16 Bike station shows top 5 destinations and Total trips by Hour of the Day
+- When users hovers on the station, the right side panel will automatically shows
+    - Top 5 Destinations (bar chart)
+        - Shows top 5 destinations that people head to from the current station
+    - Total trips by hour of the current station
+        - Shows the total number of trips hourly of the current station (line series chart)
+- Both Charts are :
+    - implemented by `d3.js`
+    - it will automatically adjust the size based on the screen size (responsive chart)
+    - it support well visual queries : `year`, `sort by station`, and `sort by times` (interactive chart)
+    - it animates the chart when data changes (d3 animated transitions)
+
+## Slide 17 Ride Duration By Passholder Type
+- The chart shows the average ride duration of each passholder type, which includes `Flex Pass`, `Monthly Pass`, `Walk-up`, `One Day Pass` and `Annual Pass`.
+- People who hold `Monthly Pass` tend to ride the bikes for about 10 - 20 minutes on average
+- People who hold `One Dday Pass` tend to ride the bikes about 40 - 90 minutes on average
+- People who hold `
+
+## Slide 18 Bike Type Usage Growth
+
+## Slide 19 Bike Station Inbound and Outbound
+
+## Slide 20 Explain what you would have done differently.
+- If we have more time, 
+
+## Slide 15 - 19 Highlight what you have built and with d3 (see Demonstration for a list of required d3 features to include) and other tools including Bootstrap and framework features you used.
+- d3 maps
+- responsive d3 charts, interactive d3 charts, d3 animated transitions and 
+- d3 layouts
+
+
+
+
