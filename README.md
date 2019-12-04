@@ -18,6 +18,21 @@
 - [Article](<article-pdf-url>) and [Overleaf URL](https://www.overleaf.com/read/vnpnvkwvddft)
 - [YouTube video](<youtube-video-url>)
 
+### PROJECT CONTRIBUTIONS
+
+- Demonstration: [<member-name> (<member-USC-username>) ...]
+- Presentation: [<member-name> (<member-USC-username>) ...]
+- Transcript: [<member-name> (<member-USC-username>) ...]
+- Paper: [<member-name> (<member-USC-username>) ...]
+- YouTube video: [<member-name> (<member-USC-username>) ...]
+- Web site: [Ming-Yi Lin (linmingy), <member-name> (<member-USC-username>) ...]
+- Top 5 Destinations (bar chart) : [Ming-Yi Lin (linmingy)] 
+- Ride Duration By Passholder Type : [Ming-Yi Lin (linmingy)]
+- Bike Type Usage Growth : [Ming-Yi Lin (linmingy)]
+- Bike Station Inbound and Outbound : [Ming-Yi Lin (linmingy)]
+- <chart-description>: [<member-name> (<member-USC-username>) ...]
+- <chart-description>: [<member-name> (<member-USC-username>) ...]
+
 ## Introduction
 
 * Targeted audience : **Metro Bike Institute**<br>
