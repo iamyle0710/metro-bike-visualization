@@ -23,20 +23,19 @@ export class WelcomeComponent implements OnInit {
     this.locationService.locationDataSub.subscribe(data => {
       this.locationData = data;
       this.updateChart();
-      // this.renderChart();
       // console.log(this.locationData);
     });
 
     this.locationService.mapDataSub.subscribe(data => {
       this.mapData= data;
       this.updateChart();
-      // this.renderChart();
       // console.log(this.mapData);
     });
    }
 
   ngOnInit() {
   };
+
   ngOnChanges() {
     this.updateChart();
   };
@@ -45,25 +44,23 @@ export class WelcomeComponent implements OnInit {
     this.resizeService.resizeSub.subscribe(() => {
       this.updateChart();
     });
+    this.updateChart();
   }
 
   updateChart() {
     this.updateSize();
     this.renderChart();
-
   }
 
   updateSize() {
     if (this.chartRef) {
       this.width = this.chartRef.nativeElement.offsetWidth;
-      if (this.station) {
-        d3.select("#stations").attr("width", this.width);
-      }
+      this.height = this.chartRef.nativeElement.offsetHeight;
     }
   }
   
   renderChart(){
-    if(this.locationData.length !=0 && this.mapData.length != 0){
+    if(this.locationData.length !=0 && this.mapData.length != 0 && this.chartRef){
       if (!this.station) {
         
         var station = this.locationData;
@@ -71,14 +68,8 @@ export class WelcomeComponent implements OnInit {
 
         this.width = this.chartRef.nativeElement.offsetWidth;
         this.height = this.chartRef.nativeElement.offsetWidth;
-
-        this.station = d3.select("#stations")
-        .attr("width", this.width)
-        .attr("width", this.height);
-
-        console.log(this.width)
-        console.log(this.height)
-        
+        var width = this.width;
+        var height = this.height;
         // var region = {};
         // station.forEach(function(item) {
         //   region[item.Region] = (region[item.Region] || 0) + 1;
@@ -106,11 +97,16 @@ export class WelcomeComponent implements OnInit {
         // console.log(la);
         // console.log(la);
         
-        // this.station = d3.select("#stations")
-        
+        this.station = d3.select("#stations")
+        // var width = +this.station.attr("width");
+        // var height = +this.station.attr("height");
+        // var width = +this.station.offsetWidth;
+        // var height = +this.station.offsetHeight;
+        // var width = +this.station.offsetWidth;
+        // var height = +this.station.offsetHeight;
 
-        console.log(this.width)
-        console.log(this.height)
+        // console.log(width)
+        // console.log(height)
         // .attr("width", 900)
         // .attr("height", 600)
 
@@ -133,9 +129,14 @@ export class WelcomeComponent implements OnInit {
         // console.log(station)
 
         // var center = 
+        var scaleLinear = d3.scaleLinear()
+          .domain([400, 1600])
+          .range([25000, 40000]);
+        
+        var scale = scaleLinear(width);
 
         var projection = d3.geoMercator()
-                    .scale(32000)
+                    .scale(scale)
                     .center([-118.408703, 33.946042])
                     // .center([-119.012550, 33.960832])
                     // .center([-118.949379, 33.927794])
