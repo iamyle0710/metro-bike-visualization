@@ -218,6 +218,9 @@ export class WelcomeComponent implements OnInit {
           .style("fill", '#77d64b')
           .style("stroke", '#fff')
           .style("stroke-width", '2')
+
+          d3.select('#hover-bubbletip')
+          .attr('display', 'block')
           
           hover
           .attr("transform", datum.area != 'North Hollywood'?
@@ -261,6 +264,9 @@ export class WelcomeComponent implements OnInit {
           d3.select(this)
           .style("fill", 'black')
           .style("stroke-width", '0')
+
+          d3.select('#hover-bubbletip')
+          .attr('display', 'none')
 
         }
 
