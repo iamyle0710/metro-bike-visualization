@@ -83,6 +83,8 @@ In the last phase tried to improve the system based on the feedbacks acquired.
         - Shows top 5 destinations that people head to from the current station
     - Total trips by hour of the current station
         - Shows the total number of trips hourly of the current station (line series chart)
+        - supply : total number of incoming bikes
+        - demand : total number of outgoing bikes
 - Both Charts are :
     - implemented by `d3.js`
     - it will automatically adjust the size based on the screen size (responsive chart)
@@ -91,16 +93,41 @@ In the last phase tried to improve the system based on the feedbacks acquired.
 
 ## Slide 17 Ride Duration By Passholder Type
 - The chart shows the average ride duration of each passholder type, which includes `Flex Pass`, `Monthly Pass`, `Walk-up`, `One Day Pass` and `Annual Pass`.
+- People who hold `Flex Pass` tend to ride the bikes for about 10 - 60 minutes on average
 - People who hold `Monthly Pass` tend to ride the bikes for about 10 - 20 minutes on average
-- People who hold `One Dday Pass` tend to ride the bikes about 40 - 90 minutes on average
-- People who hold `
+- People who `Walk-up` tend to ride the bikes for about 50 - 80 minutes on average
+- People who hold `One Day Pass` tend to ride the bikes about 40 - 90 minutes on average
+- People who hold `Annual Pass` tend to ride the bikes about 10 - 120 minutes on average`
+- Line Chart :
+    - implemented by `d3.js`
+    - it will automatically adjust the size based on the screen size (responsive chart)
+    - it support well visual queries : `years`, `click legend to toggle visbility of specific passholder type` (interactive chart)
+    - it animates the chart and axis when data changes (d3 animated transitions)
 
 ## Slide 18 Bike Type Usage Growth
+- The usage of `electric bike` started to grow up since May 2019 to Sep 2019 
+- The usage of `standard bike` started to decrease from Oct 2018 to Sep 2019.
+- The usage of `smart bike` increases slowly from the trend of Feb 2019 to Sep 2019.
+- Group Bar Chart :
+    - implemented by `d3.js`
+    - it will automatically adjust the size based on the screen size (responsive chart)
+    - it support well visual queries : `years`, `click legend to toggle visbility of specific bike type` (interactive chart)
+    - it animates the chart and axis when data changes (d3 animated transitions)
 
 ## Slide 19 Bike Station Inbound and Outbound
+- We also want to see each station's inbound and outbound, which allows us to see where people, who rent the bikee, come from and head to which stations. 
+- The chart will be able users to select a specific station and years to show the circle packing layout of inbound and outbound stations.
+- Circle Packing Layout :
+    - implemented by `d3.js`
+    - it will automatically adjust the size based on the screen size (responsive chart)
+    - it support well visual queries : `select a station`, `years` and albe to `zoom in`, `zoom out` when click the bubble (interactive chart)
+    - it animates the chart and axis when data changes (d3 animated transitions)
 
 ## Slide 20 Explain what you would have done differently.
-- If we have more time, 
+- Analyze whether users' gender and age will be factors that affect them using metro bikes
+- Analyze whether people use metro bikes more often in holidays or in weekdays
+- Analyze whether LA weather data / temperature will affect people using metro bikes
+
 
 ## Slide 15 - 19 Highlight what you have built and with d3 (see Demonstration for a list of required d3 features to include) and other tools including Bootstrap and framework features you used.
 - d3 maps
