@@ -30,7 +30,7 @@
 - Ride Duration By Passholder Type : [Ming-Yi Lin (linmingy)]
 - Bike Type Usage Growth : [Ming-Yi Lin (linmingy)]
 - Bike Station Inbound and Outbound : [Ming-Yi Lin (linmingy)]
-- Bike share station proportional map : [Hsin-Yu Chang (hsinyuch)]
+- Bike Share Station Proportional Map : [Hsin-Yu Chang (hsinyuch)]
 - Bike Trips Time Series Chart : [Hsin-Yu Chang (hsinyuch)]
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
