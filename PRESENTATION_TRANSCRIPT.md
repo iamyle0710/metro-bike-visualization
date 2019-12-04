@@ -25,14 +25,15 @@ shareholders get an overall concept of the usages in each station right away. ==
 - Zhao-Yang Song: Map-based charts including yearly performance, etc.
 
 
-## Slide 4 Data
+## Slide 6 Data
 - We retrieved data from the LA Bikeshare Metro Website (https://bikeshare.metro.net/about/data/). 
 - This is the major dataset we use is [Trip Data]. The data has been refined according to years. We select the trip data from 2017 Q1 to 2019 Q4. 
 - To generate the map, we also link two other datasets: [Station Table] and [Station Status].
  
 
-## Slide 5 Research
+## Slide 7,8 Research
 - Our research was mainly focussed on understanding the already existing visualizations on LA Metro Bikeshare performance and digging into the aspects that we wanted to improve on such that the shareholders can make a quick and informed decision on the bike renew system or other business strategies.
+- LA Bike Data Analysis, LA Bike Data Official, NYC citi bike
 
 
 ## Slide 6 7 8  How your work is original
