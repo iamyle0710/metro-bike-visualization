@@ -20,6 +20,7 @@ export class ChartComponent implements OnInit {
   width: number = 500;
   height: number = 400;
   noData : boolean  = false;
+  hidden : Array<String> = [];
   svg;
   node;
   label;
@@ -487,6 +488,7 @@ export class ChartComponent implements OnInit {
       "#4275a2",
       "#475385"
     ]);
+    var hiddens = this.hidden;
 
     var xAxis = d3.axisBottom(x).ticks(5),
       yAxis = d3.axisLeft(y).ticks(5);
@@ -616,6 +618,10 @@ export class ChartComponent implements OnInit {
         .append("g")
         .attr("class", "line_group")
         .attr("id", d.key.replace(/\s/g, "_"))
+        .attr("opacity", function(){
+          var id = d3.select(this).attr("id");
+          return hiddens.indexOf(id) === -1 ? 1 : 0;
+        })
         .append("path")
         .attr("class", "line")
         .style("stroke", color(d.key))
@@ -673,38 +679,54 @@ export class ChartComponent implements OnInit {
       });
   }
 
+  updateFilters(id){
+    var index = this.hidden.indexOf(id);
+    if(index == -1){
+      this.hidden.push(id);
+    }
+    else{
+      this.hidden.splice(index, 1);
+    }
+  }
   toggleLineSeries(d: any) {
     var id = d.key.replace(/\s/g, "_");
-    if (
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .classed("selected")
-    ) {
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .attr("opacity", 1)
-        .classed("selected", false);
+    var hiddens = this.hidden;
+    this.updateFilters(id);
 
-      this.svg
-        .select(".line_group#" + id)
-        .transition()
-        .duration(300)
-        .attr("opacity", 1);
-    } else {
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .attr("opacity", 0.1)
-        .classed("selected", true);
+    this.svg
+        .selectAll(".legend text")
+        .attr("opacity", function(){
+          var classes = d3.select(this).attr("class");
+          var id = classes.split(" ")[0];
+          return hiddens.indexOf(id) == -1 ? 1 : 0.3;
+        })
+        .classed("selected", function(){
+          var classes = d3.select(this).attr("class");
+          var id = classes.split(" ")[0];
+          return hiddens.indexOf(id) == -1 ? true : false;
+        });
 
-      this.svg
-        .select(".line_group#" + id)
-        .transition()
-        .duration(300)
-        .attr("opacity", 0);
-    }
+    this.svg
+      .selectAll(".legend rect")
+      .attr("opacity", function(){
+        var classes = d3.select(this).attr("class");
+        var id = classes.split(" ")[0];
+        return hiddens.indexOf(id) == -1 ? 1 : 0.3;
+      })
+      .classed("selected", function(){
+        var classes = d3.select(this).attr("class");
+        var id = classes.split(" ")[0];
+        return hiddens.indexOf(id) == -1 ? true : false;
+      });
+
+    this.svg.selectAll(".line_group")
+      .transition()
+      .duration(300)
+      .attr("opacity", function(){
+        var id = d3.select(this).attr("id");
+        return  hiddens.indexOf(id) == -1 ? 1 : 0;
+      });
+  
   }
 
   toggleBarSeries(d: String) {
