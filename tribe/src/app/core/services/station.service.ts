@@ -161,7 +161,7 @@ export class StationService  {
     }
 
     setHoverStationById(stationId: number){
-        if(this.stationGeojson){
+        if(this.stationGeojson || stationId == this.hoverStation.id){
             console.log(this.stationGeojson);
             var obj = this.stationGeojson.features.find(item => item.properties.kioskId == stationId);
             if(obj.properties){
@@ -178,7 +178,7 @@ export class StationService  {
     }
 
     setHoverStation(e:any){
-        if(!e){
+        if(!e || e.features[0].properties.kioskId == this.hoverStation.id ){
             return;
         }
         this.hoverStation.id = e.features[0].properties.kioskId;

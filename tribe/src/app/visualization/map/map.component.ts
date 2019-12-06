@@ -31,6 +31,11 @@ export class MapComponent implements OnInit {
       }
       this.loadGeojson(data);
     })
+
+    this.stationService.hoverStationSub.subscribe((station: StationStatus) => {
+      this.station = station;
+      this.drawTopFiveStations();
+    });
   }
 
   ngOnInit() {
@@ -121,25 +126,29 @@ export class MapComponent implements OnInit {
     });
 
     this.map.on("mouseenter", "stations", this.onMouseHoverEvent.bind(this));
-    this.map.on("mouseleave", "stations", this.onMouseLeaveEvent.bind(this));
+    // this.map.on("mouseleave", "stations", this.onMouseLeaveEvent.bind(this));
   }
 
   updateMarkers() {
     var newMarkers = {};
     var features = this.map.querySourceFeatures("stations");
+    var currentHoverId = this.station.id || false;
+    var destinationIds = this.station.destinations || [];
 
     for (var i = 0; i < features.length; i++) {
       var coords = features[i].geometry.coordinates;
       var props = features[i].properties;
       var ratio = 100 - 100 * (props.bikesAvailable / props.totalDocks);
       var id = props.kioskId;
+      var isHidden = (!currentHoverId || destinationIds.indexOf(id) !== -1) ? false : true;
       var marker = this.markers.hasOwnProperty(id) ? this.markers[id] : false;
 
       if (!marker) {
         var el = document.createElement("div");
+        
         // el.addEventListener('click', this.onClickSelectStation);
         el.innerHTML = [
-          "<div class='bike_station_marker' id='marker_"+id+"'>",
+          "<div class='bike_station_marker "+ (isHidden ? "hidden" : "") + "' id='marker_"+id+"'>",
           "<div class='bike_station_progess' style='top:" + ratio + "%'></div>",
           "</div>"
         ].join("");
@@ -174,7 +183,12 @@ export class MapComponent implements OnInit {
       this.stationService.setHoverStation(e);
     }
     
-    this.drawTopFiveStations(e);
+    // this.drawTopFiveStations({
+    //   id : e.features[0].properties.kioskId,
+    //   lat : e.features[0].properties.latitude,
+    //   lng : e.features[0].properties.longitude,
+
+    // });
 
     // this.createPopup(e);
   }
@@ -185,15 +199,13 @@ export class MapComponent implements OnInit {
       type: "FeatureCollection",
       features: []
     });
-    // this.removePopup();
     this.showStations();
     
   }
 
-  drawTopFiveStations(e: any) {
-    var stationId = e.features[0].properties.kioskId;
-    var destinations = this.stationService.getStationTopNInOut(stationId, 5, true);
-    this.hideStations(stationId);
+  drawTopFiveStations() {
+    var destinations = this.station.destinations || [];
+    this.hideStations(this.station.id);
 
     // Create a GeoJSON source with an empty lineString.
     var geojson = {
@@ -208,8 +220,8 @@ export class MapComponent implements OnInit {
             type: "LineString",
             coordinates: [
               [
-                e.features[0].properties.longitude,
-                e.features[0].properties.latitude
+                this.station.longitude,
+                this.station.latitude
               ],
               [+destinations[i].latLng[0], +destinations[i].latLng[1]]
             ]
@@ -270,14 +282,15 @@ export class MapComponent implements OnInit {
   showStations(){
     var markers = document.querySelectorAll(".bike_station_marker");
     for(var i = 0; i < markers.length; i++){
-      markers[i]["style"].opacity = 1;
+      markers[i]["classList"].remove("hidden");
     }
   }
 
   hideStations(stationId){
     var markers = document.querySelectorAll(".bike_station_marker");
     for(var i = 0; i < markers.length; i++){
-      markers[i]["style"].opacity = 0.2;
+      markers[i]["classList"].add("hidden");
+      markers[i]["classList"].remove("selected");
     }
     // Change the current marker and destination markers opacity
     if(stationId){
@@ -285,12 +298,12 @@ export class MapComponent implements OnInit {
       // var destinations = this.stationInOut[id]["out"];
       var destinations = this.stationService.getStationTopNInOut(stationId, 5, true);
       var current_marker = document.querySelector("#marker_" + id);
-      current_marker["style"].opacity = 1;
-
+      current_marker["classList"].remove("hidden");
+      current_marker["classList"].add("selected");
       for(var i = 0; i < destinations.length; i++){
         var marker = document.querySelector("#marker_" + destinations[i].stationId);
         if(marker){
-          marker["style"].opacity = 1;
+          marker["classList"].remove("hidden");
         }
       }
     }
