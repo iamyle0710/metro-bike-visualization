@@ -16,7 +16,26 @@
       </span>
     </div>
   </div>
+
+
+
+  <div class="chart_header flex_row">
+      <div class="chart_title">Overall Inbound / Outbound
+          <fa-icon class="info" 
+          [icon]="faInfoCircle" 
+          placement="bottom" 
+          [ngbTooltip]="tooltipQuarter"
+          tooltipClass="tooltip_container"></fa-icon>
+        </div>
+    </div>
+  
   <svg id="QuarterChart" width="100%"></svg>
+  
+  
+  
+  
+  
+  
   <div class='filter_func flex_row'>
     <div class='filter_year' [ngClass]="{'selected' : filterYear == year}" (click)="onClickChangeYear(year)" *ngFor="let year of years">{{ year }}</div>
   </div>
@@ -24,9 +43,9 @@
     <div class="chart_title">Top 5 Outbound Destinations 
       <fa-icon class="info" 
         [icon]="faInfoCircle" 
-        placement="bottom" 
         [ngbTooltip]="tooltipDestinations"
-        tooltipClass="tooltip_container"></fa-icon></div>
+        tooltipClass="tooltip_container"></fa-icon>
+    </div>
     <div class="chart_func flex_row">
         <span class="sort_value sort_func" 
             (click)="onClickChangeSort('BY_TIMES')"

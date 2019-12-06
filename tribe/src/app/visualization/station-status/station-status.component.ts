@@ -16,8 +16,8 @@ import { QuarterModel} from "src/app/share/quarter.model";
 export class StationStatusComponent implements OnInit{
   faInfoCircle = faInfoCircle;
   width: number;
-  height: number = 100;
-  margin = { top: 5, right: 20, bottom: 10, left: 100 };
+  height: number = 120;
+  margin = { top: 5, right: 30, bottom: 10, left: 150 };
   station : StationStatus = new StationStatus();
   sortMethod: string = "BY_STATION";
   years: Array<number> = [2017, 2018, 2019];
@@ -30,6 +30,10 @@ export class StationStatusComponent implements OnInit{
   tooltipHour : String = `This section shows total inbound/outbound trips to this station.
    You can click year to see the trends or hover on the chart to see detail information.
     `;
+
+  tooltipQuarter : String = `This section shows total inbound/outbound trips of this station since it went live.
+  `;
+
   svg;
   // stationData: DataModel[];
   stationData: [];
@@ -261,7 +265,7 @@ export class StationStatusComponent implements OnInit{
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "middle")
       .attr("fill", "#343333")
-      .attr("font-size", 10)
+      .attr("font-size", 12)
       .transition()
       .duration(400)
       .attr("x", function(d: any) {
@@ -300,7 +304,7 @@ export class StationStatusComponent implements OnInit{
       .enter()
       .append("text")
       .attr("class", "stations")
-      .attr("x", -5)
+      .attr("x", -8)
       .attr("y", function(d: any) {
         return y(d.stationId) + y.bandwidth() / 2;
       })
@@ -308,7 +312,7 @@ export class StationStatusComponent implements OnInit{
       .attr("alignment-baseline", "middle")
       .attr("text-transform", "uppercase")
       .attr("fill", "#fff")
-      .attr("font-size", 8)
+      .attr("font-size", 12)
       .text(function(d: any) {
         return d.name;
       });
@@ -734,12 +738,30 @@ export class StationStatusComponent implements OnInit{
         .range([chart_height, 0]); 
 
     var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
-      return d.replace("_", " ");;
+      // return d.replace("_", " ");
+      return 'Q'+d.split("_")[1];
     }),
     yAxis = d3
       .axisLeft(y)
       .tickSizeInner(-chart_width)
       .ticks(5);
+
+
+    var years = data.map(d=>d.yr_q.split('_')[0])
+    var yearSet = [...new Set(data.map(d=>d.yr_q.split('_')[0]))] 
+    var year = {}
+    for (var i = 0; i < years.length; i++) {
+      if (years[i] in year){
+        year[years[i]]++
+      }else{
+        year[years[i]] =1
+      }
+    }
+
+
+
+    // console.log(year)
+
 
 
 
@@ -757,9 +779,6 @@ export class StationStatusComponent implements OnInit{
         );
 
           // groupKey = "name"
-
-
-
       this.quarter
         .append("g")
         .attr("id", "quarterX")
