@@ -14,6 +14,7 @@ export class StationService  {
     filterYear : number = 2019;
     hoverStation: StationStatus = new StationStatus();
     hoverStationSub = new EventEmitter<StationStatus>();
+    changeMapCenterSub = new EventEmitter<any>();
     
     // metroJsonOb: {};
     metroJson: DataModel[];
@@ -173,6 +174,7 @@ export class StationService  {
             this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
             this.hoverStation.latitude = obj.properties.latitude;
             this.hoverStation.longitude = obj.properties.longitude;
+            this.changeMapCenterSub.emit();
             this.hoverStationSub.emit(this.hoverStation);
         }
     }
