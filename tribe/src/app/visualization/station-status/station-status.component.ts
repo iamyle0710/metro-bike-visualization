@@ -16,8 +16,8 @@ import { QuarterModel} from "src/app/share/quarter.model";
 export class StationStatusComponent implements OnInit{
   faInfoCircle = faInfoCircle;
   width: number;
-  height: number = 100;
-  margin = { top: 5, right: 20, bottom: 10, left: 100 };
+  height: number = 120;
+  margin = { top: 5, right: 30, bottom: 10, left: 150 };
   station : StationStatus = new StationStatus();
   sortMethod: string = "BY_STATION";
   years: Array<number> = [2017, 2018, 2019];
@@ -257,7 +257,7 @@ export class StationStatusComponent implements OnInit{
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "middle")
       .attr("fill", "#343333")
-      .attr("font-size", 10)
+      .attr("font-size", 12)
       .transition()
       .duration(400)
       .attr("x", function(d: any) {
@@ -296,7 +296,7 @@ export class StationStatusComponent implements OnInit{
       .enter()
       .append("text")
       .attr("class", "stations")
-      .attr("x", -5)
+      .attr("x", -8)
       .attr("y", function(d: any) {
         return y(d.stationId) + y.bandwidth() / 2;
       })
@@ -304,7 +304,7 @@ export class StationStatusComponent implements OnInit{
       .attr("alignment-baseline", "middle")
       .attr("text-transform", "uppercase")
       .attr("fill", "#fff")
-      .attr("font-size", 8)
+      .attr("font-size", 12)
       .text(function(d: any) {
         return d.name;
       });
