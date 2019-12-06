@@ -5,6 +5,7 @@ import { StationStatus } from '../../share/station.model';
 import * as mapboxgl from "mapbox-gl";
 import * as d3 from "d3";
 import { ResizeService } from 'src/app/core/services/resize.service';
+import { LocationService } from 'src/app/core/services/location.service';
 
 @Component({
   selector: "app-map",
@@ -24,9 +25,13 @@ export class MapComponent implements OnInit {
   stationInOut : {};
 
   constructor(private stationService: StationService,
-    private resizeService : ResizeService) {
+    private resizeService : ResizeService,
+    private locationService : LocationService) {
     this.markers = {};
     this.markersOnScreen = {};
+    this.lng = this.locationService.center[0];
+    this.lat = this.locationService.center[1];
+
     this.stationService.stationsGeojsonSub.subscribe((data:any) => {
       if(Object.entries(data).length === 0){
         return;
@@ -43,7 +48,7 @@ export class MapComponent implements OnInit {
 
     this.stationService.changeMapCenterSub.subscribe(() => {
       this.changeMapCenter(this.station.latitude, this.station.longitude);
-    })
+    });    
   }
 
   ngOnInit() {
