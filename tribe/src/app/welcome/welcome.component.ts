@@ -105,7 +105,7 @@ export class WelcomeComponent implements OnInit {
         var width = this.width;
         var height = this.height;
 
-        var scale = Math.sqrt(width*width+height*height)*30
+        var scale = Math.sqrt(width*width+height*height)*32.5
         
         const regionset = [...new Set(station.map(item => item.Region))];
 
@@ -133,7 +133,7 @@ export class WelcomeComponent implements OnInit {
         var bubble = d3
         .scaleSqrt()
         .domain([d3.min(region, r => r.stations), d3.max(region, r => r.stations)])
-        .range([30*this.pageWidth/1375, 70*this.pageWidth/1375])
+        .range([20*scale/40000, 70*scale/40000])
 
         
 
@@ -180,7 +180,7 @@ export class WelcomeComponent implements OnInit {
 
         hover.append('rect')
         // .attr("id", "hover-right")
-        .attr('width', boxHeight)
+        .attr('width', boxHeight+3)
         .attr('height', boxHeight)
         .attr('fill', '#3B3E4A')
         .attr('stroke-width', '0')
@@ -205,7 +205,7 @@ export class WelcomeComponent implements OnInit {
         .attr('dominant-baseline',"middle")
         // .attr('text-anchor',"start")
         .attr('text-anchor',"end")
-        .attr('x', boxWidth-1.5)
+        .attr('x', boxWidth-boxHeight*3/4+boxHeight-3)
         .attr('y', boxHeight/2)
 
         var points = this.station.selectAll("circle")
@@ -217,7 +217,9 @@ export class WelcomeComponent implements OnInit {
         .style('fill', '#2F515C')
         .attr("cx", function (d) { return projection(d.point)[0]; })
         .attr("cy", function (d) { return projection(d.point)[1]; })
-        .attr("r", d => bubble(d.stations))
+        .attr("r", function (d) { 
+          console.log(bubble(d.stations));
+          return bubble(d.stations); })
         // .style("fill", function (d) { return color(d.year);})
         .style("opacity", 0.8)
         .on("mouseenter", onMouseEnter)
@@ -228,9 +230,12 @@ export class WelcomeComponent implements OnInit {
         .transition()
         .attr("cx", function (d) { return projection(d.point)[0]; })
         .attr("cy", function (d) { return projection(d.point)[1]; })
-        .attr("r", d => bubble(d.stations))
-        .on("mouseenter", onMouseEnter)
-        .on("mouseleave", onMouseLeave);
+        .attr("r", function (d) { 
+          console.log(bubble(d.stations));
+          return bubble(d.stations); })
+        // .on("mouseenter", onMouseEnter)
+        // .on("mouseleave", onMouseLeave)
+        // .on('click', onClick.bind(this));
 
         points
         .exit()
@@ -243,6 +248,7 @@ export class WelcomeComponent implements OnInit {
 
         function onClick(datum){
           this.locationService.setCenter(datum.point);
+          points.exit().remove();
           console.log(this.locationService.center);
           this.router.navigate(['/visualization']);
           // console.log(datum.point)
