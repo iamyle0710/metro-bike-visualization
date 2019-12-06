@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { environment } from "../../../environments/environment";
-import { StationService } from "../../core/services/station.service";
-import { StationStatus } from '../../share/station.model';
 import * as mapboxgl from "mapbox-gl";
 import * as d3 from "d3";
+
+import { StationService } from "../../core/services/station.service";
+import { StationStatus } from '../../share/station.model';
 import { ResizeService } from 'src/app/core/services/resize.service';
 import { LocationService } from 'src/app/core/services/location.service';
 
