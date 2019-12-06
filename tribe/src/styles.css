@@ -114,3 +114,8 @@ span.area{
  border-bottom: 2px solid #3CC9ED;
  background-color: rgba(0, 203, 241, 0);
 }
+
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-bottom-right{
+  display: none !important;
+}

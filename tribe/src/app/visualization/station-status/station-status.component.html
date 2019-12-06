@@ -1,5 +1,6 @@
 <div
   class="map_station_tooltip"
+  *ngIf="station"
   #station_tooltip
 >
   <div class="marker_header">
@@ -20,7 +21,12 @@
     <div class='filter_year' [ngClass]="{'selected' : filterYear == year}" (click)="onClickChangeYear(year)" *ngFor="let year of years">{{ year }}</div>
   </div>
   <div class="chart_header flex_row">
-    <div class="chart_title">Top 5 Destinations</div>
+    <div class="chart_title">Top 5 Outbound Destinations 
+      <fa-icon class="info" 
+        [icon]="faInfoCircle" 
+        placement="bottom" 
+        [ngbTooltip]="tooltipDestinations"
+        tooltipClass="tooltip_container"></fa-icon></div>
     <div class="chart_func flex_row">
         <span class="sort_value sort_func" 
             (click)="onClickChangeSort('BY_TIMES')"
@@ -32,7 +38,7 @@
             >Sort by name</span>
     </div>
   </div>
-  <div *ngIf="topFiveStations.length == 0" class="no_data">
+  <div *ngIf="!station || station.destinations.length == 0" class="no_data">
       This is a new station and hence no data has been collected for available visualization 
   </div>
   <svg id="inOutBarChart" width="100%"></svg>
@@ -40,7 +46,7 @@
   <div class="chart_header flex_row">
     <div class="chart_title">Total Trips by Hour of the Day</div>
   </div>
-  <div *ngIf="topFiveStations.length == 0" class="no_data">
+  <div *ngIf="!station || station.destinations.length == 0" class="no_data">
     This is a new station and hence no data has been collected for available visualization 
   </div>
   <svg id="hourlyChart" width="100%"></svg>

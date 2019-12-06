@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation } from "@angular/core";
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
@@ -9,17 +10,22 @@ import { QuarterModel} from "src/app/share/quarter.model";
 @Component({
   selector: "app-station-status",
   templateUrl: "./station-status.component.html",
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ["./station-status.component.css"]
 })
-export class StationStatusComponent implements OnInit {
-  // station: StationStatus;
+export class StationStatusComponent implements OnInit{
+  faInfoCircle = faInfoCircle;
   width: number;
   height: number = 100;
   margin = { top: 5, right: 20, bottom: 10, left: 100 };
+  station : StationStatus = new StationStatus();
   sortMethod: string = "BY_STATION";
   years: Array<number> = [2017, 2018, 2019];
   filterYear: number = 2019;
-  topFiveStations: [];
+  topFiveStations : Array<any> = [];
+  tooltipDestinations : String = `This section shows the top 5 destinations people head to from this station.
+  You can click different year to see different destinations or click the bar chart to change the current station.
+   `;
   svg;
   // stationData: DataModel[];
   stationData: [];
@@ -29,13 +35,12 @@ export class StationStatusComponent implements OnInit {
   quarter;
 
   @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
-  @Input() station: StationStatus;
+  // @Input() station: StationStatus;
 
   constructor(
     private stationService: StationService,
     private reszieService: ResizeService
   ) {
-    this.topFiveStations = [];
     this.stationData = [];
     this.quarterData = [];
   }
@@ -44,16 +49,8 @@ export class StationStatusComponent implements OnInit {
     this.stationService.hoverStationSub.subscribe((station: StationStatus) => {
       // console.log(station);
       this.station = station;
-      this.topFiveStations = this.stationService.getStationTopNInOut(
-        this.station.id,
-        5,
-        true
-      );
-
       this.stationData = this.stationService.getStation(this.station.id);
       this.quarterData = this.stationService.getQuarterData(this.station.id);
-
-      // console.log(this.quarterData)
 
       this.updateData();
       this.updateSize();
@@ -67,10 +64,8 @@ export class StationStatusComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {}
-
   updateData() {
-    this.topFiveStations = this.topFiveStations.sort((a: any, b: any) => {
+    this.station.destinations.sort((a: any, b: any) => {
       switch (this.sortMethod) {
         case "BY_STATION":
           return d3.descending(a.name, b.name);
@@ -124,13 +119,17 @@ export class StationStatusComponent implements OnInit {
     this.renderTravelTimesChart();
   }
 
+  onStationChange(){
+
+  }
+
   updateChart() {
     // console.log("Station resized");
-    var topFiveStations = this.stationService.getStationTopNInOut(
-      this.station.id,
-      5,
-      true
-    );
+    // var topFiveStations = this.stationService.getStationTopNInOut(
+    //   this.station.id,
+    //   5,
+    //   true
+    // );
     this.updateSize();
     this.renderTravelTimesChart();
     this.renderHourlyChart();
@@ -142,7 +141,7 @@ export class StationStatusComponent implements OnInit {
       return;
     }
     var stationService = this.stationService;
-    var data = this.topFiveStations;
+    var data = this.station.destinations;
     if (!data || data.length == 0) {
       d3.select("#inOutBarChart").style("display", "none");
     } else {
@@ -218,7 +217,7 @@ export class StationStatusComponent implements OnInit {
       .attr("width", function(d: any) {
         return x(d.numberOftimes);
       })
-      .attr("fill", "#529137")
+      .attr("fill", "#FFCF21")
       
 
     bars
@@ -231,7 +230,7 @@ export class StationStatusComponent implements OnInit {
       .attr("width", function(d: any) {
         return x(d.numberOftimes);
       })
-      .attr("fill", "#529137");
+      .attr("fill", "#FFCF21");
 
     bars
       .exit()
@@ -257,14 +256,14 @@ export class StationStatusComponent implements OnInit {
       .attr("x", 0)
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "middle")
-      .attr("fill", "#fff")
+      .attr("fill", "#343333")
       .attr("font-size", 10)
       .transition()
       .duration(400)
       .attr("x", function(d: any) {
         return x(d.numberOftimes) - 5 < 0 ? 0 : x(d.numberOftimes) - 5;
       })
-      .attr("fill", "#fff")
+      .attr("fill", "#343333")
       .text(function(d: any) {
         return d.numberOftimes;
       });

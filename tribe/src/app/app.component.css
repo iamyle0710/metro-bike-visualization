@@ -1,3 +1,7 @@
+.app{
+    min-width: 400px;
+}
+
 .loadingPage{
     position: absolute;
     width: 100%;
