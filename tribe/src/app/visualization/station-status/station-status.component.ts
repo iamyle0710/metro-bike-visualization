@@ -4,7 +4,7 @@ import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
 import { ResizeService } from "src/app/core/services/resize.service";
-import { DataModel} from "src/app/share/data.model";
+// import { DataModel} from "src/app/share/data.model";
 import { QuarterModel} from "src/app/share/quarter.model";
 
 @Component({
@@ -26,7 +26,8 @@ export class StationStatusComponent implements OnInit {
   You can click different year to see different destinations or click the bar chart to change the current station.
    `;
   svg;
-  stationData: DataModel[];
+  // stationData: DataModel[];
+  stationData: [];
   hourly;
 
   quarterData: QuarterModel[];
@@ -332,45 +333,51 @@ export class StationStatusComponent implements OnInit {
   }
 
   renderHourlyChart() {
-    var height = 300;
+    var height = 220;
     var margin = { top: 50, right: 50, bottom: 30, left: 70 };
     var palette = ["#FFCF21", "#0191B4"];
     // console.log('Hello!!')
     if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
       return;
     }
-    var data = this.stationData;
-    // console.log(data);
+    var hourly: any = this.stationData;
 
-    if (data.length == 0) {
+    if (hourly.length == 0) {
       d3.select("#hourlyChart").style("display", "none");
     } else {
       d3.select("#hourlyChart").style("display", "block");
     }
 
-    var hourly_d = [];
-    var hourly_s = [];
+    // var hourly_d = [];
+    // var hourly_s = [];
     var houraly_list = [];
+    if(hourly.length !=0){
+      for (var i = 0; i < 24; i++){
+        // console.log(hourly[0][i], hourly[1][i])
+        houraly_list.push([hourly[0]['values'][i].value, hourly[1]['values'][i].value]);
+      }
+    
+    
+    
+    
 
-    for (var i = 0; i < 24; i++) {
-      var d = data.filter(
-        row => row.start_station == this.station.id && row.start_time_hour == i
-      );
-      var s = data.filter(
-        row => row.end_station == this.station.id && row.end_time_hour == i
-      );
+    // for (var i = 0; i < 24; i++) {
+    //   var d = data.filter(
+    //     row => row.start_station == this.station.id && row.start_time_hour == i
+    //   );
+    //   var s = data.filter(
+    //     row => row.end_station == this.station.id && row.end_time_hour == i
+    //   );
 
-      hourly_d.push({ time: i, value: d.length });
-      hourly_s.push({ time: i, value: s.length });
-      houraly_list.push([d.length, s.length]);
-    }
+    //   hourly_d.push({ time: i, value: d.length });
+    //   hourly_s.push({ time: i, value: s.length });
+    //   houraly_list.push([d.length, s.length]);
+    // }
 
-    var hourly = [
-      { type: "demand", values: hourly_d },
-      { type: "supply", values: hourly_s }
-    ];
-
-    // console.log(hourly)
+    // var hourly = [
+    //   { type: "demand", values: hourly_d },
+    //   { type: "supply", values: hourly_s }
+    // ];
 
     this.width = this.tooltipRef.nativeElement.offsetWidth;
     // var chart_width = this.width - this.margin.left - this.margin.right;
@@ -397,18 +404,24 @@ export class StationStatusComponent implements OnInit {
 
     var y = d3.scaleLinear().range([chart_height, 0]);
 
+    
+
     y.domain([
-      d3.min(hourly, function(h) {
-        return d3.min(h.values, function(v) {
-          return v.value;
-        });
-      }),
-      d3.max(hourly, function(h) {
-        return d3.max(h.values, function(v) {
-          return v.value;
-        });
-      })
-    ]);
+      d3.min(houraly_list, d=> Math.min(d[0], d[1])),
+      d3.max(houraly_list, d=> Math.max(d[0], d[1]))
+    ])
+    // y.domain([
+    //   d3.min(hourly, function(h) {
+    //     return d3.min(h.values, function(v) {
+    //       return v.value;
+    //     });
+    //   }),
+    //   d3.max(hourly, function(h) {
+    //     return d3.max(h.values, function(v) {
+    //       return v.value;
+    //     });
+    //   })
+    // ]);
 
     var hourlyX = document.getElementById("hourlyX");
     var hourlyY = document.getElementById("hourlyY");
@@ -459,7 +472,7 @@ export class StationStatusComponent implements OnInit {
 
     var color : any = d3
       .scaleOrdinal()
-      .domain(["demand", "supply"])
+      .domain(["outbound", "inbound"])
       .range(palette);
 
     var lines = this.hourly.selectAll(".path").data(hourly);
@@ -514,7 +527,7 @@ export class StationStatusComponent implements OnInit {
 
     this.hourly.append("g").attr("id", "legend");
 
-    var legendstr = ["Demand", "Supply"];
+    var legendstr = ["Outbound", "Inbound"];
 
     var legend = d3
       .select("#legend")
@@ -606,9 +619,9 @@ export class StationStatusComponent implements OnInit {
         .attr("class", "hover-point")
         .attr("fill", function(d, i) {
           if (i == 0) {
-            return color("demand");
+            return color("outbound");
           } else {
-            return color("supply");
+            return color("inbound");
           }
         })
         .style("stroke", "#fff")
@@ -640,7 +653,7 @@ export class StationStatusComponent implements OnInit {
         .attr("height", margin.top - 5);
 
       // left word
-      var rowname = ["Time", "Demand", "Supply", "Difference"];
+      var rowname = ["Time", "Outbound", "Inbound", "Difference"];
       var rowheight = [12, 22, 32, 42];
       var rowcolor = ["#EEEEEE", palette[0], palette[1], "#EEEEEE"];
       var filldata = [index, datum[0], datum[1], datum[0] - datum[1]];
@@ -697,6 +710,7 @@ export class StationStatusComponent implements OnInit {
         d3.select("#mytooltip").remove();
       }
     }
+  } 
   }
   
   renderQuarterChart(){
@@ -710,32 +724,20 @@ export class StationStatusComponent implements OnInit {
       d3.select("#QuarterChart").style("display", "block");
     }
 
+    var margin = { top: 20, right: 30, bottom: 40, left: 40 };
+
+    var height = 220;
     this.width = this.tooltipRef.nativeElement.offsetWidth;
-    var chart_width = this.width - this.margin.left - this.margin.right;
-    var chart_height = this.height - this.margin.top - this.margin.bottom;
-    var height = 300;
-    var margin = { top: 50, right: 50, bottom: 30, left: 70 };
+    // var chart_width = this.width - this.margin.left - this.margin.right;
+    // var chart_height = this.height - this.margin.top - this.margin.bottom;
+    var chart_width = this.width - margin.left - margin.right;
+    var chart_height = height - margin.top - margin.bottom;
 
 
-    if (!this.quarter) {
-      this.quarter = d3
-        .select("#QuarterChart")
-        .attr("width", this.width)
-        // .attr("height", this.height)
-        .attr("height", height)
-        .append("g")
-        .attr(
-          "transform",
-          // "translate(" + this.margin.left + "," + this.margin.top + ")"
-          "translate(" + margin.left + "," + margin.top + ")"
-        );
-    }
 
-
-    // groupKey = "name"
     var keys = ['outtrip', 'intrip']
     var color = d3.scaleOrdinal()
-                .range(["#2E344A", "#08968F"])
+                .range(["#FFCF21", "#0191B4"])
                     
 
     // axis for countries
@@ -751,68 +753,191 @@ export class StationStatusComponent implements OnInit {
         .padding(0.05)
 
     var y = d3.scaleLinear() // y scale
-        .domain([0, 500])
-        .range([height, 0]); 
+        .domain([0, 
+        d3.max(data, d => Math.max(d.intrip, d.outtrip))])
+        .range([chart_height, 0]); 
+
+    var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
+      return d.replace("_", " ");;
+    }),
+    yAxis = d3
+      .axisLeft(y)
+      .tickSizeInner(-chart_width)
+      .ticks(5);
+
+
+
+    if (!this.quarter) {
+      this.quarter = d3
+        .select("#QuarterChart")
+        .attr("width", this.width)
+        // .attr("height", this.height)
+        .attr("height", height)
+        .append("g")
+        .attr(
+          "transform",
+          // "translate(" + this.margin.left + "," + this.margin.top + ")"
+          "translate(" + margin.left + "," + margin.top + ")"
+        );
+
+          // groupKey = "name"
+
+
+
+      this.quarter
+        .append("g")
+        .attr("id", "quarterX")
+        .attr("transform", "translate(0, " + chart_height + ")");
+    
+      this.quarter.append("g")
+      .attr("id", "quarterY")
+      .call(yAxis);
+
+      this.quarter
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .style('fill', '#fff')
+      .attr("y", 3)
+      .style('font-size', 10)
+      .attr("dy", ".7em")
+      .style("text-anchor", "end")
+      .text("Total Trips");
+
+      // this.quarter
+      // .append("text")
+      // .attr("class", "xlabel")
+      // .attr("x", chart_width / 2)
+      // .attr("y", chart_height + 30)
+      // .text("Date");
+
+          //   // Add Legend
+          //   this.svg
+          //   .append("g")
+          //   .attr("class", "legend")
+          //   .attr("transform", "translate(" + -90 + "," + 0 + ")");
+    
+          // this.svg
+          //   .select("g.legend")
+          //   .selectAll("rect")
+          //   .data(bikeTypeArr)
+          //   .enter()
+          //   .append("rect")
+          //   .attr("width", 15)
+          //   .attr("height", 15)
+          //   .attr("x", function(d, i) {
+          //     return chart_width + 15;
+          //   })
+          //   .attr("y", function(d, i) {
+          //     return i * 20 + 10;
+          //   })
+          //   .attr("fill", function(d) {
+          //     return color(d);
+          //   })
+          //   .style("cursor", "pointer");
+    
+          // this.svg
+          //   .select("g.legend")
+          //   .selectAll("text")
+          //   .data(bikeTypeArr)
+          //   .enter()
+          //   .append("text")
+          //   .style("cursor", "pointer")
+          //   .attr("alignment-baseline", "middle")
+          //   .attr("text-anchor", "start")
+          //   .attr("font-size", 12)
+          //   .attr("fill", "#aaa")
+          //   .attr("x", function(d, i) {
+          //     return chart_width + 45;
+          //   })
+          //   .attr("y", function(d, i) {
+          //     return i * 20 + 18;
+          //   })
+          //   .text(function(d) {
+          //     return d;
+          //   })
+          //   ;
+    
+  
+    }
+
+
 
                         
                         
-    this.quarter.selectAll('g')
+    var qqyear = this.quarter.selectAll('.qqyear')
         .data(data)
-        .enter()
+
+  
+    qqyear.enter()
         .append('g')
+        .attr('class', 'qqyear')
         .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+        // .selectAll(".qqbar")
         .selectAll("rect")
         .data(d => keys.map(key => ({key, value: d[key]})))
         .enter()
         .append('rect')
+        .attr("class", (d: any) => {
+          return d.key;
+        })
         .attr("x", d => x1(d.key))
         .attr("y", d => y(d.value))
         .attr("width", x1.bandwidth())
-        .attr("height", d => y(0) - y(d.value))
+        .attr("height", d => chart_height - y(d.value))
         .attr("fill", d => color(d.key));
-                        
-        this.quarter.append('g')               
-        //    .attr("transform", "translate(0, "+ height+ ")")
-        .call(d3.axisLeft(y).ticks(10))
 
-        this.quarter.append('g')
-        // .attr("transform", `translate(0,${height - margin.bottom})`)
-        .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x0))
+    qqyear.transition()
+    .attr("transform", d => `translate(${x0(d.yr_q)},0)`);
 
-                    // // console.log(color.domain())
-                    // var legend = bar.append('g')
-                    //    .attr('transform', `translate(${width},0)`)
-                    //    .selectAll('g')
-                    //    .data(color.domain().slice())
-                    //    .enter()
-                    //    .append('g')
-                    //    .attr('transform', (d, i) => `translate(0,${i * 20 - 10})`)
+    qqyear.exit()
+      // .transition()
+    .remove();
 
-                    // legend.append("rect")
-                    //    .attr("x", -19)
-                    //    .attr("width", 19)
-                    //    .attr("height", 19)
-                    //    .attr("fill", color);
- 
-                    // legend.append("text")
-                    //    .attr("x", -60)
-                    //    .attr("y", 9.5)
-                    //    .attr("dy", "0.35em")
-                    //    .text(d => d.slice(5, 9));
+    qqyear
+    .transition()
+    .duration(500)
+    .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
 
-                    // bar.append("text")
-                    //     .attr("text-anchor", "middle") 
-                    //     .attr("transform", "translate(0,0)")
-                    //     .attr('x', -10)
-                    //     .attr('y', -15)
-                    //     //    .attr("transform", "translate("+ (margin.top/5) +","+(height/2)+")rotate(-90)") 
-                    //     .text("Rate");
 
-                    // bar.append("text")
-                    //     .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                    //     .attr("transform", "translate("+ (width/2) +","+(height+2*(margin.bottom/3))+")")  // centre below axis
-                    //     .text("Countries");
+    var qqbar = this.quarter
+      .selectAll(".qqyear")
+      .selectAll("rect")
+      .data(d => keys.map(key => ({key, value: d[key]})));
+
+
+    qqbar
+      .transition()
+      .duration(500)
+      .attr("x", d => x1(d.key))
+      .attr("y", d => y(d.value))
+      .attr("width", x1.bandwidth())
+      .attr("height", d => chart_height - y(d.value))
+      .attr("fill", d => color(d.key));
+
+    
+    // this.quarter.append('g')               
+    // //    .attr("transform", "translate(0, "+ height+ ")")
+    // .call(d3.axisLeft(y).ticks(10))
+
+    // this.quarter.append('g')
+    // // .attr("transform", `translate(0,${height - margin.bottom})`)
+    // .attr("transform", "translate(0," + chart_height + ")")
+    // .call(d3.axisBottom(x0))
+
+    this.quarter
+    .select("#quarterX")
+    .transition()
+    .duration(300)
+    .call(xAxis);
+
+    this.quarter
+    .select("#quarterY")
+    .transition()
+    .duration(300)
+    .call(yAxis);
+
+
+
 
 
   }

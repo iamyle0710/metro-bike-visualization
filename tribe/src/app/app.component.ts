@@ -15,6 +15,12 @@ export class AppComponent {
   countDown : number = 0;
   countDownInterval; 
 
+  // constructor(
+  //   private resizeService: ResizeService){
+
+  // }
+  
+
   constructor(private stationServie: StationService,
     private resizeService: ResizeService){
     this.stationServie.hoverStationSub.subscribe((station : StationStatus) => {
