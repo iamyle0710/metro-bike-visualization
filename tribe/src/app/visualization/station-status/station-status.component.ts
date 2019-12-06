@@ -263,7 +263,7 @@ export class StationStatusComponent implements OnInit{
       .attr("x", function(d: any) {
         return x(d.numberOftimes) - 5 < 0 ? 0 : x(d.numberOftimes) - 5;
       })
-      .attr("fill", "#fff")
+      .attr("fill", "#343333")
       .text(function(d: any) {
         return d.numberOftimes;
       });
