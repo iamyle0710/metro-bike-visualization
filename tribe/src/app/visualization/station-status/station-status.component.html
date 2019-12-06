@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class='filter_func flex_row'>
-    <div class='filter_year' [ngClass]="{'selected' : filterYear == year}" (click)="onClickChangeYear(year)" *ngFor="let year of years">{{ year }}</div>
+    <div class='filter_year' placement="top" ngbTooltip="Tooltip on top" [ngClass]="{'selected' : filterYear == year}" (click)="onClickChangeYear(year)" *ngFor="let year of years">{{ year }}</div>
   </div>
   <div class="chart_header flex_row">
     <div class="chart_title">Top 5 Destinations</div>
