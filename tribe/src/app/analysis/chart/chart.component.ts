@@ -255,7 +255,7 @@ export class ChartComponent implements OnInit {
       this.svg
         .append("g")
         .attr("class", "axis axis--y")
-        .call(yAxis);
+        
 
       // Add Y Title
       this.svg
