@@ -21,7 +21,6 @@ export class StationStatusComponent implements OnInit {
   filterYear: number = 2019;
   topFiveStations: [];
   svg;
-
   stationData: DataModel[];
   hourly;
 
@@ -143,6 +142,7 @@ export class StationStatusComponent implements OnInit {
     if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
       return;
     }
+    var stationService = this.stationService;
     var data = this.topFiveStations;
     if (!data || data.length == 0) {
       d3.select("#inOutBarChart").style("display", "none");
@@ -200,6 +200,16 @@ export class StationStatusComponent implements OnInit {
       })
       .attr("height", y.bandwidth())
       .attr("width", 0)
+      .style("cursor", "pointer")
+      .on("mouseenter", function(d){
+        d3.select(this).attr("opacity", 0.8)
+      })
+      .on("mouseleave", function(d){
+        d3.select(this).attr("opacity", 1)
+      })
+      .on("click", function(d){
+        stationService.setHoverStationById(d.stationId);
+      })
       .transition()
       .duration(300)
       .attr("y", function(d: any) {
@@ -209,7 +219,8 @@ export class StationStatusComponent implements OnInit {
       .attr("width", function(d: any) {
         return x(d.numberOftimes);
       })
-      .attr("fill", "#529137");
+      .attr("fill", "#529137")
+      
 
     bars
       .transition()

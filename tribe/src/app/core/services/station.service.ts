@@ -16,6 +16,7 @@ export class StationService  {
     filterYear : number = 2019;
     hoverStation: StationStatus = new StationStatus();
     hoverStationSub = new EventEmitter<StationStatus>();
+    changeMapCenterSub = new EventEmitter<any>();
     
     // metroJsonOb: {};
     metroJson: DataModel[];
@@ -170,16 +171,37 @@ export class StationService  {
             return this.quarterJson.filter(row => row.station == stationId);
         }       
         return [];
+
+    }
+    setHoverStationById(stationId: number){
+        if(!this.stationGeojson || !this.stationGeojson["features"] || stationId == this.hoverStation.id){
+            return;
+        }
+        var obj = this.stationGeojson["features"].find(item => item.properties.kioskId == stationId);
+        if(obj.properties){
+            this.hoverStation.id = obj.properties.kioskId;
+            this.hoverStation.name = obj.properties.name;
+            this.hoverStation.bikesAvailable = obj.properties.bikesAvailable;
+            this.hoverStation.docksAvailable = obj.properties.docksAvailable;
+            this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
+            this.hoverStation.latitude = obj.properties.latitude;
+            this.hoverStation.longitude = obj.properties.longitude;
+            this.changeMapCenterSub.emit();
+            this.hoverStationSub.emit(this.hoverStation);
+        }
     }
 
     setHoverStation(e:any){
-        if(!e){
+        if(!e || e.features[0].properties.kioskId == this.hoverStation.id ){
             return;
         }
         this.hoverStation.id = e.features[0].properties.kioskId;
         this.hoverStation.name = e.features[0].properties.name;
         this.hoverStation.bikesAvailable = e.features[0].properties.bikesAvailable;
         this.hoverStation.docksAvailable = e.features[0].properties.docksAvailable;
+        this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
+        this.hoverStation.latitude = e.features[0].properties.latitude;
+        this.hoverStation.longitude = e.features[0].properties.longitude;
         // if(this.stationsDemand[this.hoverStation.id]){
         //     this.hoverStation.totalInNumber = this.stationsDemand[this.hoverStation.id]["in"].map(x => x[2]).reduce((x:number,y:number) => x+y);
         //     this.hoverStation.totalOutNumber = this.stationsDemand[this.hoverStation.id]["out"].map(x => x[2]).reduce((x:number,y:number) => x+y)
@@ -190,6 +212,7 @@ export class StationService  {
 
     setFilterYear(year: number){
         this.filterYear = year;
+        this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
         this.hoverStationSub.emit(this.hoverStation);
     }
 }

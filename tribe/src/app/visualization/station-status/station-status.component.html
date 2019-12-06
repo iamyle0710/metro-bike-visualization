@@ -21,14 +21,14 @@
   <div class="chart_header flex_row">
     <div class="chart_title">Top 5 Destinations</div>
     <div class="chart_func flex_row">
-        <span class="sort_name sort_func" 
-            (click)="onClickChangeSort('BY_STATION')"
-            [ngClass]="{ selected : sortMethod == 'BY_STATION'}"
-            >Sort by station</span>
         <span class="sort_value sort_func" 
             (click)="onClickChangeSort('BY_TIMES')"
             [ngClass]="{ selected : sortMethod == 'BY_TIMES'}"
             >Sort by times</span>
+        <span class="sort_name sort_func" 
+            (click)="onClickChangeSort('BY_STATION')"
+            [ngClass]="{ selected : sortMethod == 'BY_STATION'}"
+            >Sort by name</span>
     </div>
   </div>
   <div *ngIf="topFiveStations.length == 0" class="no_data">
