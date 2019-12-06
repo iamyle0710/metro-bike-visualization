@@ -23,22 +23,32 @@ export class WelcomeComponent implements OnInit {
   
   constructor(private locationService: LocationService, private resizeService: ResizeService, private router:Router) {
 
-    this.locationService.locationDataSub.subscribe(data => {
-      this.locationData = data;
-      // console.log('1')
-      this.updateChart();
-      
+    if (this.locationService.locationData.length === 0){
+      this.locationService.locationDataSub.subscribe(data => {
+        this.locationData = data;
+        this.locationService.setLocationdata(data)
+        // console.log(this.locationService.locationData);
+        this.updateChart();
+      });      
+    }else{
+      this.locationData = this.locationService.locationData;
       // console.log(this.locationData);
-    });
-
-    this.locationService.mapDataSub.subscribe(data => {
-      this.mapData= data;
-      // console.log('2');
       this.updateChart();
-      
-      // console.log(this.mapData);
-    });
-   }
+    }
+
+    if (this.locationService.mapData.length === 0){
+      this.locationService.mapDataSub.subscribe(data => {
+          this.mapData= data;
+          this.locationService.setMapdata(data)
+          console.log(this.locationService.mapData);
+          this.updateChart();
+        });     
+    }else{
+      this.mapData = this.locationService.mapData;
+      console.log(this.mapData);
+      this.updateChart();
+    }
+  }
 
   ngOnInit() {
   };
@@ -247,8 +257,7 @@ export class WelcomeComponent implements OnInit {
 
           if(area == 'Pasadena'){
 
-            
-
+          
           }else{
             d3.select(this)
             .style('background-color', 'rgba(0, 203, 241, 0.6)')
@@ -275,10 +284,7 @@ export class WelcomeComponent implements OnInit {
             d3.select('#hover-station')
             .attr('transform', "translate("+boxWidth*2/5+",0)")
 
-            }
-
-          
-
+            }  
         }
 
         function outText(){
@@ -328,7 +334,6 @@ export class WelcomeComponent implements OnInit {
           .attr('display', 'none')
 
         }
-
       }
     }
   }
