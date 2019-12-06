@@ -24,8 +24,12 @@ export class StationStatusComponent implements OnInit{
   filterYear: number = 2019;
   topFiveStations : Array<any> = [];
   tooltipDestinations : String = `This section shows the top 5 destinations people head to from this station.
-  You can click different year to see different destinations or click the bar chart to change the current station.
+  You can click different year to see different top 5 destinations or click the bar chart to change the current station.
    `;
+
+  tooltipHour : String = `This section shows total inbound/outbound trips to this station.
+   You can click year to see the trends or hover on the chart to see detail information.
+    `;
   svg;
   // stationData: DataModel[];
   stationData: [];
