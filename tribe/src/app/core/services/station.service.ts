@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { StationStatus } from 'src/app/share/station.model';
-import { DataModel } from 'src/app/share/data.model';
+// import { DataModel } from 'src/app/share/data.model';
 import { QuarterModel } from 'src/app/share/quarter.model';
 
 
@@ -19,7 +19,9 @@ export class StationService  {
     changeMapCenterSub = new EventEmitter<any>();
     
     // metroJsonOb: {};
-    metroJson: DataModel[];
+    metroJson: {};
+    metroJsonSub = new EventEmitter<any>();
+
     quarterJson: QuarterModel[];
     
 
@@ -33,10 +35,15 @@ export class StationService  {
             this.stationsDemand = data;
             this.stationsDemandSub.emit(data);
         })
-
+        
         this.getMetro().subscribe((data) => {
-            this.metroJson = Object.values(data)
+            this.metroJson = data;
+            this.metroJsonSub.emit(data);
         })
+
+        // this.getMetro().subscribe((data) => {
+        //     this.metroJson = Object.values(data)
+        // })
 
         this.getQuarter().subscribe((data) => {
             this.quarterJson = Object.values(data)
@@ -52,9 +59,13 @@ export class StationService  {
         return this.http.get('assets/station_in_out.json')
     }
 
-    private getMetro() : Observable<DataModel>{
-        return this.http.get<DataModel>('assets/metro-small.json');
+    private getMetro() : Observable<any>{
+        return this.http.get('assets/metro-hourly.json')
     }
+
+    // private getMetro() : Observable<DataModel>{
+    //     return this.http.get<DataModel>('assets/metro-small.json');
+    // }
 
     private getQuarter() : Observable<QuarterModel>{
         return this.http.get<QuarterModel>('assets/metro-quarter.json');
@@ -160,7 +171,12 @@ export class StationService  {
 
     getStation(stationId : number){
         if(this.metroJson){
-            return this.metroJson.filter(row => (row.start_station == stationId  ||row.end_station == stationId) && row.end_time_year == this.filterYear);
+            if(stationId.toString() in this.metroJson && this.filterYear.toString() in this.metroJson[stationId.toString()]){
+                return this.metroJson[stationId][this.filterYear];
+            // return this.metroJson.filter(row => (row.start_station == stationId  ||row.end_station == stationId) && row.end_time_year == this.filterYear);
+            }else{
+                return [];
+            }
         }
         
         return [];

@@ -41,25 +41,25 @@
 }
 
 
-#hourlyX line{
+#hourlyX line, #quarterX line{
   stroke: #ffffff;
 }
 
-#hourlyY line{
-  stroke: #ffffff;
-  opacity: 0;
-}
-
-#hourlyX path{
+#hourlyY line, #quarterY line{
   stroke: #ffffff;
   opacity: 0;
 }
 
-#hourlyY path{
+#hourlyX path, #quarterX path{
+  stroke: #ffffff;
+  opacity: 0;
+}
+
+#hourlyY path, #quarterY path{
   stroke: #ffffff;
 }
 
-#hourlyX text, #hourlyY text{
+#hourlyX text, #hourlyY text, #quarterX text, #quarterY text{
   fill: #ffffff;
 }
 

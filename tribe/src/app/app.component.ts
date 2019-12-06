@@ -12,6 +12,12 @@ export class AppComponent {
   title = 'tribe';
   station : StationStatus;
 
+  // constructor(
+  //   private resizeService: ResizeService){
+
+  // }
+  
+
   constructor(private stationServie: StationService,
     private resizeService: ResizeService){
     this.stationServie.hoverStationSub.subscribe((station : StationStatus) => {
