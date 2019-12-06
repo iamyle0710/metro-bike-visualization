@@ -83,7 +83,7 @@ export class StationStatusComponent implements OnInit{
 
   updateSize() {
     if (this.tooltipRef) {
-      this.width = this.tooltipRef.nativeElement.offsetWidth;
+      this.width = this.tooltipRef.nativeElement.offsetWidth - 40;
       if (this.svg) {
         d3.select("#inOutBarChart").attr("width", this.width);
       }
@@ -152,7 +152,6 @@ export class StationStatusComponent implements OnInit{
       d3.select("#inOutBarChart").style("display", "block");
     }
 
-    this.width = this.tooltipRef.nativeElement.offsetWidth;
     var chart_width = this.width - this.margin.left - this.margin.right;
     var chart_height = this.height - this.margin.top - this.margin.bottom;
 
@@ -355,7 +354,7 @@ export class StationStatusComponent implements OnInit{
         houraly_list.push([hourly[0]['values'][i].value, hourly[1]['values'][i].value]);
       }
 
-      this.width = this.tooltipRef.nativeElement.offsetWidth;
+      // this.width = this.tooltipRef.nativeElement.offsetWidth;
       // var chart_width = this.width - this.margin.left - this.margin.right;
       // var chart_height = this.height - this.margin.top - this.margin.bottom;
       var chart_width = this.width - margin.left - margin.right;
@@ -703,7 +702,7 @@ export class StationStatusComponent implements OnInit{
     var margin = { top: 20, right: 30, bottom: 40, left: 40 };
 
     var height = 220;
-    this.width = this.tooltipRef.nativeElement.offsetWidth;
+    // this.width = this.tooltipRef.nativeElement.offsetWidth;
     // var chart_width = this.width - this.margin.left - this.margin.right;
     // var chart_height = this.height - this.margin.top - this.margin.bottom;
     var chart_width = this.width - margin.left - margin.right;
