@@ -1,6 +1,62 @@
 <div class="analysis container-fluid">
   <div class="row pl-0 pr-0 mr-0 ml-0 pt-3">
     <div class="col-lg-5 pl-0 pr-0">
+      <span class="analysis_header">Bike Station Inbound and Outbound</span>
+      <p class="analysis_content">
+        We also want to see each station's inbound and outbound, which allows us
+        to see where people, who rent the bikee, come from and head to which
+        stations. The chart will be able to present the total number travel
+        times based on the selected station and years.
+      </p>
+      <p class="analysis_title">
+        Select a station :
+      </p>
+      <div class="filter_func flex_row">
+        <div class="dropdown">
+          <button
+            class="btn btn-success dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ this.bikeStation.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a
+              *ngFor="let station of bikeStations"
+              class="dropdown-item"
+              (click)="onClickChangeStation(station)"
+              >{{ station.name }}</a
+            >
+          </div>
+        </div>
+      </div>
+      <p class="analysis_title">
+        Select years to be shown in the chart :
+      </p>
+      <div class="filter_func flex_row">
+        <div
+          *ngFor="let year of bikeStationYears"
+          class="filter_year"
+          [ngClass]="{ selected: bikeStationFilterYears.indexOf(year) != -1 }"
+          (click)="onClickChangeYear('BIKESTATION', year)"
+        >
+          {{ year }}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 pl-0 pr-0">
+      <app-chart
+        [type]="'CIRCLE_PACKING'"
+        [chartData]="bikeStationInOutData"
+        [chartId]="'bikestation_in_out'"
+      ></app-chart>
+    </div>
+  </div>
+  <div class="row pl-0 pr-0 mr-0 ml-0 pt-3">
+    <div class="col-lg-5 pl-0 pr-0">
       <span class="analysis_header">Ride Duration By Passholder Type</span>
       <p class="analysis_content">
         We want to analyze the difference of each passholder type. We grouped by
@@ -67,51 +123,6 @@
         [type]="'GROUOBARS'"
         [chartData]="bikeUsageData"
         [chartId]="'biketype_usage'"
-      ></app-chart>
-    </div>
-  </div>
-  <div class="row pl-0 pr-0 mr-0 ml-0 pt-3">
-    <div class="col-lg-5 pl-0 pr-0">
-      <span class="analysis_header"
-        >Bike Station Inbound and Outbound</span
-      >
-      <p class="analysis_content">
-        We also want to see each station's inbound and outbound, which allows us
-        to see where people, who rent the bikee, come from and head to which stations. The chart will
-        be able to present the total number travel times based on the selected station and years.
-      </p>
-      <p class="analysis_title">
-        Select a station :
-      </p>
-      <div class="filter_func flex_row">
-        <div class="dropdown">
-          <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ this.bikeStation.name }}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a *ngFor="let station of bikeStations" class="dropdown-item" (click)="onClickChangeStation(station)">{{ station.name }}</a>
-          </div>
-        </div>
-      </div>
-      <p class="analysis_title">
-        Select years to be shown in the chart :
-      </p>
-      <div class="filter_func flex_row">
-        <div
-          *ngFor="let year of bikeStationYears"
-          class="filter_year"
-          [ngClass]="{ selected: bikeStationFilterYears.indexOf(year) != -1 }"
-          (click)="onClickChangeYear('BIKESTATION', year)"
-        >
-          {{ year }}
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-7 pl-0 pr-0">
-      <app-chart
-        [type]="'CIRCLE_PACKING'"
-        [chartData]="bikeStationInOutData"
-        [chartId]="'bikestation_in_out'"
       ></app-chart>
     </div>
   </div>
