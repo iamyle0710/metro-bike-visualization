@@ -8,6 +8,10 @@ export class LocationService{
     locationDataSub : EventEmitter<any> = new EventEmitter<any>();
     mapDataSub : EventEmitter<any> = new EventEmitter<any>();
 
+    locationData = [];
+    mapData = [];
+  
+
     center : number[] = [-118.272892, 34.026283];
 
     constructor(private http: HttpClient){
@@ -31,15 +35,13 @@ export class LocationService{
 
     setCenter(center: number[]){
       this.center = center;
-  }
+    }
 
-    // getPoints(){
-    //   console.log(this.locationData);
-    //   return this.locationData;
-    // }
+    setLocationdata(data: any[]){
+      this.locationData = data;
+    }
 
-    // getMap(){
-    //   console.log(this.mapData);
-    //   return this.mapData;
-  // }
+    setMapdata(data: any[]){
+      this.mapData = data;
+    }
 }
