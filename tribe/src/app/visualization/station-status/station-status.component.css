@@ -122,3 +122,20 @@
     align-items: center;
     justify-content: center;
 }
+
+.info{
+  cursor: pointer;
+}
+
+.info:hover{
+  color : #75d04a;
+}
+
+.tooltip_container .tooltip-inner{
+  background-color: #11827d;
+  padding: 15px;
+}
+
+.tooltip_container .arrow::before{
+  border-bottom-color: #11827d;
+}

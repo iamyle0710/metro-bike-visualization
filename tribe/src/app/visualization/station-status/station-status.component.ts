@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation } from "@angular/core";
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
@@ -9,10 +10,11 @@ import { QuarterModel} from "src/app/share/quarter.model";
 @Component({
   selector: "app-station-status",
   templateUrl: "./station-status.component.html",
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ["./station-status.component.css"]
 })
 export class StationStatusComponent implements OnInit {
-  // station: StationStatus;
+  faInfoCircle = faInfoCircle;
   width: number;
   height: number = 100;
   margin = { top: 5, right: 20, bottom: 10, left: 100 };
@@ -20,6 +22,9 @@ export class StationStatusComponent implements OnInit {
   years: Array<number> = [2017, 2018, 2019];
   filterYear: number = 2019;
   topFiveStations: [];
+  tooltipDestinations : String = `This section shows the top 5 destinations people head to from this station.
+  You can click different year to see different destinations or click the bar chart to change the current station.
+   `;
   svg;
   stationData: DataModel[];
   hourly;

@@ -40,13 +40,13 @@ const appRoutes = [
     WelcomeComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,    
+    FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     NgbModule,
     RouterModule.forRoot(appRoutes),
-    FontAwesomeModule
   ],
   providers: [
     StationService,
