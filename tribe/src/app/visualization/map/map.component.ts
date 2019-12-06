@@ -4,6 +4,7 @@ import { StationService } from "../../core/services/station.service";
 import { StationStatus } from '../../share/station.model';
 import * as mapboxgl from "mapbox-gl";
 import * as d3 from "d3";
+import { ResizeService } from 'src/app/core/services/resize.service';
 
 @Component({
   selector: "app-map",
@@ -22,7 +23,8 @@ export class MapComponent implements OnInit {
   markersOnScreen: {};
   stationInOut : {};
 
-  constructor(private stationService: StationService) {
+  constructor(private stationService: StationService,
+    private resizeService : ResizeService) {
     this.markers = {};
     this.markersOnScreen = {};
     this.stationService.stationsGeojsonSub.subscribe((data:any) => {
@@ -33,9 +35,15 @@ export class MapComponent implements OnInit {
     })
 
     this.stationService.hoverStationSub.subscribe((station: StationStatus) => {
+      this.map.resize();
       this.station = station;
+      // this.changeMapCenter(this.station.latitude, this.station.longitude);
       this.drawTopFiveStations();
     });
+
+    this.stationService.changeMapCenterSub.subscribe(() => {
+      this.changeMapCenter(this.station.latitude, this.station.longitude);
+    })
   }
 
   ngOnInit() {
@@ -44,6 +52,9 @@ export class MapComponent implements OnInit {
   
   ngAfterViewInit(){
     this.stationService.getStationGeojson(); 
+    this.resizeService.resizeSub.subscribe(() => {
+      this.map.resize();
+    })
   }
 
   initMap() {
@@ -59,6 +70,12 @@ export class MapComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl(), "top-left");
   }
   
+  changeMapCenter(lat, lng){
+    this.map.flyTo({
+      center: [lng,lat]
+    });
+  }
+
   loadGeojson(data:any){
     
     this.map.on("load", () => {
