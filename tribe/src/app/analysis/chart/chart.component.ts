@@ -225,6 +225,7 @@ export class ChartComponent implements OnInit {
       // "#cdf6d2",
       // "#ffffff"
     ]);
+    var hiddens = this.hidden;
 
     var xAxis = d3.axisBottom(x).ticks(5),
       yAxis = d3
@@ -296,7 +297,8 @@ export class ChartComponent implements OnInit {
         })
         .attr("fill", function(d) {
           return color(d);
-        });
+        })
+        .style("cursor", "pointer");
 
       this.svg
         .select("g.legend")
@@ -304,6 +306,7 @@ export class ChartComponent implements OnInit {
         .data(bikeTypeArr)
         .enter()
         .append("text")
+        .style("cursor", "pointer")
         .attr("alignment-baseline", "middle")
         .attr("text-anchor", "start")
         .attr("font-size", 12)
@@ -316,7 +319,8 @@ export class ChartComponent implements OnInit {
         })
         .text(function(d) {
           return d;
-        });
+        })
+        ;
     }
 
     // this.svg.selectAll(".months").remove();
@@ -351,6 +355,9 @@ export class ChartComponent implements OnInit {
       .attr("height", d => {
         return chart_height - y(d.usage);
       })
+      .attr("opacity", function(d){
+        return hiddens.indexOf(d.bike_type) === -1 ? 1 : 0;
+      })
       .attr("x", function(d, i) {
         return xInScale(d.bike_type);
       })
@@ -376,6 +383,7 @@ export class ChartComponent implements OnInit {
 
     bars
       .transition()
+      .duration(500)
       .attr("x", function(d) {
         return xInScale(d.bike_type);
       })
@@ -389,7 +397,10 @@ export class ChartComponent implements OnInit {
       .attr("fill", function(d) {
         return color(d.bike_type);
       })
-      .duration(500);
+      .attr("opacity", function(d){
+        return hiddens.indexOf(d.bike_type) === -1 ? 1 : 0;
+      })
+      
 
     bars
       .exit()
@@ -429,6 +440,10 @@ export class ChartComponent implements OnInit {
       .attr("fill", function(d) {
         return color(d);
       })
+      .attr("opacity", function(d){
+        return hiddens.indexOf(d) === -1 ? 1 : 0.2
+      })
+      .style("cursor", "pointer")
       .on("click", this.toggleBarSeries.bind(this));
 
     this.svg
@@ -450,6 +465,10 @@ export class ChartComponent implements OnInit {
       .attr("y", function(d, i) {
         return i * 20 + 18;
       })
+      .attr("opacity", function(d){
+        return hiddens.indexOf(d) === -1 ? 1 : 0.2
+      })
+      .style("cursor", "pointer")
       .text(function(d) {
         return d;
       })
@@ -584,6 +603,7 @@ export class ChartComponent implements OnInit {
         .attr("fill", function(d, i) {
           return color(d.key);
         })
+        .style("cursor", "pointer")
         .on("click", this.toggleLineSeries.bind(this));
 
       this.svg
@@ -608,6 +628,7 @@ export class ChartComponent implements OnInit {
         .text(function(d) {
           return d.key;
         })
+        .style("cursor", "pointer")
         .on("click", this.toggleLineSeries.bind(this));
     }
 
@@ -731,36 +752,74 @@ export class ChartComponent implements OnInit {
 
   toggleBarSeries(d: String) {
     var id = d;
-    if (
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .classed("selected")
-    ) {
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .attr("opacity", 1)
-        .classed("selected", false);
+    var hiddens = this.hidden;
+    this.updateFilters(id);
 
-      this.svg
-        .selectAll(".bargroup ." + id)
-        .transition()
-        .duration(300)
-        .attr("opacity", 1);
-    } else {
-      this.svg
-        .select(".legend")
-        .selectAll("." + id)
-        .attr("opacity", 0.1)
-        .classed("selected", true);
+    this.svg
+        .selectAll(".legend text")
+        .attr("opacity", function(){
+          var classes = d3.select(this).attr("class");
+          var id = classes.split(" ")[0];
+          return hiddens.indexOf(id) == -1 ? 1 : 0.3;
+        })
+        .classed("selected", function(){
+          var classes = d3.select(this).attr("class");
+          var id = classes.split(" ")[0];
+          return hiddens.indexOf(id) == -1 ? true : false;
+        });
 
-      this.svg
-        .selectAll(".bargroup ." + id)
-        .transition()
-        .duration(300)
-        .attr("opacity", 0);
-    }
+    this.svg
+      .selectAll(".legend rect")
+      .attr("opacity", function(){
+        var classes = d3.select(this).attr("class");
+        var id = classes.split(" ")[0];
+        return hiddens.indexOf(id) == -1 ? 1 : 0.3;
+      })
+      .classed("selected", function(){
+        var classes = d3.select(this).attr("class");
+        var id = classes.split(" ")[0];
+        return hiddens.indexOf(id) == -1 ? true : false;
+      });
+
+    this.svg
+      .selectAll(".bargroup rect")
+      .transition()
+      .duration(300)
+      .attr("opacity", function(){
+        var id = d3.select(this).attr("class");
+        return  hiddens.indexOf(id) == -1 ? 1 : 0;
+      });
+
+    // if (
+    //   this.svg
+    //     .select(".legend")
+    //     .selectAll("." + id)
+    //     .classed("selected")
+    // ) {
+    //   this.svg
+    //     .select(".legend")
+    //     .selectAll("." + id)
+    //     .attr("opacity", 1)
+    //     .classed("selected", false);
+
+    //   this.svg
+    //     .selectAll(".bargroup ." + id)
+    //     .transition()
+    //     .duration(300)
+    //     .attr("opacity", 1);
+    // } else {
+    //   this.svg
+    //     .select(".legend")
+    //     .selectAll("." + id)
+    //     .attr("opacity", 0.1)
+    //     .classed("selected", true);
+
+    //   this.svg
+    //     .selectAll(".bargroup ." + id)
+    //     .transition()
+    //     .duration(300)
+    //     .attr("opacity", 0);
+    // }
   }
 
   zoomCirclePacking(d) {
