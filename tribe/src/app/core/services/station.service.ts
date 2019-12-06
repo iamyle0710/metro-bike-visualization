@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { StationStatus } from 'src/app/share/station.model';
 import { DataModel } from 'src/app/share/data.model';
+import { QuarterModel } from 'src/app/share/quarter.model';
+
 
 @Injectable()
 export class StationService  {
@@ -17,6 +19,7 @@ export class StationService  {
     
     // metroJsonOb: {};
     metroJson: DataModel[];
+    quarterJson: QuarterModel[];
     
 
     constructor(private http : HttpClient){
@@ -32,12 +35,10 @@ export class StationService  {
 
         this.getMetro().subscribe((data) => {
             this.metroJson = Object.values(data)
-            // console.log(this.metroJson.filter(row => row.start_station == 3046 ||row.end_station == 3046))
-            // console.log(typeof(this.metroJson))
+        })
 
-            // console.log(typeof(this.metroJson))
-            // console.log(this.metroJson)
-
+        this.getQuarter().subscribe((data) => {
+            this.quarterJson = Object.values(data)
         })
     }
 
@@ -52,6 +53,10 @@ export class StationService  {
 
     private getMetro() : Observable<DataModel>{
         return this.http.get<DataModel>('assets/metro-small.json');
+    }
+
+    private getQuarter() : Observable<QuarterModel>{
+        return this.http.get<QuarterModel>('assets/metro-quarter.json');
     }
 
     getStationGeojson(){
@@ -157,6 +162,13 @@ export class StationService  {
             return this.metroJson.filter(row => (row.start_station == stationId  ||row.end_station == stationId) && row.end_time_year == this.filterYear);
         }
         
+        return [];
+    }
+
+    getQuarterData(stationId : number){
+        if(this.quarterJson){
+            return this.quarterJson.filter(row => row.station == stationId);
+        }       
         return [];
     }
 

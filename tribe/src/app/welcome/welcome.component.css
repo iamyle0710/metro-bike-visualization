@@ -4,23 +4,51 @@
   }
 
 .mymap {
-    background-color: #23282c;
+    /* background-color: #23282c; */
     height: 100vh;
   }
+
+
 
 /* .title-container{
     background-color: #23282c;
 } */
 
-h1 {
+/* h2 span {
     color: #586371;
-    font-size: 5.5vw;
-    line-height: 5.5vw;
+    font-size: 4vw;
+    line-height: 4.5vw;
+    margin:0;
+    text-shadow: 8px 6px 13px rgba(0, 0, 0, .1)
+} */
+h1{
+    color: #E3E3E3;
+    font-size: 8vh;
+    line-height: 8vh;
     margin:0;
     text-shadow: 8px 6px 13px rgba(0, 0, 0, .1)
 }
 
+h5{
+  color: #3CC9ED
+}
+
+span, h3{
+  color: #E3E3E3;
+  font-size: 3vh;
+  font-weight: 'normal';
+  line-height: 4vh;
+}
+
+/* span {
+  color: #B4A995;
+  font-size: 1vw;
+  line-height: 1vw;
+  margin:0;
+  /* text-shadow: 8px 6px 13px rgba(0, 0, 0, .1) */
+/* } */ 
+
 path.states{
     fill: transparent;
-    stroke: #B4A995;
+    stroke: #454545;
 }

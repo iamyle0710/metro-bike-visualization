@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from "@angula
 import * as d3 from "d3";
 import { LocationService } from "../core/services/location.service";
 import { ResizeService } from "../core/services/resize.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
@@ -21,7 +22,8 @@ export class WelcomeComponent implements OnInit {
   station;
 
   
-  constructor(private locationService: LocationService, private resizeService: ResizeService) {
+  constructor(private locationService: LocationService, private resizeService: ResizeService, private router:Router) {
+
     this.locationService.locationDataSub.subscribe(data => {
       this.locationData = data;
       // console.log('1')
@@ -87,110 +89,52 @@ export class WelcomeComponent implements OnInit {
     // console.log(this.locationData.length, this.mapData.length, this.chartRef);
     if(this.locationData.length !=0 && this.mapData.length != 0 && this.chartRef){
       if (this.station) {
-        // console.log('hi')
-        
-        var station = this.locationData;
-        var la = this.mapData;
 
-        // this.width = this.chartRef.nativeElement.offsetWidth;
-        // this.height = this.chartRef.nativeElement.offsetWidth;
+        var station = this.locationData;
+        var la:any = this.mapData;
+
         var width = this.width;
         var height = this.height;
-        // var region = {};
-        // station.forEach(function(item) {
-        //   region[item.Region] = (region[item.Region] || 0) + 1;
-        // })
 
+        var scale = Math.sqrt(width*width+height*height)*30
         
         const regionset = [...new Set(station.map(item => item.Region))];
-        // // console.log(region)
-        // // la = this.mapData;
+
         var region = [];
         for (var i = 0; i < regionset.length; i++) {
           // console.log(regionset[i])
-          var arr = station.filter(item => item.Region == regionset[i]);
-          var lons = arr.map(item => item.lon).reduce((prev, next) => prev + next);
-          var lats = arr.map(item => item.lat).reduce((prev, next) => prev + next);
-          // console.log(lons/arr.length);
-          region.push({
-              area: regionset[i],
-              stations: arr.length,
-              point: [lons/arr.length, lats/arr.length]
-          });
+          var arr = station.filter(item => item.Region == regionset[i] && item.Status == 'Active');
+          if(arr.length != 0){
+            var lons = arr.map(item => item.lon).reduce((prev, next) => prev + next);
+            var lats = arr.map(item => item.lat).reduce((prev, next) => prev + next);
+            // console.log(lons/arr.length);
+            region.push({
+                area: regionset[i],
+                stations: arr.length,
+                point: [lons/arr.length, lats/arr.length]
+            });
+          }
         }
 
-        // console.log(region);
-        // console.log(la);
-        // console.log(la);
-        
-        // this.station = d3.select("#stations")
-        // var width = +this.station.attr("width");
-        // var height = +this.station.attr("height");
-        // var width = +this.station.offsetWidth;
-        // var height = +this.station.offsetHeight;
-        // var width = +this.station.offsetWidth;
-        // var height = +this.station.offsetHeight;
-
-        // console.log(width)
-        // console.log(height)
-        // .attr("width", 900)
-        // .attr("height", 600)
-
-        var color = d3
-        .scaleOrdinal()
-        .domain(regionset)
-        .range(['#FF3D20','#00C7D5', '#3A5154', '#9AACB8'])
+        // var color = d3
+        // .scaleOrdinal()
+        // .domain(regionset)
+        // .range(['#FF3D20','#00C7D5', '#3A5154', '#9AACB8'])
 
         var bubble = d3
         .scaleSqrt()
         .domain([d3.min(region, r => r.stations), d3.max(region, r => r.stations)])
-        .range([10, 50])
+        .range([30*this.pageWidth/1375, 70*this.pageWidth/1375])
 
-        // console.log(bubble);
-
-        // station.forEach(element => {
-        //   element.point = [element.lon, element.lat]   
-        //   element.year = element.Go_live_date.slice(0,4) 
-        // });
-        // console.log(station)
-
-        // var center = 
-        // var scaleLinear = d3.scaleLinear()
-        //   .domain([400, 1600])
-        //   .range([25000, 40000]);
         
-        // var scale = scaleLinear(width);
-
-        var scale;
-        var center;
-
-        if (this.pageWidth<1000){
-          scale = 26000;
-          center = [-118.284424, 33.945776];
-        }else{
-          scale = 40000;
-          center = [-118.408703, 33.946042];
-        }
 
         var projection = d3.geoMercator()
                     .scale(scale)
-                    .center(center)
-                    // .center([-119.012550, 33.960832])
-                    // .center([-118.949379, 33.927794])
-                    // .center([-118.517528, 33.939066])
-                    // .center([-118.3592, 34.0639])
-                    // .fitSize([width, height], la);
-        console.log(projection)
+                    // .center([-118.361149, 34.109704])
+                    .center([-118.251179, 34.117857])
+
         var path = d3.geoPath().projection(projection);
-        // var graticule = d3.geoGraticule()  // graticule generator
-        //             .step([10, 10]);
-
      
-        // this.station.append("path")
-        // .datum(graticule)  //data join with a single path
-        // .attr("class", "graticule")
-        // .attr("d", path);
-
         var border = this.station.selectAll(".states")
         .data(la["features"])
         
@@ -199,8 +143,6 @@ export class WelcomeComponent implements OnInit {
         .enter()
         .append("path")
         .attr("class", "states")
-        .attr("fill", "white")
-        .attr("stroke", "black")
         .attr("d", path);
 
         border
@@ -211,41 +153,59 @@ export class WelcomeComponent implements OnInit {
         .exit()
         .remove()
 
+        const boxHeight = 36;
+        const boxWidth = 175;
+
+
         const hover = this.station.append('g')
         .attr("id", "hover-bubbletip")
+        .attr('display', 'none')
 
         hover.append('rect')
-        .attr("id", "hover-box")
-        // .attr('rx', 5)
-        // .attr('ry', 5)
-        .attr('width', this.width/5 )
-        .attr('height', this.height/15)
+        // .attr("id", "hover-left")
+        .attr('width', boxWidth)
+        .attr('height', boxHeight)
+        .attr('fill', '#1B2A45')
+        .attr('x', 0)
+        .attr('y', 0)
+
+        hover.append('rect')
+        // .attr("id", "hover-right")
+        .attr('width', boxHeight)
+        .attr('height', boxHeight)
         .attr('fill', '#3B3E4A')
-        .attr('opacity', 1)
+        .attr('stroke-width', '0')
+        .attr('x', boxWidth-boxHeight*3/4)
+        .attr('y', 0)
         // .style('opacity', '100%')
-        .attr('display', 'none')
+
 
         hover
         .append('text')
         .attr("id", "hover-region")
         .attr('text-anchor',"start")
-        .attr('x', "5")
-        .attr('y', this.height/24-10)
+        .attr('dominant-baseline',"middle")
+        .attr('x', "10")
+        .attr('y', boxHeight/2)
+        .style('fill', '#BECBE1')
+        .style('font-weight', 'bold')
 
         hover
         .append('text')
         .attr("id", "hover-stations")
-        .attr('text-anchor',"start")
-        // .attr('text-anchor',"end")
-        // .attr('x', width/5-5)
-        // .attr('y', height/24)
-        .attr('x', "5")
-        .attr('y', this.height/24+10)
+        .attr('dominant-baseline',"middle")
+        // .attr('text-anchor',"start")
+        .attr('text-anchor',"end")
+        .attr('x', boxWidth-1.5)
+        .attr('y', boxHeight/2)
 
         var points = this.station.selectAll("circle")
         // .delay(5)  
-        .data(region).enter()
+        .data(region)
+        
+        points.enter()
         .append("circle")
+        .style('fill', '#2F515C')
         .attr("cx", function (d) { return projection(d.point)[0]; })
         .attr("cy", function (d) { return projection(d.point)[1]; })
         .attr("r", d => bubble(d.stations))
@@ -253,20 +213,88 @@ export class WelcomeComponent implements OnInit {
         .style("opacity", 0.8)
         .on("mouseenter", onMouseEnter)
         .on("mouseleave", onMouseLeave)
+        .on('click', onClick.bind(this))
 
-        // points
-        // .transition() // <------- TRANSITION STARTS HERE --------
-        // .delay(function(d,i){ return 100*i; }) 
-        // .duration(3000)
-        // .attr("r", d => bubble(d.stations))
+        points
+        .transition()
+        .attr("cx", function (d) { return projection(d.point)[0]; })
+        .attr("cy", function (d) { return projection(d.point)[1]; })
+        .attr("r", d => bubble(d.stations))
+        .on("mouseenter", onMouseEnter)
+        .on("mouseleave", onMouseLeave);
+
+        points
+        .exit()
+        .remove()
+
+        var texts = d3.selectAll('.area')
+        .on("mouseenter", onText)
+        .on("mouseleave", outText)
+
+
+        function onClick(datum){
+          this.locationService.setCenter(datum.point);
+          console.log(this.locationService.center);
+          this.router.navigate(['/visualization']);
+          // console.log(datum.point)
+        }
+
+
+        function onText(){
+          var area = this.innerHTML == 'Downtown LA'? 'DTLA': this.innerHTML;
+          var datum = region.filter(item => item.area == area)[0];
+          console.log(datum)
+          console.log(region)
+
+          if(area == 'Pasadena'){
+
+            
+
+          }else{
+            d3.select(this)
+            .style('background-color', 'rgba(0, 203, 241, 0.6)')
+            
+            
+            d3.select('#hover-bubbletip')
+            .attr('display', 'block')
+            
+            hover
+            .attr("transform", datum.area != 'North Hollywood'?
+            "translate(" + 
+            (projection(datum.point)[0]+bubble(datum.stations))+"," + 
+            (projection(datum.point)[1]+bubble(datum.stations)) + ")":
+            "translate(" + 
+            (projection(datum.point)[0]+bubble(datum.stations))+"," + 
+            (projection(datum.point)[1]-bubble(datum.stations)-boxHeight) + ")")
+            
+            d3.select('#hover-region')
+            .text(datum.area=='DTLA'? 'Downtown LA': datum.area )
+
+            d3.select('#hover-stations')
+            .text(datum.stations)
+
+            d3.select('#hover-station')
+            .attr('transform', "translate("+boxWidth*2/5+",0)")
+
+            }
+
+          
+
+        }
+
+        function outText(){
+          d3.select('#hover-bubbletip')
+          .attr('display', 'none')
+          d3.select(this)
+          .style('background-color', 'rgba(0, 203, 241, 0)')
+
+        }
+
 
         function onMouseEnter(datum, index){
-          // console.log(datum.area);
           
           d3.select(this)
-          .style("fill", '#77d64b')
-          .style("stroke", '#fff')
-          .style("stroke-width", '2')
+          .style("fill", '#2F515C')
 
           d3.select('#hover-bubbletip')
           .attr('display', 'block')
@@ -277,53 +305,30 @@ export class WelcomeComponent implements OnInit {
           (projection(datum.point)[0]+bubble(datum.stations))+"," + 
           (projection(datum.point)[1]+bubble(datum.stations)) + ")":
           "translate(" + 
-          (projection(datum.point)[0]-bubble(datum.stations)-this.width/5)+"," + 
-          (projection(datum.point)[1]-bubble(datum.stations)-this.height/12) + ")")
-
+          (projection(datum.point)[0]+bubble(datum.stations))+"," + 
+          (projection(datum.point)[1]-bubble(datum.stations)-boxHeight) + ")")
+          
           d3.select('#hover-region')
           .text(datum.area)
+          .text(datum.area=='DTLA'? 'Downtown LA':datum.area )
+
 
           d3.select('#hover-stations')
-          .text(datum.stations+' stations')
-          
+          .text(datum.stations)
 
           d3.select('#hover-station')
-          .attr('transform', "translate("+this.width*4/25+",0)")
-
-          d3.select('#hover-box')
-          .attr('display', 'block')
-          .attr("opacity", 1)
-          .attr('x', 0)
-          .attr('y', 0)
-
-
-
-          
-          
-          // d3.select('#hover-region')
-          // .attr('x', bubble(datum.stations))
-          // .attr('y', bubble(datum.stations)/4)
-          // .text(datum.area)
-          // .style('fill', 'pink')
-          
-
+          .attr('transform', "translate("+boxWidth*2/5+",0)")
         }
 
         function onMouseLeave(datum, index){
           d3.select(this)
-          .style("fill", 'black')
+          .style("fill", '#2F515C')
           .style("stroke-width", '0')
 
           d3.select('#hover-bubbletip')
           .attr('display', 'none')
 
         }
-
-
-
-
-
-
 
       }
     }

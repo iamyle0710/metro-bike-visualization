@@ -3,7 +3,8 @@ import { StationService } from "../../core/services/station.service";
 import { StationStatus } from "../../share/station.model";
 import * as d3 from "d3";
 import { ResizeService } from "src/app/core/services/resize.service";
-import { DataModel } from "src/app/share/data.model";
+import { DataModel} from "src/app/share/data.model";
+import { QuarterModel} from "src/app/share/quarter.model";
 
 @Component({
   selector: "app-station-status",
@@ -24,6 +25,9 @@ export class StationStatusComponent implements OnInit {
   stationData: DataModel[];
   hourly;
 
+  quarterData: QuarterModel[];
+  quarter;
+
   @ViewChild("station_tooltip", { static: false }) tooltipRef: ElementRef;
   @Input() station: StationStatus;
 
@@ -33,6 +37,7 @@ export class StationStatusComponent implements OnInit {
   ) {
     this.topFiveStations = [];
     this.stationData = [];
+    this.quarterData = [];
   }
 
   ngOnInit() {
@@ -46,11 +51,15 @@ export class StationStatusComponent implements OnInit {
       );
 
       this.stationData = this.stationService.getStation(this.station.id);
+      this.quarterData = this.stationService.getQuarterData(this.station.id);
+
+      // console.log(this.quarterData)
 
       this.updateData();
       this.updateSize();
       this.renderTravelTimesChart();
       this.renderHourlyChart();
+      this.renderQuarterChart();
     });
 
     this.reszieService.resizeSub.subscribe(() => {
@@ -93,6 +102,9 @@ export class StationStatusComponent implements OnInit {
           d3.select("#listeners").remove();
         }
       }
+      if (this.quarter) {
+        d3.select("#QuarterChart").attr("width", this.width);
+      }
       // this.height = this.tooltipRef.nativeElement.offsetHeight;
     }
   }
@@ -124,6 +136,7 @@ export class StationStatusComponent implements OnInit {
     this.updateSize();
     this.renderTravelTimesChart();
     this.renderHourlyChart();
+    this.renderQuarterChart();
   }
 
   renderTravelTimesChart() {
@@ -670,5 +683,123 @@ export class StationStatusComponent implements OnInit {
         d3.select("#mytooltip").remove();
       }
     }
+  }
+  
+  renderQuarterChart(){
+    var data = this.quarterData;
+    if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
+      return;
+    }
+    if (!data || data.length == 0) {
+      d3.select("#QuarterChart").style("display", "none");
+    } else {
+      d3.select("#QuarterChart").style("display", "block");
+    }
+
+    this.width = this.tooltipRef.nativeElement.offsetWidth;
+    var chart_width = this.width - this.margin.left - this.margin.right;
+    var chart_height = this.height - this.margin.top - this.margin.bottom;
+    var height = 300;
+    var margin = { top: 50, right: 50, bottom: 30, left: 70 };
+
+
+    if (!this.quarter) {
+      this.quarter = d3
+        .select("#QuarterChart")
+        .attr("width", this.width)
+        // .attr("height", this.height)
+        .attr("height", height)
+        .append("g")
+        .attr(
+          "transform",
+          // "translate(" + this.margin.left + "," + this.margin.top + ")"
+          "translate(" + margin.left + "," + margin.top + ")"
+        );
+    }
+
+
+    // groupKey = "name"
+    var keys = ['outtrip', 'intrip']
+    var color = d3.scaleOrdinal()
+                .range(["#2E344A", "#08968F"])
+                    
+
+    // axis for countries
+    var x0 = d3.scaleBand()  //x scale
+        .domain(data.map(function(d) {return d.yr_q;}))
+        .range([0, chart_width])
+        .paddingInner(0.05);
+
+    // axis for years
+    var x1 = d3.scaleBand()
+        .domain(keys)
+        .rangeRound([0, x0.bandwidth()])
+        .padding(0.05)
+
+    var y = d3.scaleLinear() // y scale
+        .domain([0, 500])
+        .range([height, 0]); 
+
+                        
+                        
+    this.quarter.selectAll('g')
+        .data(data)
+        .enter()
+        .append('g')
+        .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+        .selectAll("rect")
+        .data(d => keys.map(key => ({key, value: d[key]})))
+        .enter()
+        .append('rect')
+        .attr("x", d => x1(d.key))
+        .attr("y", d => y(d.value))
+        .attr("width", x1.bandwidth())
+        .attr("height", d => y(0) - y(d.value))
+        .attr("fill", d => color(d.key));
+                        
+        this.quarter.append('g')               
+        //    .attr("transform", "translate(0, "+ height+ ")")
+        .call(d3.axisLeft(y).ticks(10))
+
+        this.quarter.append('g')
+        // .attr("transform", `translate(0,${height - margin.bottom})`)
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom(x0))
+
+                    // // console.log(color.domain())
+                    // var legend = bar.append('g')
+                    //    .attr('transform', `translate(${width},0)`)
+                    //    .selectAll('g')
+                    //    .data(color.domain().slice())
+                    //    .enter()
+                    //    .append('g')
+                    //    .attr('transform', (d, i) => `translate(0,${i * 20 - 10})`)
+
+                    // legend.append("rect")
+                    //    .attr("x", -19)
+                    //    .attr("width", 19)
+                    //    .attr("height", 19)
+                    //    .attr("fill", color);
+ 
+                    // legend.append("text")
+                    //    .attr("x", -60)
+                    //    .attr("y", 9.5)
+                    //    .attr("dy", "0.35em")
+                    //    .text(d => d.slice(5, 9));
+
+                    // bar.append("text")
+                    //     .attr("text-anchor", "middle") 
+                    //     .attr("transform", "translate(0,0)")
+                    //     .attr('x', -10)
+                    //     .attr('y', -15)
+                    //     //    .attr("transform", "translate("+ (margin.top/5) +","+(height/2)+")rotate(-90)") 
+                    //     .text("Rate");
+
+                    // bar.append("text")
+                    //     .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                    //     .attr("transform", "translate("+ (width/2) +","+(height+2*(margin.bottom/3))+")")  // centre below axis
+                    //     .text("Countries");
+
+
   }
 }
