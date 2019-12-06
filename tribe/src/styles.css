@@ -23,7 +23,11 @@
   transition: width 0.3s, height 0.3s;
 }
 
-.bike_station_marker:hover{
+.bike_station_marker.hidden{
+  opacity : 0.2;
+}
+.bike_station_marker:hover,
+.bike_station_marker.selected{
   border: 2px solid #ffffff;
   width: 30px;
   height: 30px;
