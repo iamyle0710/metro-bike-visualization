@@ -13,7 +13,7 @@ import { StationService } from '../core/services/station.service';
 export class AnalysisComponent implements OnInit {
   margin = { top: 20, right: 20, bottom: 70, left: 70 };
   width: number = 500;
-  height: number = 400;
+  height: number = 500;
   svg;
   passholderYears = ['2017' ,'2018', '2019'];
   passholderFilterYears = ['2018', '2019'];

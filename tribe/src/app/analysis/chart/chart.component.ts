@@ -77,7 +77,7 @@ export class ChartComponent implements OnInit {
     this.noData = false;
     
     // console.log(data);
-    this.width = this.chartRef.nativeElement.offsetWidth * 0.6;
+    this.width = this.chartRef.nativeElement.offsetWidth * 0.5;
     this.height = this.width;
 
     var color = d3.scaleOrdinal([

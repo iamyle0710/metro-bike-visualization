@@ -1,5 +1,6 @@
 .analysis {
   background-color: #23282c;
+  padding: 0 30px;
 }
 
 .analysis_header {
@@ -14,11 +15,12 @@
   font-weight: 100;
   color: #9b9b9b;
   margin: 15px 0;
+  line-height: 36px;
 }
 
 .filter_func {
-  padding: 0 0 0 10px;
-  margin: 0 0 15px;
+  padding: 0;
+  margin: 15px 0 30px;
 }
 
 .filter_year {
@@ -55,6 +57,7 @@
   font-style: italic;
   border-left: 2px solid;
   padding-left: 10px;
+  line-height: 36px;
 }
 
 .dropdown-menu{
