@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StationService } from '../core/services/station.service';
 import { StationStatus } from '../share/station.model';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { ResizeService } from '../core/services/resize.service';
 
 @Component({
   selector: 'app-visualization',
@@ -9,15 +11,30 @@ import { StationStatus } from '../share/station.model';
 })
 export class VisualizationComponent implements OnInit {
 
+  faChevronUp = faChevronUp;
   station : StationStatus;
-  
-  constructor(private stationServie: StationService){
+  width : number;
+
+  @ViewChild("visualization", { static: false }) visualRef: ElementRef;
+
+  constructor(private stationServie: StationService,
+    private resizeService : ResizeService){
     this.stationServie.hoverStationSub.subscribe((station : StationStatus) => {
       this.station = station;
+    })
+
+    this.resizeService.resizeSub.subscribe(() => {
+      this.updateSize();
     })
   }
 
   ngOnInit() {
+  }
+
+  updateSize(){
+    if(this.visualRef && this.visualRef.nativeElement.offsetWidth != 0){
+      this.width = this.visualRef.nativeElement.offsetWidth;
+    }
   }
 
 }

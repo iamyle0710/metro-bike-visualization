@@ -1,4 +1,4 @@
-<div class="app-container container-fluid">
+<div class="app-container container-fluid" #visualization>
   <div class="row">
     <div
       class="order-2 order-lg-1 pl-0 pr-1"
@@ -12,8 +12,12 @@
     <div class="col-lg-4 order-1 order-lg-2 pl-0 pr-0">
         <app-station-status></app-station-status>
     </div>
-    <!-- <div *ngIf="station" class="col-lg-4 order-1 order-lg-2 pl-0 pr-0">
-      <app-station-status></app-station-status>
-    </div> -->
   </div>
+  <fa-icon *ngIf="width < 1000" class="scrollToTopBtn" 
+    [icon]="faChevronUp" 
+    placement="left" 
+    ngbTooltip="Click to scroll to the top"
+    tooltipClass="tooltip_container"
+    (click)="visualization.scrollTop = 0">
+  </fa-icon>
 </div>
