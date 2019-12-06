@@ -129,7 +129,7 @@ export class MapComponent implements OnInit {
         paint: {
           "line-color": "#77d64b",
           "line-width": 3,
-          "line-opacity": 0.8
+          "line-opacity": 0.5
         },
         layout: {
           "line-cap": "round",
@@ -259,48 +259,6 @@ export class MapComponent implements OnInit {
 
     // console.log(this.geojson);
   }
-
-  // createPopup(e: any) {
-  //   this.map.getCanvas().style.cursor = "pointer";
-  //   var coordinates = e.features[0].geometry.coordinates.slice();
-  //   var description = e.features[0].properties.addressStreet;
-
-  //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-  //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-  //   }
-
-  //   // Populate the popup and set its coordinates
-  //   // based on the feature found.
-  //   this.popup
-  //     .setLngLat(coordinates)
-  //     .setHTML(
-  //       [
-  //         "<div class='marker_header'>",
-  //         "<span class='title'>" + e.features[0].properties.name + "</span>",
-  //         "</div>",
-  //         "<div class='bike_dock_status'>",
-  //         "<span class='flex_col'>",
-  //         "<span class='status'>" +
-  //           e.features[0].properties.bikesAvailable +
-  //           "</span>",
-  //         "<span class='name'>Bikes</span>",
-  //         "</span>",
-  //         "<span class='flex_col'>",
-  //         "<span class='status'>" +
-  //           e.features[0].properties.docksAvailable +
-  //           "</span>",
-  //         "<span class='name'>Docks</span>",
-  //         "</span>",
-  //         "</div>"
-  //       ].join("")
-  //     )
-  //     .addTo(this.map);
-  // }
-
-  // removePopup() {
-  //   this.map.getCanvas().style.cursor = "";
-  //   this.popup.remove();
-  // }
 
   showStations(){
     var markers = document.querySelectorAll(".bike_station_marker");
