@@ -828,7 +828,11 @@
   ],
   "elementsToHide": [],
   "selectedFrames": [
+<<<<<<< HEAD
     "frame2262"
+=======
+    "frame6002"
+>>>>>>> bdc01ec5075fb394670e79441b0199d1d634d6c0
   ],
   "selectedLayers": [
     "Artboard",
