@@ -161,19 +161,19 @@ export class StationService  {
     }
 
     setHoverStationById(stationId: number){
-        if(this.stationGeojson || stationId == this.hoverStation.id){
-            // console.log(this.stationGeojson);
-            var obj = this.stationGeojson.features.find(item => item.properties.kioskId == stationId);
-            if(obj.properties){
-                this.hoverStation.id = obj.properties.kioskId;
-                this.hoverStation.name = obj.properties.name;
-                this.hoverStation.bikesAvailable = obj.properties.bikesAvailable;
-                this.hoverStation.docksAvailable = obj.properties.docksAvailable;
-                this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
-                this.hoverStation.latitude = obj.properties.latitude;
-                this.hoverStation.longitude = obj.properties.longitude;
-                this.hoverStationSub.emit(this.hoverStation);
-            }
+        if(!this.stationGeojson || !this.stationGeojson["features"] || stationId == this.hoverStation.id){
+            return;
+        }
+        var obj = this.stationGeojson["features"].find(item => item.properties.kioskId == stationId);
+        if(obj.properties){
+            this.hoverStation.id = obj.properties.kioskId;
+            this.hoverStation.name = obj.properties.name;
+            this.hoverStation.bikesAvailable = obj.properties.bikesAvailable;
+            this.hoverStation.docksAvailable = obj.properties.docksAvailable;
+            this.hoverStation.destinations = this.getStationTopNInOut(this.hoverStation.id, 5);
+            this.hoverStation.latitude = obj.properties.latitude;
+            this.hoverStation.longitude = obj.properties.longitude;
+            this.hoverStationSub.emit(this.hoverStation);
         }
     }
 
