@@ -1,4 +1,13 @@
 <div class="app" (window:resize)="onResize($event)">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
+  <div *ngIf="!isLoadingDone" class='loadingPage container-fluid'>
+    <div class="loadingContainer flex_col">
+        <span class='title'>Tribe</span>
+        <span class="countDown">{{countDown + '%'}} </span>
+    </div>
+  </div>
+  <div *ngIf="isLoadingDone">
+      <app-header></app-header>
+      <router-outlet></router-outlet>
+  </div>
+  
 </div>
