@@ -123,15 +123,15 @@
     justify-content: center;
 }
 
-.info{
+/* .info{
   cursor: pointer;
 }
 
 .info:hover{
   color : #75d04a;
-}
+} */
 
-.tooltip_container .tooltip-inner{
+/* .tooltip_container .tooltip-inner{
   background-color: #11827d;
   padding: 15px;
 }
@@ -139,3 +139,19 @@
 .tooltip_container .arrow::before{
   border-top-color: #11827d;
 }
+
+.tooltip_container.bs-tooltip-top .arrow::before{
+  border-top-color: #11827d;
+}
+
+.tooltip_container.bs-tooltip-bottom .arrow::before{
+  border-bottom-color: #11827d;
+}
+
+.tooltip_container.bs-tooltip-left .arrow::before{
+  border-left-color: #11827d;
+}
+
+.tooltip_container.bs-tooltip-right .arrow::before{
+  border-right-color: #11827d;
+} */

@@ -1,7 +1,12 @@
 <div class="analysis container-fluid">
   <div class="row pl-0 pr-0 mr-0 ml-0 pt-5">
     <div class="col-lg-5 pl-0 pr-0 pt-2">
-      <span class="analysis_header">Bike Station Inbound and Outbound</span>
+      <span class="analysis_header">Bike Station Inbound and Outbound 
+        <fa-icon class="info" 
+        [icon]="faInfoCircle" 
+        [ngbTooltip]="tooltipBikeInOut"
+        tooltipClass="tooltip_container"></fa-icon>
+      </span>
       <div class="filter_func flex_row">
         <div
           *ngFor="let year of bikeStationYears"
@@ -50,7 +55,12 @@
   </div>
   <div class="row pl-0 pr-0 mr-0 ml-0 pt-5">
     <div class="col-lg-5 pl-2 pr-2">
-      <span class="analysis_header">Ride Duration By Passholder Type</span>
+      <span class="analysis_header">Ride Duration By Passholder Type
+          <fa-icon class="info" 
+          [icon]="faInfoCircle" 
+          [ngbTooltip]="tooltipPassholderType"
+          tooltipClass="tooltip_container"></fa-icon>
+      </span>
       <div class="filter_func flex_row">
         <div
           *ngFor="let year of passholderYears"
@@ -86,7 +96,12 @@
   </div>
   <div class="row pl-0 pr-0 mr-0 ml-0 pt-5">
     <div class="col-lg-5 pl-2 pr-2">
-      <span class="analysis_header">Bike Type Usage Growth</span>
+      <span class="analysis_header">Bike Type Usage Growth
+          <fa-icon class="info" 
+          [icon]="faInfoCircle" 
+          [ngbTooltip]="tooltipBikeUsageGrowth"
+          tooltipClass="tooltip_container"></fa-icon>
+      </span>
       <div class="filter_func flex_row">
         <div
           *ngFor="let year of bikeUsagesYears"

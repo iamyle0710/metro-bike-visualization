@@ -1,8 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import * as d3 from "d3";
 import { AnalysisService } from "../core/services/analysis.service";
-import { ResizeService } from "../core/services/resize.service";
 import { StationService } from '../core/services/station.service';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-analysis",
@@ -11,6 +10,7 @@ import { StationService } from '../core/services/station.service';
   providers: [AnalysisService]
 })
 export class AnalysisComponent implements OnInit {
+  faInfoCircle = faInfoCircle;
   margin = { top: 20, right: 20, bottom: 70, left: 70 };
   width: number = 500;
   height: number = 500;
@@ -29,7 +29,9 @@ export class AnalysisComponent implements OnInit {
   bikeStationInOutData : any = {};
   bikeStationYears = ['2017','2018', '2019'];
   bikeStationFilterYears = ['2018', '2019'];
-  
+  tooltipBikeInOut = `You can select multiple years and a station to show all its inbound and outbound station`;
+  tooltipPassholderType = `You can select multiple yers or click legend on the chart to show specific data`;
+  tooltipBikeUsageGrowth = `You can select multiple yers or click legend on the chart to show specific data`;
 
   constructor(private analysisService: AnalysisService,
     private stationService : StationService) {
