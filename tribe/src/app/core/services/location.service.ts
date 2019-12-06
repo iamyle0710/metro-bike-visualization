@@ -8,6 +8,8 @@ export class LocationService{
     locationDataSub : EventEmitter<any> = new EventEmitter<any>();
     mapDataSub : EventEmitter<any> = new EventEmitter<any>();
 
+    center : number[];
+
     constructor(private http: HttpClient){
         
         this.getLocationData().subscribe((data:[any]) => {
@@ -24,8 +26,12 @@ export class LocationService{
     }
 
     private getMapData(){
-        return this.http.get('./assets/city_boundaries.geojson');
+        return this.http.get('./assets/city_boundaries.json');
     }
+
+    setCenter(center: number[]){
+      this.center = center;
+  }
 
     // getPoints(){
     //   console.log(this.locationData);
