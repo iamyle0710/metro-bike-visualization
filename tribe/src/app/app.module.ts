@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { StationService } from './core/services/station.service';
 import { ResizeService } from './core/services/resize.service';
@@ -46,7 +46,7 @@ const appRoutes = [
     FormsModule,
     NgbModule,
     RouterModule.forRoot(appRoutes),
-    // FontAwesomeModule
+    FontAwesomeModule
   ],
   providers: [
     StationService,
