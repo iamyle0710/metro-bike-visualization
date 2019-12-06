@@ -156,7 +156,7 @@ export class ChartComponent implements OnInit {
       .data(root.descendants())
       .join("text")
       .style("fill-opacity", d => (d.parent === root ? 1 : 0))
-      .style("font-size", 16)
+      .style("font-size", 14)
       .style("fill", "#22272c")
       .style("display", d => (d.parent === root ? "inline" : "none"))
       .text(d => {
