@@ -67,9 +67,7 @@ export class StationStatusComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    
-  }
+  ngAfterViewInit() {}
 
   updateData() {
     this.topFiveStations = this.topFiveStations.sort((a: any, b: any) => {

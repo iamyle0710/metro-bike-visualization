@@ -11,6 +11,9 @@ import { ResizeService } from './core/services/resize.service';
 export class AppComponent {
   title = 'tribe';
   station : StationStatus;
+  isLoadingDone : boolean = true;
+  countDown : number = 0;
+  countDownInterval; 
 
   // constructor(
   //   private resizeService: ResizeService){
@@ -23,6 +26,23 @@ export class AppComponent {
     this.stationServie.hoverStationSub.subscribe((station : StationStatus) => {
       this.station = station;
     })
+
+    if(!this.isLoadingDone){
+      this.loading();
+    }
+  }
+
+  loading(){
+    this.countDownInterval = setInterval(() => {
+      var progress : any = Math.random() * 10;
+      progress = parseInt(progress);
+      this.countDown = progress + this.countDown >= 100 ? 100 : progress + this.countDown;
+      
+      if(this.countDown == 100){
+        this.isLoadingDone = true;
+        clearInterval(this.countDownInterval);
+      }
+    }, 500)
   }
 
   onResize(event: any) {

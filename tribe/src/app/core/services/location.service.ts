@@ -8,7 +8,7 @@ export class LocationService{
     locationDataSub : EventEmitter<any> = new EventEmitter<any>();
     mapDataSub : EventEmitter<any> = new EventEmitter<any>();
 
-    center : number[];
+    center : number[] = [-118.272892, 34.026283];
 
     constructor(private http: HttpClient){
         

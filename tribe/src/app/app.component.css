@@ -1,1 +1,39 @@
+.loadingPage{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #23282c;
+    justify-content: center;
+}
+.loadingContainer{
+    justify-content: center;
+    align-items: center;
+}
 
+.countDown{
+    color: #fff;
+    font-size: 50px;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+    line-height: 50px;
+}
+
+.title{
+    font-size: 100px;
+    color: #3CC9ED;
+    padding: 0;
+    line-height: 100px;
+    animation-name: progress;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+
+
+@keyframes progress {
+    0%   {color:#3CC9ED;}
+    50%  {color: #fff;}
+    100%   {color:#3CC9ED;}
+}

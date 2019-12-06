@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
+    "@fortawesome/angular-fontawesome": "^0.6.0-alpha.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "@types/d3": "^5.7.2",
     "bootstrap": "^4.3.1",
