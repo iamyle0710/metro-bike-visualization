@@ -35,7 +35,7 @@
 - Bike Trips Time Series Chart : Hsin-Yu Chang (hsinyuch)
 - Bike Trips Overall Inbound and Outbound Chart : Hsin-Yu Chang (hsinyuch)
 
-### Data used in this project
+### DATA
 - Metro Bike Share Data
    - The dataset is about bike trip information and is summarized for each quarter from 2016 to now
    - Data format includes `trip_id`, `duration`, `start_time`, `end_time`, `start_station`, `start_lat`, `start_lon`, `end_station`, `end_lat`, `end_lon`, `bike_id`, `plan_duration`, `trip_route_category`, `passholder_type` and `bike_type`
@@ -47,7 +47,7 @@
    - Implemented charts include `Bike Station Map`, `Bike Share Station Proportional Map`
    - [Data Source](http://bikeshare.metro.net/stations/json/)
 
-### Project Set-Up
+### PROJECT SET-UP
 - Clone the project
 ```
 git clone https://github.com/INF554/Tribe.git
@@ -66,7 +66,7 @@ sudo npm install
 ng serve --open
 ```
 
-### Publish
+### PUBLISH
 - Build our Angular project and deploy on `pdms.usc.edu`
 ```
 ng build --prod --base-href /~mingyi/tribe/
@@ -75,6 +75,32 @@ scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
 
 ### GIT
 - Over 200 commits contributed by all members
+
+### DEMONSTRATION
+## Required Charts
+- D3 Maps
+   - Bike Share Station Proportional Map
+      - Located in `Tribe` page
+- Responsive D3 Charts, Interactive D3 Charts, D3 Animated Transitions
+   - Bar Charts
+      - Top 5 Destinations
+         - Located in `Visualization` page
+      - Top 5 Destinations
+         - Located in `Visualization` page
+   - Group Bars Charts
+      - Overall Outbound / Inbound
+         - Located in `Visualization` page
+      - Bike Type Usage Growth
+         - Located in `Analysis` page
+   - Line Charts
+      - Total Trips by Hour of the Day
+         - Located in `Visualization` page
+      - Ride Duration By Passholder Type
+         - Located in `Analysis` page
+- D3 layouts
+   - Circle Packing Layout
+      - Bike Station Inbound and Outbound
+         - Located in `Analysis` page
 
 ### Development Details
 #### Bootstrap
@@ -1559,6 +1585,8 @@ renderGroupBars() {
    .call(yAxis);
 }
 ```
+
+
 
 ## Introduction
 
