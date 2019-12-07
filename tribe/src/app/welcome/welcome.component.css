@@ -52,3 +52,12 @@ path.states{
     fill: transparent;
     stroke: #454545;
 }
+
+.connect_sign{
+  color: #c6c6c6;
+  margin-bottom: .5rem;
+  font-weight: 100;
+  line-height: 1.2;
+  margin-left: 10px;
+  font-size: 1.25rem;
+}
