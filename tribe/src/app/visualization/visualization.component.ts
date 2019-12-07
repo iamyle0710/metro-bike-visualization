@@ -15,7 +15,7 @@ export class VisualizationComponent implements OnInit {
   station : StationStatus;
   width : number;
 
-  @ViewChild("visualization", { static: false }) visualRef: ElementRef;
+  @ViewChild("visualization", { static: true }) visualRef: ElementRef;
 
   constructor(private stationServie: StationService,
     private resizeService : ResizeService){
@@ -29,6 +29,10 @@ export class VisualizationComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(){
+    this.updateSize();
   }
 
   updateSize(){
