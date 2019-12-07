@@ -54,11 +54,156 @@ sudo npm install
 ng serve --open
 ```
 
-### Deployment
+### Publish
 - Build our Angular project and deploy on `pdms.usc.edu`
 ```
 ng build --prod --base-href /~mingyi/tribe/
 scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
+```
+
+### GIT
+- Over 200 commits contributed by all members
+
+### Development Details
+#### Bootstrap
+- Use `container-fluid`, `row` and combination of `col-number` to implement a responsive grid layout
+
+#### Angular
+- Using Service for components to communicate with each other
+```typescript
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
+import { StationStatus } from 'src/app/share/station.model';
+import { QuarterModel } from 'src/app/share/quarter.model';
+
+
+@Injectable()
+export class StationService  {
+
+    stationsGeojsonSub = new EventEmitter<any>();
+    stationGeojson = {};
+    stationsDemandSub = new EventEmitter<any>();
+    stationsDemand = {};
+    hoverStation: StationStatus = new StationStatus();
+    hoverStationSub = new EventEmitter<StationStatus>();
+    changeMapCenterSub = new EventEmitter<any>();
+    metroJson: {};
+    metroJsonSub = new EventEmitter<any>();
+    
+    constructor(private http : HttpClient){
+        this.getStationJSON().subscribe((data) => {
+            this.stationGeojson = data;
+            this.stationsGeojsonSub.emit(data);
+        })
+
+        this.getStationInOut().subscribe((data) => {
+            this.stationsDemand = data;
+            this.stationsDemandSub.emit(data);
+        })
+        
+        this.getMetro().subscribe((data) => {
+            this.metroJson = data;
+            this.metroJsonSub.emit(data);
+        })
+
+        this.getQuarter().subscribe((data) => {
+            this.quarterJson = Object.values(data)
+        })
+    }
+
+   ...
+}
+``` 
+- Components access and subscribe data using Service
+```typescript
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { StationService } from '../core/services/station.service';
+import { StationStatus } from '../share/station.model';
+import { ResizeService } from '../core/services/resize.service';
+
+@Component({
+  selector: 'app-visualization',
+  templateUrl: './visualization.component.html',
+  styleUrls: ['./visualization.component.css']
+})
+export class VisualizationComponent implements OnInit {
+
+  station : StationStatus;
+  width : number;
+
+  @ViewChild("visualization", { static: false }) visualRef: ElementRef;
+
+  constructor(private stationServie: StationService,
+    private resizeService : ResizeService){
+    this.stationServie.hoverStationSub.subscribe((station : StationStatus) => {
+      this.station = station;
+    })
+
+    this.resizeService.resizeSub.subscribe(() => {
+      this.updateSize();
+    })
+  }
+
+  ...
+
+}
+
+```
+- Using Mapbox to deploy our bike stations
+```typescript
+initMap() {
+   mapboxgl.accessToken = environment.mapbox.accessToken;
+   this.map = new mapboxgl.Map({
+   container: "map",
+   style: this.style,
+   zoom: 13,
+   center: [this.lng, this.lat]
+   });
+
+   // Add map controls
+   this.map.addControl(new mapboxgl.NavigationControl(), "top-left");
+}
+updateMarkers() {
+   var newMarkers = {};
+   var features = this.map.querySourceFeatures("stations");
+   var currentHoverId = this.station.id || false;
+   var destinationIds = this.station.destinations || [];
+
+   for (var i = 0; i < features.length; i++) {
+   var coords = features[i].geometry.coordinates;
+   var props = features[i].properties;
+   var ratio = 100 - 100 * (props.bikesAvailable / props.totalDocks);
+   var id = props.kioskId;
+   var isHidden = (!currentHoverId || destinationIds.indexOf(id) !== -1) ? false : true;
+   var marker = this.markers.hasOwnProperty(id) ? this.markers[id] : false;
+
+   if (!marker) {
+      var el = document.createElement("div");
+      el.innerHTML = [
+         "<div class='bike_station_marker "+ (isHidden ? "hidden" : "") + "' id='marker_"+id+"'>",
+         "<div class='bike_station_progess' style='top:" + ratio + "%'></div>",
+         "</div>"
+      ].join("");
+      marker = this.markers[id] = new mapboxgl.Marker({
+         element: el
+      }).setLngLat(coords);
+   }
+
+   newMarkers[id] = marker;
+
+   if (!this.markersOnScreen[id]) {
+      marker.addTo(this.map);
+   }
+   }
+
+   for (id in this.markersOnScreen) {
+   if (!newMarkers[id]) {
+      this.markersOnScreen[id].remove();
+   }
+   }
+   this.markersOnScreen = newMarkers;
+}
 ```
 
 ## Introduction
