@@ -30,8 +30,8 @@ export class AnalysisComponent implements OnInit {
   bikeStationYears = ['2017','2018', '2019'];
   bikeStationFilterYears = ['2018', '2019'];
   tooltipBikeInOut = `You can select multiple years and a station to show all its inbound and outbound station`;
-  tooltipPassholderType = `You can select multiple yers or click legend on the chart to show specific data`;
-  tooltipBikeUsageGrowth = `You can select multiple yers or click legend on the chart to show specific data`;
+  tooltipPassholderType = `You can select multiple years or click the legend on the chart to show specific data`;
+  tooltipBikeUsageGrowth = `You can select multiple years or click the legend on the chart to show specific data`;
 
   constructor(private analysisService: AnalysisService,
     private stationService : StationService) {

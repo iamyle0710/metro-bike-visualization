@@ -11,7 +11,7 @@ import { ResizeService } from './core/services/resize.service';
 export class AppComponent {
   title = 'tribe';
   station : StationStatus;
-  isLoadingDone : boolean = true;
+  isLoadingDone : boolean = false;
   countDown : number = 0;
   countDownInterval; 
 
