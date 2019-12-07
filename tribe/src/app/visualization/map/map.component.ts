@@ -25,7 +25,7 @@ export class MapComponent implements OnInit {
   markers: {};
   markersOnScreen: {};
   stationInOut : {};
-  tooltipMapUsage = `Hover on a station to learn more information about the station`
+  tooltipMapUsage = `Hover on a station to see its top 5 outbound stations and other information`
 
   constructor(private stationService: StationService,
     private resizeService : ResizeService,

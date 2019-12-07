@@ -86,7 +86,7 @@ export class StationStatusComponent implements OnInit{
   }
 
   updateSize() {
-    if (this.tooltipRef) {
+    if (this.tooltipRef && this.tooltipRef.nativeElement.offsetWidth != 0) {
       this.width = this.tooltipRef.nativeElement.offsetWidth - 40;
       if (this.svg) {
         d3.select("#inOutBarChart").attr("width", this.width);

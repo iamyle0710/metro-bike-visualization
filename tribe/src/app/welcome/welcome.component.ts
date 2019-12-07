@@ -85,7 +85,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   updateSize() {
-    if (this.chartRef) {
+    if (this.chartRef && this.chartRef.nativeElement.offsetWidth !== 0) {
       this.width = this.chartRef.nativeElement.offsetWidth;
       this.height = this.chartRef.nativeElement.offsetHeight;
     }

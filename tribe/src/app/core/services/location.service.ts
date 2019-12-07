@@ -17,11 +17,13 @@ export class LocationService{
     constructor(private http: HttpClient){
         
         this.getLocationData().subscribe((data:[any]) => {
-          this.locationDataSub.emit(data)
+          this.locationData = data;
+          this.locationDataSub.emit(this.locationData);
         });
 
         this.getMapData().subscribe((data: [any]) => {
-          this.mapDataSub.emit(data)
+          this.mapData = data;
+          this.mapDataSub.emit(this.mapData);
         })
     }
 
