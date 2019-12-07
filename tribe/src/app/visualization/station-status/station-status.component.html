@@ -13,6 +13,16 @@
     </div>
   </div>
   <div class="flex_row pane">
+      <div class="chart_header flex_row">
+          <div class="chart_title" id = 'inout'>Overall Outbound / Inbound
+            <!-- <span style="color:#FFCF21">Outbound</span> / <span style="color:#0191B4">Inbound</span> -->
+              <fa-icon class="info" 
+              [icon]="faInfoCircle" 
+              placement="bottom" 
+              [ngbTooltip]="tooltipQuarter"
+              tooltipClass="tooltip_container"></fa-icon>
+            </div>
+        </div>
     <svg id="QuarterChart" width="100%"></svg>
   </div>
   <div class="flex_col pane">

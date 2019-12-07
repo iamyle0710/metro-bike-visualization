@@ -30,6 +30,10 @@ export class StationStatusComponent implements OnInit{
   tooltipHour : String = `This section shows total inbound/outbound trips to this station.
    You can click year to see the trends or hover on the chart to see detail information.
     `;
+
+  tooltipQuarter : String = `This section shows total inbound/outbound trips of this station since it went live.
+  `;
+
   svg;
   // stationData: DataModel[];
   stationData: [];
@@ -100,7 +104,9 @@ export class StationStatusComponent implements OnInit{
         }
       }
       if (this.quarter) {
-        d3.select("#QuarterChart").attr("width", this.width);
+        var title = parseFloat(d3.select('#inout').style('width'));
+        // console.log(title, this.width)
+        d3.select("#QuarterChart").attr("width", this.width-title);
       }
       // this.height = this.tooltipRef.nativeElement.offsetHeight;
     }
@@ -705,14 +711,17 @@ export class StationStatusComponent implements OnInit{
     // this.width = this.tooltipRef.nativeElement.offsetWidth;
     // var chart_width = this.width - this.margin.left - this.margin.right;
     // var chart_height = this.height - this.margin.top - this.margin.bottom;
-    var chart_width = this.width - margin.left - margin.right;
+    var title = parseFloat(d3.select('#inout').style('width'));
+    var chart_width = this.width -title- margin.left - margin.right;
     var chart_height = height - margin.top - margin.bottom;
+
 
 
 
     var keys = ['outtrip', 'intrip']
     var color = d3.scaleOrdinal()
                 .range(["#FFCF21", "#0191B4"])
+                // .range(["#005A59", "#004544"])
                     
 
     // axis for countries
@@ -733,12 +742,27 @@ export class StationStatusComponent implements OnInit{
         .range([chart_height, 0]); 
 
     var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
-      return d.replace("_", " ");;
+      // return d.replace("_", " ");
+      return 'Q'+d.split("_")[1];
     }),
     yAxis = d3
       .axisLeft(y)
       .tickSizeInner(-chart_width)
       .ticks(5);
+
+
+    var year = ['2017', '2018', '2019'];
+    var years = data.map(d=>d.yr_q);
+    var mask = []
+    for (var i = 0; i < year.length; i++){
+      var arr = years.filter(d => d.slice(0, 4) == year[i])
+      if(arr.length!=0){
+        mask.push([d3.min(arr), arr.length]);
+      }   
+    }
+    // console.log(mask)
+
+
 
 
 
@@ -755,18 +779,78 @@ export class StationStatusComponent implements OnInit{
           "translate(" + margin.left + "," + margin.top + ")"
         );
 
-          // groupKey = "name"
-
-
-
-      this.quarter
+        this.quarter
         .append("g")
         .attr("id", "quarterX")
         .attr("transform", "translate(0, " + chart_height + ")");
     
-      this.quarter.append("g")
-      .attr("id", "quarterY")
-      .call(yAxis);
+        this.quarter.append("g")
+        .attr("id", "quarterY")
+        .call(yAxis);
+
+        this.quarter
+          .append('g')
+          .attr('id', 'masks')
+      }
+
+      console.log(mask)
+
+      // var isMasks = document.getElementById("masks");
+      this.quarter.selectAll("#masks .mask").remove();
+      
+      var masks = this.quarter.select("#masks")
+      .selectAll('.mask')
+      .data(mask)
+
+      var maskss = masks
+      .enter()
+      .append('g')
+      .attr('class', 'mask')
+      .attr("transform", d =>
+        // "translate(" + this.margin.left + "," + this.margin.top + ")"
+        "translate(" + x0(d[0])+ ",0)"
+      )
+      
+      // maskss
+      // .append('rect')
+      // .attr('x', 0)
+      // .attr('y', 0)
+      // .attr('height', chart_height+ margin.bottom)
+      // .attr('width', d => x0.bandwidth()*d[1])
+      // .style('fill', function(d,i){
+      //   if(i%2){
+      //     return '#fff';
+      //   }else{
+      //     return '#333333';
+      //   }
+      // })
+      // .style('opacity', '0.8')
+
+      maskss
+      .append('line')
+      .attr('x1', 2)
+      .attr('y1', chart_height+ margin.bottom-15)
+      .attr('x2', d => x0.bandwidth()*d[1]-2)
+      .attr('y2', chart_height+ margin.bottom-15)
+      .style('stroke-width',1)
+      .style('stroke', '#333333')
+      // .style('stroke-dasharray',4)
+
+
+      maskss
+      .append('text')
+      .attr('x', d => x0.bandwidth()*d[1]/2)
+      .attr('y', chart_height+ margin.bottom-5)
+      .text(d => d[0].split('_')[0])
+      .attr('text-anchor',"middle")
+      .attr('dominant-baseline',"middle")
+      .style('fill', '#333333')
+      .attr('font-size', 10)
+
+
+
+
+      
 
       this.quarter
       .append("text")
@@ -833,7 +917,7 @@ export class StationStatusComponent implements OnInit{
           //   ;
     
   
-    }
+    
 
 
 
