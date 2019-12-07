@@ -35,7 +35,7 @@
 - Bike Trips Time Series Chart : Hsin-Yu Chang (hsinyuch)
 - Bike Trips Overall Inbound and Outbound Chart : Hsin-Yu Chang (hsinyuch)
 
-### Data 
+### Data used in this project
 - Metro Bike Share Data
    - The dataset is about bike trip information and is summarized for each quarter from 2016 to now
    - Data format includes `trip_id`, `duration`, `start_time`, `end_time`, `start_station`, `start_lat`, `start_lon`, `end_station`, `end_lat`, `end_lon`, `bike_id`, `plan_duration`, `trip_route_category`, `passholder_type` and `bike_type`
