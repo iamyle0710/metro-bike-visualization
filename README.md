@@ -77,7 +77,7 @@ scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
 - Over 200 commits contributed by all members
 
 ### DEMONSTRATION
-## Required Charts
+#### Required Charts
 - D3 Maps
    - Bike Share Station Proportional Map
       - Located in `Tribe` page
