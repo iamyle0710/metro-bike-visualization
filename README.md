@@ -35,7 +35,19 @@
 - Bike Trips Time Series Chart : Hsin-Yu Chang (hsinyuch)
 - Bike Trips Overall Inbound and Outbound Chart : Hsin-Yu Chang (hsinyuch)
 
-### Project Set-Up
+### DATA
+- Metro Bike Share Data
+   - The dataset is about bike trip information and is summarized for each quarter from 2016 to now
+   - Data format includes `trip_id`, `duration`, `start_time`, `end_time`, `start_station`, `start_lat`, `start_lon`, `end_station`, `end_lat`, `end_lon`, `bike_id`, `plan_duration`, `trip_route_category`, `passholder_type` and `bike_type`
+   - Implemented charts include `Overall Outbound / Inbound`, `Top 5 Outbound Destinations`, `Total Trips by Hour of the Day`, `Bike Station Inbound and Outbound`, `Ride Duration By Passholder Type` and `Bike Type Usage Growth`
+   - We use all trip data from 2017 to 2019 in this project
+   - [Data Source](https://bikeshare.metro.net/about/data/)
+- Metro Bike Station Status
+   - We use this data to visualize all the bike stations and show the number of available bikes and docks on the map
+   - Implemented charts include `Bike Station Map`, `Bike Share Station Proportional Map`
+   - [Data Source](http://bikeshare.metro.net/stations/json/)
+
+### PROJECT SET-UP
 - Clone the project
 ```
 git clone https://github.com/INF554/Tribe.git
@@ -54,7 +66,7 @@ sudo npm install
 ng serve --open
 ```
 
-### Publish
+### PUBLISH
 - Build our Angular project and deploy on `pdms.usc.edu`
 ```
 ng build --prod --base-href /~mingyi/tribe/
@@ -63,6 +75,32 @@ scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
 
 ### GIT
 - Over 200 commits contributed by all members
+
+### DEMONSTRATION
+#### Required Charts
+- D3 Maps
+   - Bike Share Station Proportional Map
+      - Located in `Tribe` page
+- Responsive D3 Charts, Interactive D3 Charts, D3 Animated Transitions
+   - Bar Charts
+      - Top 5 Destinations
+         - Located in `Visualization` page
+      - Top 5 Destinations
+         - Located in `Visualization` page
+   - Group Bars Charts
+      - Overall Outbound / Inbound
+         - Located in `Visualization` page
+      - Bike Type Usage Growth
+         - Located in `Analysis` page
+   - Line Charts
+      - Total Trips by Hour of the Day
+         - Located in `Visualization` page
+      - Ride Duration By Passholder Type
+         - Located in `Analysis` page
+- D3 layouts
+   - Circle Packing Layout
+      - Bike Station Inbound and Outbound
+         - Located in `Analysis` page
 
 ### Development Details
 #### Bootstrap
@@ -242,7 +280,144 @@ updateMarkers() {
 }
 ```
 #### Station Status
-- renderTravelTimesChart
+- Overall Outbound / Inbound
+```typescript
+renderQuarterChart(){
+   var data = this.quarterData;
+   if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
+   return;
+   }
+   if (!data || data.length == 0) {
+   d3.select("#QuarterChart").style("display", "none");
+   } else {
+   d3.select("#QuarterChart").style("display", "block");
+   }
+
+   var margin = { top: 20, right: 30, bottom: 40, left: 40 };
+
+   var height = 220;
+   var chart_width = this.width - margin.left - margin.right;
+   var chart_height = height - margin.top - margin.bottom;
+   var keys = ['outtrip', 'intrip']
+   var color = d3.scaleOrdinal()
+               .range(["#FFCF21", "#0191B4"])
+                  
+   // axis for countries
+   var x0 = d3.scaleBand()  //x scale
+      .domain(data.map(function(d) {return d.yr_q;}))
+      .range([0, chart_width])
+      .paddingInner(0.05);
+
+   // axis for years
+   var x1 = d3.scaleBand()
+      .domain(keys)
+      .rangeRound([0, x0.bandwidth()])
+      .padding(0.05)
+
+   var y = d3.scaleLinear() // y scale
+      .domain([0, 
+      d3.max(data, d => Math.max(d.intrip, d.outtrip))])
+      .range([chart_height, 0]); 
+
+   var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
+   return d.replace("_", " ");;
+   }),
+   yAxis = d3
+   .axisLeft(y)
+   .tickSizeInner(-chart_width)
+   .ticks(5);
+
+   if (!this.quarter) {
+      this.quarter = d3
+         .select("#QuarterChart")
+         .attr("width", this.width)
+         .attr("height", height)
+         .append("g")
+         .attr(
+            "transform",
+            "translate(" + margin.left + "," + margin.top + ")"
+         );
+
+      this.quarter
+         .append("g")
+         .attr("id", "quarterX")
+         .attr("transform", "translate(0, " + chart_height + ")");
+      
+      this.quarter.append("g")
+      .attr("id", "quarterY")
+      .call(yAxis);
+
+      this.quarter
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .style('fill', '#fff')
+      .attr("y", 3)
+      .style('font-size', 10)
+      .attr("dy", ".7em")
+      .style("text-anchor", "end")
+      .text("Total Trips");
+   }
+                              
+   var qqyear = this.quarter.selectAll('.qqyear')
+      .data(data)
+
+   qqyear.enter()
+      .append('g')
+      .attr('class', 'qqyear')
+      .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+      .selectAll("rect")
+      .data(d => keys.map(key => ({key, value: d[key]})))
+      .enter()
+      .append('rect')
+      .attr("class", (d: any) => {
+         return d.key;
+      })
+      .attr("x", d => x1(d.key))
+      .attr("y", d => y(d.value))
+      .attr("width", x1.bandwidth())
+      .attr("height", d => chart_height - y(d.value))
+      .attr("fill", d => color(d.key));
+
+   qqyear.transition()
+   .attr("transform", d => `translate(${x0(d.yr_q)},0)`);
+
+   qqyear.exit()
+   .remove();
+
+   qqyear
+   .transition()
+   .duration(500)
+   .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+
+   var qqbar = this.quarter
+   .selectAll(".qqyear")
+   .selectAll("rect")
+   .data(d => keys.map(key => ({key, value: d[key]})));
+
+
+   qqbar
+   .transition()
+   .duration(500)
+   .attr("x", d => x1(d.key))
+   .attr("y", d => y(d.value))
+   .attr("width", x1.bandwidth())
+   .attr("height", d => chart_height - y(d.value))
+   .attr("fill", d => color(d.key));
+
+   this.quarter
+   .select("#quarterX")
+   .transition()
+   .duration(300)
+   .call(xAxis);
+
+   this.quarter
+   .select("#quarterY")
+   .transition()
+   .duration(300)
+   .call(yAxis);
+}
+```
+- Top 5 Outbound Destinations
 ```typescript
 renderTravelTimesChart() {
    if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
@@ -432,7 +607,7 @@ renderTravelTimesChart() {
    .remove();
 }
 ```
-- renderHourlyChart
+- Total Trips by Hour of the Day
 ```typescript
 renderHourlyChart() {
    var height = 220;
@@ -769,143 +944,649 @@ renderHourlyChart() {
     } 
   }
 ```
-- renderQuarterChart
+
+#### Anaylsis
+- Bike Station Inbound and Outbound
 ```typescript
-renderQuarterChart(){
-   var data = this.quarterData;
-   if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
+renderCirclePacking() {
+   var data = this.chartData;
+
+   if (!this.chartRef || data.name == "" || data.children.length == 0) {
+   d3.select("#" + this.chartId)
+      .selectAll("g")
+      .remove();
+   this.noData = true;
    return;
    }
-   if (!data || data.length == 0) {
-   d3.select("#QuarterChart").style("display", "none");
-   } else {
-   d3.select("#QuarterChart").style("display", "block");
+
+   this.noData = false;
+   
+   // console.log(data);
+   this.width = this.chartRef.nativeElement.offsetWidth * 0.5;
+   this.height = this.width;
+
+   var color = d3.scaleOrdinal([
+   "#74d7ca",
+   "#51b7c4",
+   "#51b7c4",
+   "#4196b7",
+   "#4275a2",
+   "#475385"
+   ]);
+   var format = d3.format(",d");
+   var pack = data =>
+   d3
+      .pack()
+      .size([this.width, this.height])
+      .padding(10)(
+      d3
+         .hierarchy(data)
+         .sum(d => d.value)
+         .sort((a, b) => b.value - a.value)
+   );
+
+   const root = pack(data);
+   let focus = root;
+   
+   if(!this.svg){
+   this.svg = d3
+      .select("#" + this.chartId)
+      // .attr("width", this.width)
+      .attr("height", this.height)
+      .attr(
+         "viewBox",
+         `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`
+      )
+      .style("display", "block")
+      .style("margin", "0 -14px")
+      .style("cursor", "pointer")
+      .on("click", () => this.zoomCirclePacking(root));
    }
+   
+   this.svg.attr("height", this.height)
+      .attr(
+         "viewBox",
+         `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`
+      )
+      .selectAll("g").remove();
 
-   var margin = { top: 20, right: 30, bottom: 40, left: 40 };
+   this.node = this.svg
+   .append("g")
+   .selectAll("circle")
+   .data(root.descendants())
+   .join("circle")
+   .attr("fill", (d: any) => (
+      d.children ? color(d.depth) : "white"
+   ))
+   .attr("pointer-events", (d: any) => (!d.children ? "none" : null))
+   .on("mouseover", function() {
+      d3.select(this).attr("stroke", "#000");
+   })
+   .on("mouseout", function() {
+      d3.select(this).attr("stroke", null);
+   })
+   .on(
+      "click",
+      d =>
+         focus !== d &&
+         (this.zoomCirclePacking(d), d3.event.stopPropagation())
+   );
 
-   var height = 220;
-   var chart_width = this.width - margin.left - margin.right;
-   var chart_height = height - margin.top - margin.bottom;
-   var keys = ['outtrip', 'intrip']
-   var color = d3.scaleOrdinal()
-               .range(["#FFCF21", "#0191B4"])
-                  
-   // axis for countries
-   var x0 = d3.scaleBand()  //x scale
-      .domain(data.map(function(d) {return d.yr_q;}))
-      .range([0, chart_width])
-      .paddingInner(0.05);
+   this.label = this.svg
+   .append("g")
+   .style("font", "10px sans-serif")
+   .attr("pointer-events", "none")
+   .attr("text-anchor", "middle")
+   .selectAll("text")
+   .data(root.descendants())
+   .join("text")
+   .style("fill-opacity", d => (d.parent === root ? 1 : 0))
+   .style("font-size", 14)
+   .style("fill", "#22272c")
+   .style("display", d => (d.parent === root ? "inline" : "none"))
+   .text(d => {
+      var text = d.data.name;
+      return text;
+   });
 
-   // axis for years
-   var x1 = d3.scaleBand()
-      .domain(keys)
-      .rangeRound([0, x0.bandwidth()])
-      .padding(0.05)
+   this.zoomCirclePackingTo([root.x, root.y, root.r * 2]);
+}
+```
+- Ride Duration By Passholder Type
+```typescript
+renderLineChart() {
+   if (!this.chartRef) {
+   return;
+   }
+   var data = this.chartData;
 
-   var y = d3.scaleLinear() // y scale
-      .domain([0, 
-      d3.max(data, d => Math.max(d.intrip, d.outtrip))])
-      .range([chart_height, 0]); 
+   this.width = this.chartRef.nativeElement.offsetWidth;
+   var chart_width = this.width - this.margin.left - this.margin.right;
+   var chart_height = this.height - this.margin.top - this.margin.bottom;
 
-   var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
-   return d.replace("_", " ");;
-   }),
-   yAxis = d3
-   .axisLeft(y)
-   .tickSizeInner(-chart_width)
-   .ticks(5);
+   var x = d3.scaleTime().range([0, chart_width]);
+   var y = d3.scaleLinear().range([chart_height, 0]);
+   var color = d3.scaleOrdinal([
+   "#74d7ca",
+   "#51b7c4",
+   "#51b7c4",
+   "#4196b7",
+   "#4275a2",
+   "#475385"
+   ]);
+   var hiddens = this.hidden;
 
-   if (!this.quarter) {
-      this.quarter = d3
-         .select("#QuarterChart")
-         .attr("width", this.width)
-         .attr("height", height)
-         .append("g")
-         .attr(
-            "transform",
-            "translate(" + margin.left + "," + margin.top + ")"
-         );
+   var xAxis = d3.axisBottom(x).ticks(5),
+   yAxis = d3.axisLeft(y).ticks(5);
 
-      this.quarter
-         .append("g")
-         .attr("id", "quarterX")
-         .attr("transform", "translate(0, " + chart_height + ")");
-      
-      this.quarter.append("g")
-      .attr("id", "quarterY")
-      .call(yAxis);
+   var line = d3
+   .line()
+   .curve(d3.curveBasis)
+   .x((d: any) => x(d.date))
+   .y((d: any) => y(d.duration));
 
-      this.quarter
+   var x_min: any = d3.min(data, (d: any) => {
+   var value: any = d3.min(d.values, (d1: any) => {
+      return d1.date;
+   });
+   return value;
+   });
+   var x_max: any = d3.max(data, (d: any) => {
+   var value: any = d3.max(d.values, (d1: any) => {
+      return d1.date;
+   });
+   return value;
+   });
+   var y_max: number = d3.max(data, (d: any) => {
+   var value: number = d3.max(d.values, (d1: any) => {
+      var v1: number = d1.duration;
+      return v1;
+   });
+   return value;
+   });
+
+   x.domain([x_min, x_max]);
+   y.domain([0, y_max]);
+
+   if (!this.svg) {
+   this.svg = d3
+      .select("#" + this.chartId)
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .append("g")
+      .attr(
+         "transform",
+         "translate(" + this.margin.left + "," + this.margin.top + ")"
+      );
+
+   this.svg
+      .append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0, " + chart_height + ")");
+
+   this.svg.append("g").attr("class", "axis axis--y");
+
+   // Add Y Title
+   this.svg
       .append("text")
       .attr("transform", "rotate(-90)")
-      .style('fill', '#fff')
-      .attr("y", 3)
-      .style('font-size', 10)
-      .attr("dy", ".7em")
-      .style("text-anchor", "end")
-      .text("Total Trips");
-   }
-                              
-   var qqyear = this.quarter.selectAll('.qqyear')
-      .data(data)
+      .attr("text-anchor", "middle")
+      .attr("class", "ylabel")
+      .attr("x", -chart_height / 2)
+      .attr("y", -this.margin.left * 0.5 - 5)
+      .text("Duration (minutes)");
 
-   qqyear.enter()
-      .append('g')
-      .attr('class', 'qqyear')
-      .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+   // Add X Title
+   this.svg
+      .append("text")
+      .attr("class", "xlabel")
+      .attr("x", chart_width / 2)
+      .attr("y", chart_height + 30)
+      .text("Date");
+
+   // Add Legend
+   this.svg
+      .append("g")
+      .attr("class", "legend")
+      .attr("transform", "translate(" + -90 + "," + 0 + ")");
+
+   this.svg
+      .select("g.legend")
       .selectAll("rect")
-      .data(d => keys.map(key => ({key, value: d[key]})))
-      .enter()
-      .append('rect')
-      .attr("class", (d: any) => {
+      .data(data, function(d) {
          return d.key;
       })
-      .attr("x", d => x1(d.key))
-      .attr("y", d => y(d.value))
-      .attr("width", x1.bandwidth())
-      .attr("height", d => chart_height - y(d.value))
-      .attr("fill", d => color(d.key));
+      .enter()
+      .append("rect")
+      .attr("class", (d: any) => d.key.replace(/\s/g, "_"))
+      .attr("width", 20)
+      .attr("height", 3)
+      .attr("x", function(d, i) {
+         return chart_width + 15;
+      })
+      .attr("y", function(d, i) {
+         return i * 10 + 10;
+      })
+      .attr("fill", function(d, i) {
+         return color(d.key);
+      })
+      .style("cursor", "pointer")
+      .on("click", this.toggleLineSeries.bind(this));
 
-   qqyear.transition()
-   .attr("transform", d => `translate(${x0(d.yr_q)},0)`);
+   this.svg
+      .select("g.legend")
+      .selectAll("text")
+      .data(data, function(d) {
+         return d.key;
+      })
+      .enter()
+      .append("text")
+      .attr("class", (d: any) => d.key.replace(/\s/g, "_"))
+      .attr("alignment-baseline", "middle")
+      .attr("text-anchor", "start")
+      .attr("font-size", 10)
+      .attr("fill", "#aaa")
+      .attr("x", function(d, i) {
+         return chart_width + 45;
+      })
+      .attr("y", function(d, i) {
+         return i * 10 + 12;
+      })
+      .text(function(d) {
+         return d.key;
+      })
+      .style("cursor", "pointer")
+      .on("click", this.toggleLineSeries.bind(this));
+   }
 
-   qqyear.exit()
-   .remove();
+   this.svg.selectAll(".line_group").remove();
 
-   qqyear
-   .transition()
-   .duration(500)
-   .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+   data.forEach((d: any, i: number) => {
+   this.svg
+      .append("g")
+      .attr("class", "line_group")
+      .attr("id", d.key.replace(/\s/g, "_"))
+      .attr("opacity", function(){
+         var id = d3.select(this).attr("id");
+         return hiddens.indexOf(id) === -1 ? 1 : 0;
+      })
+      .append("path")
+      .attr("class", "line")
+      .style("stroke", color(d.key))
+      .attr("d", line(d.values));
+   });
 
-   var qqbar = this.quarter
-   .selectAll(".qqyear")
-   .selectAll("rect")
-   .data(d => keys.map(key => ({key, value: d[key]})));
-
-
-   qqbar
-   .transition()
-   .duration(500)
-   .attr("x", d => x1(d.key))
-   .attr("y", d => y(d.value))
-   .attr("width", x1.bandwidth())
-   .attr("height", d => chart_height - y(d.value))
-   .attr("fill", d => color(d.key));
-
-   this.quarter
-   .select("#quarterX")
+   this.svg
+   .select("g.axis--x")
    .transition()
    .duration(300)
    .call(xAxis);
 
-   this.quarter
-   .select("#quarterY")
+   this.svg
+   .select("g.axis--y")
+   .transition()
+   .duration(300)
+   .call(yAxis);
+
+   this.svg
+   .select(".xlabel")
+   .transition()
+   .duration(300)
+   .attr("x", chart_width / 2)
+   .attr("y", chart_height + 30);
+
+   this.svg
+   .select(".ylabel")
+   .transition()
+   .duration(300)
+   .attr("x", -chart_height / 2)
+   .attr("y", -this.margin.left * 0.5 - 5);
+
+   this.svg
+   .select("g.legend")
+   .selectAll("rect")
+   .transition()
+   .duration(300)
+   .attr("x", function(d, i) {
+      return chart_width + 15;
+   })
+   .attr("y", function(d, i) {
+      return i * 10 + 10;
+   });
+
+   this.svg
+   .select("g.legend")
+   .selectAll("text")
+   .transition()
+   .duration(300)
+   .attr("x", function(d, i) {
+      return chart_width + 45;
+   })
+   .attr("y", function(d, i) {
+      return i * 10 + 12;
+   });
+}
+```
+- Bike Type Usage Growth
+```typescript
+renderGroupBars() {
+   if (!this.chartRef) {
+   return;
+   }
+
+   var data = this.chartData;
+   this.width = this.chartRef.nativeElement.offsetWidth;
+   var chart_width = this.width - this.margin.left - this.margin.right;
+   var chart_height = this.height - this.margin.top - this.margin.bottom;
+   var x = d3
+   .scaleBand()
+   .domain(
+      data.map(function(d: any) {
+         return d.key;
+      })
+   )
+   .range([0, chart_width])
+   .paddingInner(0.2);
+   var bikeTypes = {};
+
+   data.forEach(function(d: any) {
+   d.values.forEach((dv: any) => {
+      if (!bikeTypes.hasOwnProperty(dv.bike_type)) {
+         bikeTypes[dv.bike_type] = true;
+      }
+   });
+   });
+
+   var bikeTypeArr = Object.keys(bikeTypes);
+   // console.log(data, bikeTypeArr);
+   var xInScale = d3
+   .scaleBand()
+   .domain(bikeTypeArr)
+   .range([0, x.bandwidth()]);
+   var y_max: number = d3.max(data, (d: any) => {
+   var values: Array<number> = d.values.map((obj: any) => {
+      return obj.counts;
+   });
+   return isNaN(d3.max(values)) ? 1 : d3.max(values);
+   });
+
+   var y = d3
+   .scaleLinear()
+   .domain([0, y_max])
+   .range([chart_height, 0]);
+   var color = d3.scaleOrdinal([
+   "#74d7ca",
+   "#51b7c4",
+   "#4196b7",
+   // "#22bb33",
+   // "#5be16a",
+   // "#cdf6d2",
+   // "#ffffff"
+   ]);
+   var hiddens = this.hidden;
+
+   var xAxis = d3.axisBottom(x).ticks(5),
+   yAxis = d3
+      .axisLeft(y)
+      .tickSizeInner(-chart_width)
+      .ticks(5);
+
+   if (!this.svg) {
+   this.svg = d3
+      .select("#" + this.chartId)
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .append("g")
+      .attr(
+         "transform",
+         "translate(" + this.margin.left + "," + this.margin.top + ")"
+      );
+
+   this.svg.append("g").attr("class", "main_chart");
+
+   this.svg
+      .append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0, " + chart_height + ")")
+      .call(xAxis);
+
+   this.svg
+      .append("g")
+      .attr("class", "axis axis--y")
+      
+
+   // Add Y Title
+   this.svg
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("text-anchor", "middle")
+      .attr("class", "ylabel")
+      .attr("x", -chart_height / 2)
+      .attr("y", -this.margin.left * 0.5 - 5)
+      .text("Counts");
+
+   // Add X Title
+   this.svg
+      .append("text")
+      .attr("class", "xlabel")
+      .attr("x", chart_width / 2)
+      .attr("y", chart_height + 30)
+      .text("Date");
+
+   // Add Legend
+   this.svg
+      .append("g")
+      .attr("class", "legend")
+      .attr("transform", "translate(" + -90 + "," + 0 + ")");
+
+   this.svg
+      .select("g.legend")
+      .selectAll("rect")
+      .data(bikeTypeArr)
+      .enter()
+      .append("rect")
+      .attr("width", 15)
+      .attr("height", 15)
+      .attr("x", function(d, i) {
+         return chart_width + 15;
+      })
+      .attr("y", function(d, i) {
+         return i * 20 + 10;
+      })
+      .attr("fill", function(d) {
+         return color(d);
+      })
+      .style("cursor", "pointer");
+
+   this.svg
+      .select("g.legend")
+      .selectAll("text")
+      .data(bikeTypeArr)
+      .enter()
+      .append("text")
+      .style("cursor", "pointer")
+      .attr("alignment-baseline", "middle")
+      .attr("text-anchor", "start")
+      .attr("font-size", 12)
+      .attr("fill", "#aaa")
+      .attr("x", function(d, i) {
+         return chart_width + 45;
+      })
+      .attr("y", function(d, i) {
+         return i * 20 + 18;
+      })
+      .text(function(d) {
+         return d;
+      })
+      ;
+   }
+
+   // this.svg.selectAll(".months").remove();
+   var groups = this.svg
+   .select("g.main_chart")
+   .selectAll("g.bargroup")
+   .data(data, d => {
+      return d.key;
+   });
+
+   groups
+   .enter()
+   .append("g")
+   .attr("class", "bargroup")
+   .attr("transform", d => {
+      return "translate(" + x(d.key) + ",0)";
+   })
+   .selectAll("rect")
+   .data(function(d) {
+      // console.log(d);
+      return d.counts.slice();
+   })
+   .enter()
+   .append("rect")
+   .attr("class", (d: any) => {
+      return d.bike_type;
+   })
+   .attr("fill", (d, i) => {
+      return color(d.bike_type);
+   })
+   .attr("width", xInScale.bandwidth())
+   .attr("height", d => {
+      return chart_height - y(d.usage);
+   })
+   .attr("opacity", function(d){
+      return hiddens.indexOf(d.bike_type) === -1 ? 1 : 0;
+   })
+   .attr("x", function(d, i) {
+      return xInScale(d.bike_type);
+   })
+   .attr("y", function(d) {
+      return y(d.usage);
+   });
+
+   groups.transition().attr("transform", d => {
+   return "translate(" + x(d.key) + ",0)";
+   });
+
+   groups
+   .exit()
+   // .transition()
+   .remove();
+
+   var bars = this.svg
+   .selectAll(".bargroup")
+   .selectAll("rect")
+   .data(function(d: any) {
+      return d.counts.slice();
+   });
+
+   bars
+   .transition()
+   .duration(500)
+   .attr("x", function(d) {
+      return xInScale(d.bike_type);
+   })
+   .attr("y", function(d) {
+      return y(d.usage);
+   })
+   .attr("height", function(d) {
+      return chart_height - y(d.usage);
+   })
+   .attr("width", xInScale.bandwidth())
+   .attr("fill", function(d) {
+      return color(d.bike_type);
+   })
+   .attr("opacity", function(d){
+      return hiddens.indexOf(d.bike_type) === -1 ? 1 : 0;
+   })
+   
+
+   bars
+   .exit()
+   .transition()
+   .attr("y", function(d) {
+      return chart_height;
+   })
+   .attr("height", 0)
+   .attr("width", 0)
+   .remove();
+
+   this.svg.select("g.legend").remove();
+
+   // Add Legend
+   this.svg
+   .append("g")
+   .attr("class", "legend")
+   .attr("transform", "translate(" + -90 + "," + -10 + ")");
+
+   this.svg
+   .select("g.legend")
+   .selectAll("rect")
+   .data(bikeTypeArr)
+   .enter()
+   .append("rect")
+   .attr("class", (d: String) => {
+      return d;
+   })
+   .attr("width", 15)
+   .attr("height", 15)
+   .attr("x", function(d, i) {
+      return chart_width + 15;
+   })
+   .attr("y", function(d, i) {
+      return i * 20 + 10;
+   })
+   .attr("fill", function(d) {
+      return color(d);
+   })
+   .attr("opacity", function(d){
+      return hiddens.indexOf(d) === -1 ? 1 : 0.2
+   })
+   .style("cursor", "pointer")
+   .on("click", this.toggleBarSeries.bind(this));
+
+   this.svg
+   .select("g.legend")
+   .selectAll("text")
+   .data(bikeTypeArr)
+   .enter()
+   .append("text")
+   .attr("class", (d: String) => {
+      return d;
+   })
+   .attr("alignment-baseline", "middle")
+   .attr("text-anchor", "start")
+   .attr("font-size", 12)
+   .attr("fill", "#aaa")
+   .attr("x", function(d, i) {
+      return chart_width + 45;
+   })
+   .attr("y", function(d, i) {
+      return i * 20 + 18;
+   })
+   .attr("opacity", function(d){
+      return hiddens.indexOf(d) === -1 ? 1 : 0.2
+   })
+   .style("cursor", "pointer")
+   .text(function(d) {
+      return d;
+   })
+   .on("click", this.toggleBarSeries.bind(this));
+
+   this.svg
+   .select("g.axis--x")
+   .transition()
+   .duration(300)
+   .call(xAxis);
+
+   this.svg
+   .select("g.axis--y")
    .transition()
    .duration(300)
    .call(yAxis);
 }
 ```
+
+
 
 ## Introduction
 
