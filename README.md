@@ -35,6 +35,32 @@
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
 - <chart-description>: [<member-name> (<member-USC-username>) ...]
 
+### Project Set-Up
+- Clone the project
+```
+git clone https://github.com/INF554/Tribe.git
+```
+- Install Angular Client Tool
+```
+sudo npm install -g @angular/cli
+```
+- Install all the required packages in Node.js
+```
+cd tribe
+sudo npm install
+```
+- Run the project
+```
+ng serve --open
+```
+
+### Deployment
+- Build our Angular project and deploy on `pdms.usc.edu`
+```
+ng build --prod --base-href /~mingyi/tribe/
+scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
+```
+
 ## Introduction
 
 * Targeted audience : **Metro Bike Institute**<br>
