@@ -16,7 +16,7 @@
 - [Demonstration URL](http://pdms.usc.edu/~linmingy/tribe/)
 - [Presentation PDF](https://github.com/INF554/a5-zhaoyans/blob/master/final_presentation/final_presentation.pdf) and [Transcript](https://github.com/INF554/a5-zhaoyans/blob/master/PRESENTATION_TRANSCRIPT.md)
 - [Article](<https://github.com/INF554/Tribe/blob/master/INF554_Tribe_Project_Report.pdf>) and [Overleaf URL](https://www.overleaf.com/read/vnpnvkwvddft)
-- [YouTube video](<youtube-video-url>)
+- [YouTube video](https://www.youtube.com/watch?v=vRZVnWx0Yck&feature=youtu.be)
 
 ### PROJECT CONTRIBUTIONS
 
