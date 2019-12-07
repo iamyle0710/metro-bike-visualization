@@ -81,26 +81,31 @@ scp -r * linmingy@pdms.usc.edu:/home/linmingy/public_html/tribe
 - D3 Maps
    - Bike Share Station Proportional Map
       - Located in `Tribe` page
+      - Demo Start Time : 00:52
 - Responsive D3 Charts, Interactive D3 Charts, D3 Animated Transitions
    - Bar Charts
       - Top 5 Destinations
          - Located in `Visualization` page
-      - Top 5 Destinations
-         - Located in `Visualization` page
+         - Demo Start Time : 01:55
    - Group Bars Charts
       - Overall Outbound / Inbound
          - Located in `Visualization` page
+         - Demo Start Time : 03:00
       - Bike Type Usage Growth
          - Located in `Analysis` page
+         - Demo Start Time : 05:07
    - Line Charts
       - Total Trips by Hour of the Day
          - Located in `Visualization` page
+         - Demo Start Time : 02:31
       - Ride Duration By Passholder Type
          - Located in `Analysis` page
+         - Demo Start Time : 04:10
 - D3 layouts
    - Circle Packing Layout
       - Bike Station Inbound and Outbound
          - Located in `Analysis` page
+         - Demo Start Time : 03:36
 
 ### Development Details
 #### Bootstrap
