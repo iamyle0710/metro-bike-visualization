@@ -20,20 +20,20 @@
 
 ### PROJECT CONTRIBUTIONS
 
-- Demonstration: [<member-name> (<member-USC-username>) ...]
-- Presentation: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)]
-- Transcript: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)]
-- Paper: [<member-name> (<member-USC-username>) ...]
+- Demonstration: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)
+- Presentation: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)
+- Transcript: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)
+- Paper: Zhaoyang Song(zhaoyans)
 - YouTube video: [<member-name> (<member-USC-username>) ...]
-- Web site: [Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch) ...]
-- Top 5 Destinations (bar chart) : [Ming-Yi Lin (linmingy)] 
-- Ride Duration By Passholder Type : [Ming-Yi Lin (linmingy)]
-- Bike Type Usage Growth : [Ming-Yi Lin (linmingy)]
-- Bike Station Inbound and Outbound : [Ming-Yi Lin (linmingy)]
-- Bike Share Station Proportional Map : [Hsin-Yu Chang (hsinyuch)]
-- Bike Trips Time Series Chart : [Hsin-Yu Chang (hsinyuch)]
-- <chart-description>: [<member-name> (<member-USC-username>) ...]
-- <chart-description>: [<member-name> (<member-USC-username>) ...]
+- Web site: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch)
+- Bike Station Location Map : Ming-Yi Lin (linmingy)
+- Top 5 Destinations (bar chart) : Ming-Yi Lin (linmingy)
+- Ride Duration By Passholder Type : Ming-Yi Lin (linmingy)
+- Bike Type Usage Growth : Ming-Yi Lin (linmingy)
+- Bike Station Inbound and Outbound : Ming-Yi Lin (linmingy)
+- Bike Share Station Proportional Map : Hsin-Yu Chang (hsinyuch)
+- Bike Trips Time Series Chart : Hsin-Yu Chang (hsinyuch)
+- Bike Trips Overall Inbound and Outbound Chart : Hsin-Yu Chang (hsinyuch)
 
 ### Project Set-Up
 - Clone the project
