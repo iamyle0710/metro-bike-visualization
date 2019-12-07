@@ -226,7 +226,7 @@ export class StationStatusComponent implements OnInit{
       .attr("width", function(d: any) {
         return x(d.numberOftimes);
       })
-      .attr("fill", "#FFCF21")
+      .attr("fill", "#5085A5")
       
 
     bars
@@ -239,7 +239,7 @@ export class StationStatusComponent implements OnInit{
       .attr("width", function(d: any) {
         return x(d.numberOftimes);
       })
-      .attr("fill", "#FFCF21");
+      .attr("fill", "#5085A5");
 
     bars
       .exit()
@@ -336,9 +336,9 @@ export class StationStatusComponent implements OnInit{
   }
 
   renderHourlyChart() {
-    var height = 220;
-    var margin = { top: 50, right: 50, bottom: 30, left: 70 };
-    var palette = ["#FFCF21", "#0191B4"];
+    var height = 200;
+    var margin = { top: 50, right: 60, bottom: 30, left: 70 };
+    var palette = ["#5085A5", "#8FC1E3"];
     // console.log('Hello!!')
     if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
       return;
@@ -707,7 +707,7 @@ export class StationStatusComponent implements OnInit{
 
     var margin = { top: 20, right: 30, bottom: 40, left: 40 };
 
-    var height = 220;
+    var height = 180;
     // this.width = this.tooltipRef.nativeElement.offsetWidth;
     // var chart_width = this.width - this.margin.left - this.margin.right;
     // var chart_height = this.height - this.margin.top - this.margin.bottom;
@@ -720,8 +720,8 @@ export class StationStatusComponent implements OnInit{
 
     var keys = ['outtrip', 'intrip']
     var color = d3.scaleOrdinal()
-                .range(["#FFCF21", "#0191B4"])
-                // .range(["#005A59", "#004544"])
+                // .range(["#FFCF21", "#0191B4"])
+                .range(["#5085A5", "#8FC1E3"])
                     
 
     // axis for countries
@@ -833,7 +833,7 @@ export class StationStatusComponent implements OnInit{
       .attr('x2', d => x0.bandwidth()*d[1]-2)
       .attr('y2', chart_height+ margin.bottom-15)
       .style('stroke-width',1)
-      .style('stroke', '#333333')
+      .style('stroke', '#ECECEC')
       // .style('stroke-dasharray',4)
 
 
@@ -844,7 +844,7 @@ export class StationStatusComponent implements OnInit{
       .text(d => d[0].split('_')[0])
       .attr('text-anchor',"middle")
       .attr('dominant-baseline',"middle")
-      .style('fill', '#333333')
+      .style('fill', '#ECECEC')
       .attr('font-size', 10)
 
 
