@@ -51,6 +51,13 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.resizeService.resizeSub.subscribe(() => {
+      // console.log('4');
+      this.updateChart();
+      
+    });
+    // console.log('5');
+    this.updateChart();
   };
 
   ngOnChanges() {
@@ -59,16 +66,6 @@ export class WelcomeComponent implements OnInit {
     
   };
 
-  ngAfterViewInit() {
-    this.resizeService.resizeSub.subscribe(() => {
-      // console.log('4');
-      this.updateChart();
-      
-    });
-    // console.log('5');
-    this.updateChart();
-    
-  }
 
   updateChart() {
     this.updateSize();

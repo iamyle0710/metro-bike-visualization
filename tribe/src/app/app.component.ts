@@ -34,7 +34,7 @@ export class AppComponent {
 
   loading(){
     this.countDownInterval = setInterval(() => {
-      var progress : any = Math.random() * 10;
+      var progress : any = Math.random() * 20;
       progress = parseInt(progress);
       this.countDown = progress + this.countDown >= 100 ? 100 : progress + this.countDown;
       
