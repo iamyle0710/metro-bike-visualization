@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import * as mapboxgl from "mapbox-gl";
-import * as d3 from "d3";
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { StationService } from "../../core/services/station.service";
 import { StationStatus } from '../../share/station.model';
@@ -15,6 +15,7 @@ import { LocationService } from 'src/app/core/services/location.service';
 })
 export class MapComponent implements OnInit {
   // initialization
+  faInfoCircle = faInfoCircle;
   map: mapboxgl.Map;
   style: string = "mapbox://styles/mapbox/dark-v10";
   lat: number = 34.026283;
@@ -24,6 +25,7 @@ export class MapComponent implements OnInit {
   markers: {};
   markersOnScreen: {};
   stationInOut : {};
+  tooltipMapUsage = `Hover on a station to learn more information about the station`
 
   constructor(private stationService: StationService,
     private resizeService : ResizeService,

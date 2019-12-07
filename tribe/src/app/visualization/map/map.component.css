@@ -10,3 +10,17 @@
   height: 100%;
   min-height: 400px;
 }
+
+.info{
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c0c0c0;
+  box-shadow: 0 0 7px 3px #303038;
+}
