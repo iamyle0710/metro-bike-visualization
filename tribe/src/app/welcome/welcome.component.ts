@@ -3,6 +3,8 @@ import * as d3 from "d3";
 import { LocationService } from "../core/services/location.service";
 import { ResizeService } from "../core/services/resize.service";
 import { Router } from '@angular/router';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-welcome',
@@ -19,6 +21,16 @@ export class WelcomeComponent implements OnInit {
   locationData = [];
   mapData = [];
   station;
+  faInfoCircle = faInfoCircle;
+
+  tooltipArea: String = `Metro bike share stations in Pasadena has been inactive since 2018
+   `;
+
+  tooltipMap: String = `The circles on map show active metro bike share stations in 2019. You may click on any circle to 
+  get more insights around the selected area.
+  `;
+
+
 
   
   constructor(private locationService: LocationService, private resizeService: ResizeService, private router:Router) {
@@ -171,7 +183,7 @@ export class WelcomeComponent implements OnInit {
         // .attr("id", "hover-left")
         .attr('width', boxWidth)
         .attr('height', boxHeight)
-        .attr('fill', '#1B2A45')
+        .attr('fill', '#0E8BA5')
         .attr('x', 0)
         .attr('y', 0)
 
@@ -179,7 +191,7 @@ export class WelcomeComponent implements OnInit {
         // .attr("id", "hover-right")
         .attr('width', boxHeight+3)
         .attr('height', boxHeight)
-        .attr('fill', '#3B3E4A')
+        .attr('fill', '#F8F9FB')
         .attr('stroke-width', '0')
         .attr('x', boxWidth-boxHeight*3/4)
         .attr('y', 0)
@@ -202,8 +214,9 @@ export class WelcomeComponent implements OnInit {
         .attr('dominant-baseline',"middle")
         // .attr('text-anchor',"start")
         .attr('text-anchor',"end")
-        .attr('x', boxWidth-boxHeight*3/4+boxHeight-3)
+        .attr('x', boxWidth-boxHeight*3/4+boxHeight-5)
         .attr('y', boxHeight/2)
+        .style('fill', '#2D4159')
 
         var points = this.station.selectAll("circle")
         // .delay(5)  
@@ -259,6 +272,8 @@ export class WelcomeComponent implements OnInit {
           console.log(region)
 
           if(area == 'Pasadena'){
+            d3.select(this)
+            .style('background-color', 'rgba(0, 203, 241, 0.6)')
 
           
           }else{
@@ -266,11 +281,14 @@ export class WelcomeComponent implements OnInit {
             .style('background-color', 'rgba(0, 203, 241, 0.6)')
             
             
+            
             d3.select('#hover-bubbletip')
             .attr('display', 'block')
+
+            console.log(datum.area)
             
             hover
-            .attr("transform", datum.area != 'North Hollywood'?
+            .attr("transform", (datum.area != 'North Hollywood' && datum.area != 'Port of LA') ?
             "translate(" + 
             (projection(datum.point)[0]+bubble(datum.stations))+"," + 
             (projection(datum.point)[1]+bubble(datum.stations)) + ")":
@@ -302,13 +320,13 @@ export class WelcomeComponent implements OnInit {
         function onMouseEnter(datum, index){
           
           d3.select(this)
-          .style("fill", '#2F515C')
+          .style("fill", '#0E8BA5')
 
           d3.select('#hover-bubbletip')
           .attr('display', 'block')
           
           hover
-          .attr("transform", datum.area != 'North Hollywood'?
+          .attr("transform", (datum.area != 'North Hollywood' && datum.area != 'Port of LA') ?
           "translate(" + 
           (projection(datum.point)[0]+bubble(datum.stations))+"," + 
           (projection(datum.point)[1]+bubble(datum.stations)) + ")":

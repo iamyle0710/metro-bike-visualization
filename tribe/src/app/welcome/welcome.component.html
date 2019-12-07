@@ -10,7 +10,10 @@
               </div>
               <h1>
                 <div>Los Angeles</div>
-                <div class = 'pb-5'>Metro Bike System</div>
+                <div class = 'pb-5'>Metro Bike System
+                    </div>
+
+
               </h1>
 
               <!-- <h2>
@@ -19,12 +22,25 @@
               </h2> -->
               <h3>The system first launched in 2016 with 61 stations in 
                   <span class = 'area'>Downtown LA</span>. 
-                  Expanding the stations around 
-                  <span class = 'area'  data-toggle="tooltip" data-placement="top" title="Tooltip on top">Pasadena</span>, 
+                  and expanded the stations around 
+                  <span class = 'area'  
+                  [ngbTooltip]="tooltipArea"
+                  tooltipClass="tooltip_container">Pasadena</span>, 
+                  <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                    Tooltip with HTML
+                  </button>, -->
                   <span class = 'area'>Port of LA</span> and 
-                  <span class = 'area'>Westside</span> in 2017. 
+                  <span class = 'area'>Westside</span> in the next year. 
                   In 2019, you can also grab a share bike in <span class = 'area'>North Hollywood</span>. 
-                   </h3>
+                  <span>
+                        <fa-icon class="info" 
+                        [icon]="faInfoCircle" 
+                        placement="right" 
+                        [ngbTooltip]="tooltipMap"
+                        tooltipClass="tooltip_container"></fa-icon>
+
+                   </span>    
+                </h3>
           </div>
         </div>
         <div class="col pl-5 pr-5" [ngClass]="{'order-2' : pageWidth < 1000}"></div>
