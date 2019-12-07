@@ -24,7 +24,7 @@
 - Presentation: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)
 - Transcript: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch), Zhaoyang Song(zhaoyans)
 - Paper: Zhaoyang Song(zhaoyans)
-- YouTube video: [<member-name> (<member-USC-username>) ...]
+- YouTube video: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch)
 - Web site: Ming-Yi Lin (linmingy), Hsin-Yu Chang (hsinyuch)
 - Bike Station Location Map : Ming-Yi Lin (linmingy)
 - Top 5 Destinations (bar chart) : Ming-Yi Lin (linmingy)
