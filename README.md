@@ -35,6 +35,18 @@
 - Bike Trips Time Series Chart : Hsin-Yu Chang (hsinyuch)
 - Bike Trips Overall Inbound and Outbound Chart : Hsin-Yu Chang (hsinyuch)
 
+### Data 
+- Metro Bike Share Data
+   - The dataset is about bike trip information and is summarized for each quarter from 2016 to now
+   - Data format includes `trip_id`, `duration`, `start_time`, `end_time`, `start_station`, `start_lat`, `start_lon`, `end_station`, `end_lat`, `end_lon`, `bike_id`, `plan_duration`, `trip_route_category`, `passholder_type` and `bike_type`
+   - Implemented charts include `Overall Outbound / Inbound`, `Top 5 Outbound Destinations`, `Total Trips by Hour of the Day`, `Bike Station Inbound and Outbound`, `Ride Duration By Passholder Type` and `Bike Type Usage Growth`
+   - We use all trip data from 2017 to 2019 in this project
+   - [Data Source](https://bikeshare.metro.net/about/data/)
+- Metro Bike Station Status
+   - We use this data to visualize all the bike stations and show the number of available bikes and docks on the map
+   - Implemented charts include `Bike Station Map`, `Bike Share Station Proportional Map`
+   - [Data Source](http://bikeshare.metro.net/stations/json/)
+
 ### Project Set-Up
 - Clone the project
 ```
@@ -1008,9 +1020,6 @@ renderCirclePacking() {
    .style("display", d => (d.parent === root ? "inline" : "none"))
    .text(d => {
       var text = d.data.name;
-      // if (d.data.value) {
-      //   text = text + "(" + d.data.value + ")";
-      // }
       return text;
    });
 
