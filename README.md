@@ -242,7 +242,144 @@ updateMarkers() {
 }
 ```
 #### Station Status
-- renderTravelTimesChart
+- Overall Outbound / Inbound
+```typescript
+renderQuarterChart(){
+   var data = this.quarterData;
+   if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
+   return;
+   }
+   if (!data || data.length == 0) {
+   d3.select("#QuarterChart").style("display", "none");
+   } else {
+   d3.select("#QuarterChart").style("display", "block");
+   }
+
+   var margin = { top: 20, right: 30, bottom: 40, left: 40 };
+
+   var height = 220;
+   var chart_width = this.width - margin.left - margin.right;
+   var chart_height = height - margin.top - margin.bottom;
+   var keys = ['outtrip', 'intrip']
+   var color = d3.scaleOrdinal()
+               .range(["#FFCF21", "#0191B4"])
+                  
+   // axis for countries
+   var x0 = d3.scaleBand()  //x scale
+      .domain(data.map(function(d) {return d.yr_q;}))
+      .range([0, chart_width])
+      .paddingInner(0.05);
+
+   // axis for years
+   var x1 = d3.scaleBand()
+      .domain(keys)
+      .rangeRound([0, x0.bandwidth()])
+      .padding(0.05)
+
+   var y = d3.scaleLinear() // y scale
+      .domain([0, 
+      d3.max(data, d => Math.max(d.intrip, d.outtrip))])
+      .range([chart_height, 0]); 
+
+   var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
+   return d.replace("_", " ");;
+   }),
+   yAxis = d3
+   .axisLeft(y)
+   .tickSizeInner(-chart_width)
+   .ticks(5);
+
+   if (!this.quarter) {
+      this.quarter = d3
+         .select("#QuarterChart")
+         .attr("width", this.width)
+         .attr("height", height)
+         .append("g")
+         .attr(
+            "transform",
+            "translate(" + margin.left + "," + margin.top + ")"
+         );
+
+      this.quarter
+         .append("g")
+         .attr("id", "quarterX")
+         .attr("transform", "translate(0, " + chart_height + ")");
+      
+      this.quarter.append("g")
+      .attr("id", "quarterY")
+      .call(yAxis);
+
+      this.quarter
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .style('fill', '#fff')
+      .attr("y", 3)
+      .style('font-size', 10)
+      .attr("dy", ".7em")
+      .style("text-anchor", "end")
+      .text("Total Trips");
+   }
+                              
+   var qqyear = this.quarter.selectAll('.qqyear')
+      .data(data)
+
+   qqyear.enter()
+      .append('g')
+      .attr('class', 'qqyear')
+      .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+      .selectAll("rect")
+      .data(d => keys.map(key => ({key, value: d[key]})))
+      .enter()
+      .append('rect')
+      .attr("class", (d: any) => {
+         return d.key;
+      })
+      .attr("x", d => x1(d.key))
+      .attr("y", d => y(d.value))
+      .attr("width", x1.bandwidth())
+      .attr("height", d => chart_height - y(d.value))
+      .attr("fill", d => color(d.key));
+
+   qqyear.transition()
+   .attr("transform", d => `translate(${x0(d.yr_q)},0)`);
+
+   qqyear.exit()
+   .remove();
+
+   qqyear
+   .transition()
+   .duration(500)
+   .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
+
+   var qqbar = this.quarter
+   .selectAll(".qqyear")
+   .selectAll("rect")
+   .data(d => keys.map(key => ({key, value: d[key]})));
+
+
+   qqbar
+   .transition()
+   .duration(500)
+   .attr("x", d => x1(d.key))
+   .attr("y", d => y(d.value))
+   .attr("width", x1.bandwidth())
+   .attr("height", d => chart_height - y(d.value))
+   .attr("fill", d => color(d.key));
+
+   this.quarter
+   .select("#quarterX")
+   .transition()
+   .duration(300)
+   .call(xAxis);
+
+   this.quarter
+   .select("#quarterY")
+   .transition()
+   .duration(300)
+   .call(yAxis);
+}
+```
+- Top 5 Outbound Destinations
 ```typescript
 renderTravelTimesChart() {
    if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
@@ -432,7 +569,7 @@ renderTravelTimesChart() {
    .remove();
 }
 ```
-- renderHourlyChart
+- Total Trips by Hour of the Day
 ```typescript
 renderHourlyChart() {
    var height = 220;
@@ -769,143 +906,7 @@ renderHourlyChart() {
     } 
   }
 ```
-- renderQuarterChart
-```typescript
-renderQuarterChart(){
-   var data = this.quarterData;
-   if (!this.tooltipRef || !this.tooltipRef.nativeElement || this.tooltipRef.nativeElement.offsetWidth === 0) {
-   return;
-   }
-   if (!data || data.length == 0) {
-   d3.select("#QuarterChart").style("display", "none");
-   } else {
-   d3.select("#QuarterChart").style("display", "block");
-   }
 
-   var margin = { top: 20, right: 30, bottom: 40, left: 40 };
-
-   var height = 220;
-   var chart_width = this.width - margin.left - margin.right;
-   var chart_height = height - margin.top - margin.bottom;
-   var keys = ['outtrip', 'intrip']
-   var color = d3.scaleOrdinal()
-               .range(["#FFCF21", "#0191B4"])
-                  
-   // axis for countries
-   var x0 = d3.scaleBand()  //x scale
-      .domain(data.map(function(d) {return d.yr_q;}))
-      .range([0, chart_width])
-      .paddingInner(0.05);
-
-   // axis for years
-   var x1 = d3.scaleBand()
-      .domain(keys)
-      .rangeRound([0, x0.bandwidth()])
-      .padding(0.05)
-
-   var y = d3.scaleLinear() // y scale
-      .domain([0, 
-      d3.max(data, d => Math.max(d.intrip, d.outtrip))])
-      .range([chart_height, 0]); 
-
-   var xAxis = d3.axisBottom(x0).ticks(2).tickFormat(function(d) {
-   return d.replace("_", " ");;
-   }),
-   yAxis = d3
-   .axisLeft(y)
-   .tickSizeInner(-chart_width)
-   .ticks(5);
-
-   if (!this.quarter) {
-      this.quarter = d3
-         .select("#QuarterChart")
-         .attr("width", this.width)
-         .attr("height", height)
-         .append("g")
-         .attr(
-            "transform",
-            "translate(" + margin.left + "," + margin.top + ")"
-         );
-
-      this.quarter
-         .append("g")
-         .attr("id", "quarterX")
-         .attr("transform", "translate(0, " + chart_height + ")");
-      
-      this.quarter.append("g")
-      .attr("id", "quarterY")
-      .call(yAxis);
-
-      this.quarter
-      .append("text")
-      .attr("transform", "rotate(-90)")
-      .style('fill', '#fff')
-      .attr("y", 3)
-      .style('font-size', 10)
-      .attr("dy", ".7em")
-      .style("text-anchor", "end")
-      .text("Total Trips");
-   }
-                              
-   var qqyear = this.quarter.selectAll('.qqyear')
-      .data(data)
-
-   qqyear.enter()
-      .append('g')
-      .attr('class', 'qqyear')
-      .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
-      .selectAll("rect")
-      .data(d => keys.map(key => ({key, value: d[key]})))
-      .enter()
-      .append('rect')
-      .attr("class", (d: any) => {
-         return d.key;
-      })
-      .attr("x", d => x1(d.key))
-      .attr("y", d => y(d.value))
-      .attr("width", x1.bandwidth())
-      .attr("height", d => chart_height - y(d.value))
-      .attr("fill", d => color(d.key));
-
-   qqyear.transition()
-   .attr("transform", d => `translate(${x0(d.yr_q)},0)`);
-
-   qqyear.exit()
-   .remove();
-
-   qqyear
-   .transition()
-   .duration(500)
-   .attr("transform", d => `translate(${x0(d.yr_q)},0)`)
-
-   var qqbar = this.quarter
-   .selectAll(".qqyear")
-   .selectAll("rect")
-   .data(d => keys.map(key => ({key, value: d[key]})));
-
-
-   qqbar
-   .transition()
-   .duration(500)
-   .attr("x", d => x1(d.key))
-   .attr("y", d => y(d.value))
-   .attr("width", x1.bandwidth())
-   .attr("height", d => chart_height - y(d.value))
-   .attr("fill", d => color(d.key));
-
-   this.quarter
-   .select("#quarterX")
-   .transition()
-   .duration(300)
-   .call(xAxis);
-
-   this.quarter
-   .select("#quarterY")
-   .transition()
-   .duration(300)
-   .call(yAxis);
-}
-```
 #### Anaylsis
 - Bike Station Inbound and Outbound
 ```typescript
